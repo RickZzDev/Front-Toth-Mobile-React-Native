@@ -15,31 +15,34 @@ return PixelRatio.roundToNearestPixel(screenHeight * parseFloat(heightPercent) /
 
 
 export const FundoHeader = styled.View`
-    height: ${heightPercentageToDP('40%')};
     background:#378ce4;
     border-bottom-left-radius:120px;
     justify-content:center;
     align-items:center;
-    padding: 0 40px;
+    flex:1;
+
+
 `
 
 
 export const Logo = styled.Image`
-    width:70%;
-    height:40%;
+    flex:1;
+    height:250;
+    width:250;
 `
 
 export const TextBemVindo = styled.Text`
     color:white;
     font-size:17px;
     margin-left:auto;
-
+    margin-right:25;
+    margin-bottom:25;
 `
 
 export const CaixaEmail=styled.View`
     align-self:center;
     margin-top:50px;
-    height: ${heightPercentageToDP('8%')};
+    height: ${heightPercentageToDP('8%')}px;
     width:80%;
     background:#e8e8e8;
     border-radius:100px;
@@ -53,7 +56,7 @@ export const CaixaEmail=styled.View`
 export const CaixaSenha=styled.View`
     align-self:center;
     margin-top:30px;
-    height: ${heightPercentageToDP('8%')};
+    height: ${heightPercentageToDP('8%')}px;
     width:80%;
     background:#e8e8e8;
     border-radius:100px;
@@ -88,7 +91,7 @@ export const Botao = styled.TouchableOpacity`
     align-items:center;
     height:${heightPercentageToDP('5%')};
     justify-content:center;
-    elevation:5px;
+    elevation:5;
 `
 
 export const TextBottao = styled.Text`

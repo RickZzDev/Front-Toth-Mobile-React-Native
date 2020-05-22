@@ -1,5 +1,5 @@
 import React from 'react'
-import {Text, View, KeyboardAvoidingView,StyleSheet } from 'react-native';
+import {Text, View, KeyboardAvoidingView,StyleSheet,Platform } from 'react-native';
 import {
     FundoHeader,
     Container,
@@ -18,11 +18,12 @@ import { SafeAreaView } from 'react-navigation';
 
 export default function Main() {
     return (
-        <KeyboardAvoidingView
-        style={{flex:1}}
-        behavior="padding">
+            <KeyboardAvoidingView
+            style={{flex:1}}
+            behavior="padding">
+                <View style={styles.container}>
                     <FundoHeader>
-                        <Logo source={logo}/>
+                        <Logo source={logo} resizeMode="contain"/>
                         <TextBemVindo>
                             Bem vindo de volta!
                         </TextBemVindo>
@@ -41,16 +42,14 @@ export default function Main() {
                             Log in
                         </TextBottao>
                     </Botao>
-        </KeyboardAvoidingView>
+                </View>
+            </KeyboardAvoidingView>
     );
   }
 
   const styles = StyleSheet.create({
     container: {
         flex: 1,
-    },
-    inner:{
-        flex:1,
-        justifyContent:'flex-end'
+        backgroundColor:'red'
     }
   })
