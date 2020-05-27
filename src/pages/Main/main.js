@@ -17,10 +17,14 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import { SafeAreaView } from 'react-navigation';
 
 export default function Main() {
+    
+
     return (
             <KeyboardAvoidingView
-            style={{flex:1}}
-            behavior="padding">
+            keyboardVerticalOffset={Platform.OS === "ios" ? 0 + 64 : 18 + 10}
+            style={styles.container}
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+            enabled>
                 <View style={styles.container}>
                     <FundoHeader>
                         <Logo source={logo} resizeMode="contain"/>
@@ -37,7 +41,7 @@ export default function Main() {
                         <Icon name="security" color="gray" size={25}/>
                         <InputEmail placeholder="Digite sua senha"/>
                     </CaixaSenha>
-                    <Botao>
+                    <Botao onPress={()=>{alert('a')}}>
                         <TextBottao>
                             Log in
                         </TextBottao>
@@ -50,6 +54,6 @@ export default function Main() {
   const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor:'red'
+        backgroundColor:'#e8e8e8'
     }
   })

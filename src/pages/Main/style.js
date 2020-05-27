@@ -20,8 +20,7 @@ export const FundoHeader = styled.View`
     justify-content:center;
     align-items:center;
     flex:1;
-
-
+    max-height:350;
 `
 
 
@@ -42,28 +41,28 @@ export const TextBemVindo = styled.Text`
 export const CaixaEmail=styled.View`
     align-self:center;
     margin-top:50px;
-    height: ${heightPercentageToDP('8%')}px;
+    height: 35;
     width:80%;
-    background:#e8e8e8;
     border-radius:100px;
     align-items:center;
     padding: 0px 20px;
     flex-direction:row;
-    elevation:5;
+    elevation:1;
+    background:white;
 
 `
 
 export const CaixaSenha=styled.View`
     align-self:center;
     margin-top:30px;
-    height: ${heightPercentageToDP('8%')}px;
+    height: 35;
     width:80%;
-    background:#e8e8e8;
+    background:white;
     border-radius:100px;
     align-items:center;
     padding: 0px 20px;
     flex-direction:row;
-    elevation:5;
+    elevation:1;
 `
 
 export const InputEmail = styled.TextInput`
