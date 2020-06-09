@@ -20,7 +20,7 @@ export const FundoHeader = styled.View`
     justify-content:center;
     align-items:center;
     flex:1;
-    max-height:350;
+    max-height:320;
 `
 
 
@@ -69,8 +69,7 @@ export const InputEmail = styled.TextInput`
     width:100%;
     height:100%;
     border-radius:100px;
-    padding: 0px 10px;
-    
+    padding: 0px 10px;   
 `
 
 export const InputSenha = styled.TextInput`
