@@ -52,7 +52,7 @@ const Home = () =>{
                  showsHorizontalScrollIndicator={false}
                  > 
                     <MenuCard text="Atividades" materialIconName="assignment"/>
-                    <MenuCard text="Minhas Turmas" materialIconName="school"/>
+                    <MenuCard text="Turmas" materialIconName="school"/>
                     <MenuCard text="Comunicados" materialIconName="sms"/>
                     <MenuCard text="Atividades" materialIconName="assignment"/>
                     <MenuCard text="Atividades" materialIconName="assignment"/>
@@ -115,7 +115,6 @@ const styles = StyleSheet.create({
         fontSize:18
     },
 
-
     routineContainer:{
         flex:1,
         width:'100%',
@@ -123,15 +122,7 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         justifyContent:'space-between',
         flexWrap:"wrap"
-    },
-
-    textRoutine:{
-        fontSize:15,
-        fontWeight:'bold',
-        color:"#378CE4"
     }
-
- 
 })
 
 export default Home

@@ -6,7 +6,7 @@ import {MaterialIcons} from '@expo/vector-icons'
 const MenuCard = ({text,materialIconName}) => {
   return (
     <TouchableOpacity activeOpacity={0.6} style={styles.menuCards}>
-      <MaterialIcons name={materialIconName} color='white' size={20}>
+      <MaterialIcons name={materialIconName} color='white' size={28}>
 
       </MaterialIcons>
 
@@ -25,7 +25,8 @@ const styles = StyleSheet.create({
     width:100,
     marginRight:15,
     padding:6,
-    justifyContent:"space-between"
+    justifyContent:"space-between",
+    alignItems:'center'
   },
 
   textMenuCards:{
