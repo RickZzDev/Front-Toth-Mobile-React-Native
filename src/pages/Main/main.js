@@ -1,9 +1,11 @@
 import React,{useState} from 'react'
 import {Text,Image,View,TouchableOpacity, KeyboardAvoidingView,StyleSheet,Platform, TextInput } from 'react-native';
 import logo from '../../assets/TOTH.png'
-import Icon from 'react-native-vector-icons/MaterialIcons'
 import {useNavigation, useRoute} from '@react-navigation/native'
 import {Feather} from '@expo/vector-icons'
+import FlashMessage from 'react-native-flash-message'
+import api from '../../services/api'
+import errorMessage from '../../components/globalComponents/errorPopUp'
 
 
 export default function Main() {
@@ -12,13 +14,29 @@ export default function Main() {
 
     const navigation = useNavigation()
 
-    function handleNavigateToHome(){
-        navigation.navigate('Home')
+   
+
+    async function confereDados(){
+        var dados = {
+            login:email,
+            senha:senha
+        }
+        api.post('professores/autenticacao',dados).then(response=>{
+            response.status == 200
+             ? handleNavigateToHome(response.data)
+             : errorMessage("Erro ao logar", "Favor conferir email e senha", "danger","danger")
+        }).catch(erro=>{
+            errorMessage("Erro ao logar", "Favor conferir email e senha", "danger","danger")      
+        }) 
+    }
+
+    function handleNavigateToHome(data){
+        navigation.navigate('Home',{data:data})
     }
 
     return (
             <KeyboardAvoidingView
-            keyboardVerticalOffset={Platform.OS === "ios" ? 0 + 64 : 18 + 10}
+            keyboardVerticalOffset={Platform.OS === "ios" ? 'padding' : 'height'}
             style={styles.container}
             behavior={Platform.OS === "ios" ? "padding" : "height"}
             enabled>
@@ -36,17 +54,18 @@ export default function Main() {
                     </View>
                     <View style={styles.caixaSenha}>
                         <Feather name="lock" color="gray" size={25}/>
-                        <TextInput  style={styles.inputSenha} value={senha} onChangeText={senha => setSenha(senha)} placeholder="Digite sua senha"/>
+                        <TextInput  secureTextEntry={true} style={styles.inputSenha} value={senha} onChangeText={senha => setSenha(senha)} placeholder="Digite sua senha"/>
                     </View>
                     <TouchableOpacity
                      style={styles.botao}
-                     onPress={handleNavigateToHome}
+                     onPress={confereDados}
                      activeOpacity={0.6}>
                         <Feather name="arrow-right" size={20} color="white"/>
                         <Text style={styles.textBottao}>
                             Log in
                         </Text>
                     </TouchableOpacity>
+                    <FlashMessage position="top"/>
                 </View>
             </KeyboardAvoidingView>
     );

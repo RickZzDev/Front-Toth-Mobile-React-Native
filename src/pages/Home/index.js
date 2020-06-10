@@ -1,14 +1,27 @@
-import React from 'react'
-import {View, Text, StyleSheet, ScrollView,TouchableNativeFeedback ,TouchableOpacity} from 'react-native'
-import {MaterialIcons} from '@expo/vector-icons'
+import React,{useState,useEffect} from 'react'
+import {View, Text, StyleSheet, ScrollView} from 'react-native'
 import MenuCard from "../../components/HomeComponents/menuCard"
 import RoutineHours from '../../components/HomeComponents/routineHours'
+import {useRoute, useNavigation} from '@react-navigation/native'
+
 
 const Home = () =>{
+
+    const routes = useRoute()
+    const routeParams = routes.params
+
+  
+    const [user,setUser] = useState([])
+    useEffect(()=>{
+        setUser(routeParams.data)
+    },[])
+
+
+
     return(
         <View style={styles.container}>
             <Text style={styles.helloText}>
-                Olá, Carlos!!
+                Olá, {user.nome}
             </Text>
             <Text style={styles.welcomText}>
                 Seja bem vindo ao Toth
