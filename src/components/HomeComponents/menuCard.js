@@ -17,6 +17,7 @@ const MenuCard = ({text,materialIconName}) => {
     Animated.timing(translateAnimY,{
       toValue:0,
       duration:1000,
+      easing:Easing.bounce,
       useNativeDriver: true
     }).start()
   })
