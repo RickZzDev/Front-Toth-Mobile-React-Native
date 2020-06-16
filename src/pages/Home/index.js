@@ -1,5 +1,5 @@
 import React,{useState,useEffect} from 'react'
-import {View, Text, StyleSheet, ScrollView} from 'react-native'
+import {View, Text, StyleSheet, ScrollView, Animated, Easing} from 'react-native'
 import MenuCard from "../../components/HomeComponents/menuCard"
 import RoutineHours from '../../components/HomeComponents/routineHours'
 import {useRoute, useNavigation} from '@react-navigation/native'
@@ -10,23 +10,48 @@ const Home = () =>{
     const routes = useRoute()
     const routeParams = routes.params
 
-  
+    const [translateAnim] = useState(new Animated.Value(150))
+    const [fadeAnim] = useState(new Animated.Value(0))
+
+    React.useEffect(()=>{
+
+        Animated.timing(fadeAnim,{
+            toValue:1,
+            duration:1000,
+            useNativeDriver: true,
+        }).start()
+
+        Animated.timing(translateAnim,{
+            toValue:0,
+            duration:1000,
+            easing:Easing.bounce,
+            useNativeDriver: true
+        }).start()
+
+       
+    },[])
+
     const [user,setUser] = useState([])
     useEffect(()=>{
         setUser(routeParams.data)
     },[])
 
+    const transfomrStyleX = {
+        transform:[{
+            translateX:translateAnim
+        }]
+    }
 
 
     return(
-        <View style={styles.container}>
-            <Text style={styles.helloText}>
+        <Animated.View style={{...styles.container}}>
+            <Animated.Text style={{...styles.helloText,...transfomrStyleX,opacity:fadeAnim }}>
                 Olá, {user.nome}
-            </Text>
-            <Text style={styles.welcomText}>
+            </Animated.Text>
+            <Animated.Text style={{...styles.welcomText,...transfomrStyleX, opacity:fadeAnim }}>
                 Seja bem vindo ao Toth
-            </Text>
-            <View style={styles.dayliCardContainer}>
+            </Animated.Text>
+            <Animated.View  style={{...styles.dayliCardContainer,...transfomrStyleX,opacity:fadeAnim}}>
                 <ScrollView
                  horizontal
                  showsHorizontalScrollIndicator={false}
@@ -58,7 +83,7 @@ const Home = () =>{
                         </Text>
                     </View>
                 </ScrollView>
-            </View>
+            </Animated.View>
             <View style={styles.menuCardsContainer}>
                 <ScrollView
                  horizontal
@@ -67,14 +92,14 @@ const Home = () =>{
                     <MenuCard text="Atividades" materialIconName="assignment"/>
                     <MenuCard text="Turmas" materialIconName="school"/>
                     <MenuCard text="Comunicados" materialIconName="sms"/>
-                    <MenuCard text="Atividades" materialIconName="assignment"/>
-                    <MenuCard text="Atividades" materialIconName="assignment"/>
-                    <MenuCard text="Atividades" materialIconName="assignment"/>
+                    <MenuCard text="Chamada" materialIconName="recent-actors"/>
+                    <MenuCard text="Notas" materialIconName="graphic-eq"/>
+                    <MenuCard text="Provas" materialIconName="event"/>
 
                 </ScrollView>
             </View>
 
-        </View>
+        </Animated.View>
     )
 }
 

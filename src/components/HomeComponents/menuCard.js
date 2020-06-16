@@ -1,11 +1,28 @@
-import React from "react";
-import {Text,StyleSheet, TouchableOpacity } from "react-native";
+import React,{useState,useEffect} from "react";
+import {Text,StyleSheet, TouchableOpacity, Animated, Easing } from "react-native";
 import {MaterialIcons} from '@expo/vector-icons'
 
 
 const MenuCard = ({text,materialIconName}) => {
+  const [translateAnimY] = useState(new Animated.Value(150))
+
+
+  const transformStyleY = { 
+    transform:[{
+        translateY:translateAnimY
+    }]
+  }
+
+  React.useEffect(()=>{
+    Animated.timing(translateAnimY,{
+      toValue:0,
+      duration:1000,
+      useNativeDriver: true
+    }).start()
+  })
+
   return (
-    <TouchableOpacity activeOpacity={0.6} style={styles.menuCards}>
+    <TouchableOpacity activeOpacity={0.6} style={{...styles.menuCards, ...transformStyleY}}>
       <MaterialIcons name={materialIconName} color='white' size={28}>
 
       </MaterialIcons>
