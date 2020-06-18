@@ -8,6 +8,7 @@ import {Roboto_400Regular,Roboto_500Medium } from '@expo-google-fonts/roboto'
 
 import Main from './pages/Main/main';
 import Home from './pages/Home'
+import Chamada from './pages/Chamada'
 
 const appStack = createStackNavigator()
 
@@ -36,6 +37,7 @@ const Routes = () =>{
 
                     <appStack.Screen name="login" component={Main} />
                     <appStack.Screen name="Home" component={Home} />
+                    <appStack.Screen name="Chamada" component={Chamada} />
             </appStack.Navigator>
         </NavigationContainer>
     )

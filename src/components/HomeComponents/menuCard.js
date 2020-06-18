@@ -1,9 +1,11 @@
 import React,{useState,useEffect} from "react";
 import {Text,StyleSheet, TouchableOpacity, Animated, Easing } from "react-native";
 import {MaterialIcons} from '@expo/vector-icons'
-
+import {useNavigation, useRoute} from '@react-navigation/native'
 
 const MenuCard = ({text,materialIconName}) => {
+  const navigation = useNavigation()
+
   const [translateAnimY] = useState(new Animated.Value(150))
 
 
@@ -22,8 +24,12 @@ const MenuCard = ({text,materialIconName}) => {
     }).start()
   })
 
+  function handleNavigateTo(pagina){
+    navigation.navigate(pagina)
+  }
+
   return (
-    <TouchableOpacity activeOpacity={0.6} style={{...styles.menuCards, ...transformStyleY}}>
+    <TouchableOpacity onPress={()=>handleNavigateTo(text)} activeOpacity={0.6} style={{...styles.menuCards, ...transformStyleY}}>
       <MaterialIcons name={materialIconName} color='white' size={28}>
 
       </MaterialIcons>
