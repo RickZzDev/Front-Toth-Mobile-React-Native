@@ -36,6 +36,18 @@ const Chamada = () => {
       aluno4: "orlando",
       id: 4,
     },
+    {
+      aluno5: "ordo",
+      id: 5,
+    },
+    {
+      aluno6: "oasdrdo",
+      id: 6,
+    },
+    {
+      aluno7: "ordoasd",
+      id: 7,
+    },
   ];
 
   //   const [translateAnimY] = useState(new Animated.Value(150))
@@ -86,7 +98,7 @@ const Chamada = () => {
           </TouchableOpacity>
           <Text style={styles.nomeTurma}>Turma 8 ano A - Chamada</Text>
         </View>
-        <ScrollView showsHorizontalScrollIndicator={false}>
+        <ScrollView showsVerticalScrollIndicator={false}>
           {array.map((item, index) => (
             <View style={styles.caixaChamada} key={item.id}>
               <View style={styles.cardChamada}>

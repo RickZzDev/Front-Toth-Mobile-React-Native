@@ -35,7 +35,7 @@ const Home = () => {
 
   const [user, setUser] = useState([]);
   useEffect(() => {
-    setUser(routeParams.data);
+    // setUser(routeParams.data);
   }, []);
 
   const transfomrStyleX = {
@@ -51,7 +51,7 @@ const Home = () => {
       <Animated.Text
         style={{ ...styles.helloText, ...transfomrStyleX, opacity: fadeAnim }}
       >
-        Olá, {user.nome}
+        {/* Olá, {user.nome} */}
       </Animated.Text>
       <Animated.Text
         style={{ ...styles.welcomText, ...transfomrStyleX, opacity: fadeAnim }}
