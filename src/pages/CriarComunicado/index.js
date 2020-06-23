@@ -1,29 +1,53 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   Text,
   StyleSheet,
   TouchableOpacity,
   View,
-  Image,
-  KeyboardAvoidingView,
-  TextInput,
-  ScrollView,
+  Animated,
 } from "react-native";
-import {
-  TextField,
-  FilledTextField,
-  OutlinedTextField,
-} from "react-native-material-textfield";
+import { TextField, OutlinedTextField } from "react-native-material-textfield";
 import { FontAwesome5, Feather } from "@expo/vector-icons";
-import CardComunicado from "../../components/ComunicadosComponents/cardComunicado";
 import { useNavigation } from "@react-navigation/native";
+import Input from "../../components/globalComponents/inputMaterialDesign";
 
 const CriarComunicado = () => {
+  const [animatedHeight, setAnimated] = useState(new Animated.Value(1));
+  const [animatedWidth, setAnimatedWidth] = useState(new Animated.Value(25));
+
+  function desc() {
+    Animated.timing(animatedHeight, {
+      toValue: 1,
+      duration: 1200,
+      useNativeDriver: true,
+    }).start(() => grow());
+  }
+
+  function grow() {
+    Animated.timing(animatedHeight, {
+      toValue: 1.2,
+      duration: 1200,
+      useNativeDriver: true,
+    }).start(() => desc());
+  }
+
+  useEffect(() => {
+    grow();
+  }, []);
+
   const navigate = useNavigation();
 
   function handleNavigateback() {
     navigate.goBack();
   }
+
+  const animatedStyle = {
+    transform: [
+      {
+        scale: animatedHeight,
+      },
+    ],
+  };
 
   return (
     <View style={styles.container}>
@@ -32,26 +56,48 @@ const CriarComunicado = () => {
           <FontAwesome5
             name="chevron-left"
             style={{ alignSelf: "center" }}
-            color="black"
+            color="gray"
             size={20}
           />
         </TouchableOpacity>
         <Text style={{ ...styles.titleEscrever, color: "#378ce4" }}>
           Escrever
         </Text>
-        <TouchableOpacity style={{ marginLeft: "auto", marginRight: 10 }}>
-          <Feather name="paperclip" size={20} color="black" />
+        <TouchableOpacity
+          style={{
+            marginLeft: "auto",
+            marginRight: 10,
+            backgroundColor: "#378ce4",
+            width: 35,
+            borderRadius: 50,
+            height: 35,
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Feather name="paperclip" size={20} color="white" />
         </TouchableOpacity>
-        <TouchableOpacity>
-          <Feather name="send" size={20} color="black" />
+        <TouchableOpacity
+          style={{
+            backgroundColor: "#378ce4",
+            width: 35,
+            borderRadius: 50,
+            height: 35,
+            alignItems: "center",
+            justifyContent: "center",
+            scaleX: animatedHeight,
+            scaleY: animatedHeight,
+          }}
+        >
+          <Animated.View style={animatedStyle}>
+            <Feather name="send" size={18} color="white" />
+          </Animated.View>
         </TouchableOpacity>
       </View>
-      <TextField
-        label="Phone number"
-        placeholder="asdasd"
-        placeholderTextColor="black"
-        keyboardType="phone-pad"
-      />
+      <Input label="De" />
+      <Input label="Para" />
+      <Input label="Assunto" />
+      <Input label="Comunicado" height={105} />
     </View>
   );
 };
@@ -59,16 +105,18 @@ const CriarComunicado = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
+    // alignItems: "center",
     padding: 20,
-    backgroundColor: "white",
   },
+
   divBackOptions: {
     paddingHorizontal: 10,
+    paddingVertical: 10,
+    height: 50,
     flexDirection: "row",
-    // backgroundColor: "blue",
     justifyContent: "space-between",
     width: "100%",
+    marginBottom: 35,
   },
   titleEscrever: {
     color: "white",

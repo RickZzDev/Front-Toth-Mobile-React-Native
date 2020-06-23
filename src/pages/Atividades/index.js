@@ -5,7 +5,6 @@ import {
   TouchableOpacity,
   View,
   Image,
-  KeyboardAvoidingView,
   TextInput,
   ScrollView,
 } from "react-native";
@@ -13,7 +12,7 @@ import { Feather, FontAwesome5 } from "@expo/vector-icons";
 import CardComunicado from "../../components/ComunicadosComponents/cardComunicado";
 import { useNavigation } from "@react-navigation/native";
 
-const Comunicados = () => {
+const Atividades = () => {
   const navigate = useNavigation();
 
   function handleNavigateback() {
@@ -43,22 +42,9 @@ const Comunicados = () => {
           />
         </TouchableOpacity>
 
-        <Text style={styles.title}>Comunicaos Gerais</Text>
+        <Text style={styles.title}>Atividades do dia</Text>
       </View>
 
-      <View style={styles.searchBox}>
-        <Feather
-          name="filter"
-          color="black"
-          size={25}
-          style={{ width: "10%" }}
-        />
-        <TextInput
-          placeholderTextColor="black"
-          style={styles.textFilter}
-          placeholder="Pesquisar nos comunicados"
-        ></TextInput>
-      </View>
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={{
@@ -127,4 +113,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Comunicados;
+export default Atividades;

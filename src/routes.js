@@ -10,6 +10,7 @@ import Home from "./pages/Home";
 import Chamada from "./pages/Chamada";
 import Comunicados from "./pages/Comunicados";
 import CriarComunicado from "./pages/CriarComunicado";
+import Atividades from "./pages/Atividades/index";
 
 const appStack = createStackNavigator();
 
@@ -40,6 +41,7 @@ const Routes = () => {
         <appStack.Screen name="Chamada" component={Chamada} />
         <appStack.Screen name="Comunicados" component={Comunicados} />
         <appStack.Screen name="CriarComunicado" component={CriarComunicado} />
+        <appStack.Screen name="Atividades" component={Atividades} />
       </appStack.Navigator>
     </NavigationContainer>
   );
