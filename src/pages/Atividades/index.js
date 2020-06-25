@@ -9,7 +9,7 @@ import {
   ScrollView,
 } from "react-native";
 import { Feather, FontAwesome5 } from "@expo/vector-icons";
-import CardComunicado from "../../components/ComunicadosComponents/cardComunicado";
+import CardAtividades from "../../components/atividadesComponentes/index";
 import { useNavigation } from "@react-navigation/native";
 
 const Atividades = () => {
@@ -20,7 +20,7 @@ const Atividades = () => {
   }
 
   function handleNavigateToCreate() {
-    navigate.navigate("CriarComunicado");
+    navigate.navigate("CriarAtividade");
   }
 
   return (
@@ -53,19 +53,43 @@ const Atividades = () => {
           // flexDirection: "row",
         }}
       >
-        <CardComunicado icon="flask" important={true} color="#00e6d2" />
-        <CardComunicado icon="atom" color="#7519ff" />
-        <CardComunicado icon="globe-africa" color="#76de00" />
-        <CardComunicado icon="language" color="#f2b600" />
-        <CardComunicado icon="hourglass" color="#007bff" />
-        <CardComunicado icon="calculator" color="#c71400" />
-        <CardComunicado icon="biohazard" color="#98c414" />
-        <CardComunicado icon="brain" color="#cf00cf" />
+        <CardAtividades
+          icon="flask"
+          nomeMateria="Física"
+          important={true}
+          color="#00e6d2"
+        />
+        <CardAtividades icon="atom" nomeMateria="Quimica" color="#7519ff" />
+        <CardAtividades
+          icon="globe-africa"
+          nomeMateria="Geografia"
+          color="#76de00"
+        />
+        <CardAtividades
+          icon="language"
+          nomeMateria="Português"
+          color="#f2b600"
+        />
+        <CardAtividades
+          icon="hourglass"
+          nomeMateria="História"
+          color="#007bff"
+        />
+        <CardAtividades
+          icon="calculator"
+          nomeMateria="Matematica"
+          color="#c71400"
+        />
+        <CardAtividades
+          icon="biohazard"
+          nomeMateria="Biologia"
+          color="#98c414"
+        />
+        <CardAtividades icon="brain" nomeMateria="Filosofia" color="#cf00cf" />
       </ScrollView>
       <TouchableOpacity
         onPress={handleNavigateToCreate}
         style={{
-          backgroundColor: "red",
           marginTop: -20,
           alignSelf: "flex-end",
           marginRight: 40,
@@ -83,7 +107,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    padding: 20,
+    paddingHorizontal: 20,
+    paddingVertical: 40,
     backgroundColor: "white",
   },
 
