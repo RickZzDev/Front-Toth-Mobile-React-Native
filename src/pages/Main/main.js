@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Platform,
   TextInput,
+  StatusBar,
 } from "react-native";
 import logo from "../../assets/TOTH.png";
 import { useNavigation, useRoute } from "@react-navigation/native";
@@ -61,6 +62,7 @@ export default function Main() {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       enabled
     >
+      <StatusBar backgroundColor="#378ce4"></StatusBar>
       <View style={styles.container}>
         <View style={styles.FundoHeader}>
           <Image style={styles.logo} source={logo} resizeMode="contain" />

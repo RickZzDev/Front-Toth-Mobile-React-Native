@@ -24,10 +24,9 @@ const criarAtividade = () => {
   );
   const [tipoAtividade, setTipoAtividade] = useState("");
   const [animatedOpacity, setAnimatedOpacity] = useState(new Animated.Value(0));
-  const [atividadesVf, setAtividadesVf] = useState([]);
-  const [atividadesMultE, setAtividadesMultE] = useState(["teste"]);
-  const [atividadesDiss, setAtividadesDiss] = useState(["Teste"]);
+  const [atividades, setAtividade] = useState([]);
 
+  const [cont, setCont] = useState([0]);
   const [animatedStyle, setAnimatedStyle] = useState({
     transform: [
       {
@@ -66,20 +65,224 @@ const criarAtividade = () => {
   // }
 
   function acrescentarQuestao(tipoAtividade) {
-    alert(tipoAtividade);
-    switch (tipoAtividade) {
-      case "Dissertativa":
-        setAtividadesDiss([...atividadesDiss, "TESTEEE"]);
-        break;
-      case "MultiEscolha":
-        setAtividadesMultE([...atividadesMultE, "TESTEEEE"]);
-        break;
-      case "vf":
-        setAtividadesVf([...atividadesVf, "TESRS"]);
-        break;
-    }
-    // setAtividadesMultE([...atividadesMultE, "TESTANDOOOO"]);
+    setAtividade([...atividades, tipoAtividade]);
+    setCont([...cont, cont[cont.length - 1] + 1]);
   }
+
+  var teste = () => {
+    return atividades.map((item) =>
+      item == "MultiEscolha" ? (
+        <Animated.View
+          style={{
+            opacity: animatedOpacity,
+            paddingHorizontal: 10,
+            paddingVertical: 10,
+            elevation: 1,
+            borderRadius: 1,
+            borderRadius: 20,
+            backgroundColor: "white",
+            marginBottom: 10,
+          }}
+        >
+          <TextField
+            placeholder="Qual a pergunta para essa questão?"
+            placeholderTextColor="black"
+            style={{ marginBottom: 5 }}
+          ></TextField>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              marginBottom: 5,
+              paddingLeft: 20,
+            }}
+          >
+            <Text style={{ fontSize: 20 }}>A.</Text>
+            <Input
+              inputContainerStyle={{
+                width: "70%",
+                marginBottom: -20,
+              }}
+            ></Input>
+          </View>
+
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              marginBottom: 5,
+              paddingLeft: 20,
+            }}
+          >
+            <Text style={{ fontSize: 20 }}>B.</Text>
+            <Input
+              inputContainerStyle={{
+                width: "70%",
+                marginBottom: -20,
+              }}
+            ></Input>
+          </View>
+
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              marginBottom: 5,
+              paddingLeft: 20,
+            }}
+          >
+            <Text style={{ fontSize: 20 }}>C.</Text>
+            <Input
+              inputContainerStyle={{
+                width: "70%",
+                marginBottom: -20,
+              }}
+            ></Input>
+          </View>
+
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              paddingLeft: 20,
+              // justifyContent: "space-between",
+            }}
+          >
+            <Text style={{ fontSize: 20 }}>D.</Text>
+            <Input
+              inputContainerStyle={{
+                width: "70%",
+                marginBottom: -20,
+              }}
+            ></Input>
+          </View>
+
+          {/* <Input label="Resposta" style={{ martinTop: 5 }} /> */}
+        </Animated.View>
+      ) : item == "Dissertativa" ? (
+        <Animated.View
+          style={{
+            opacity: animatedOpacity,
+            paddingHorizontal: 10,
+            marginBottom: 10,
+            elevation: 1,
+            borderRadius: 1,
+            borderRadius: 20,
+            backgroundColor: "white",
+          }}
+        >
+          <TextField
+            placeholder="Qual a pergunta da questão?"
+            placeholderTextColor="black"
+            style={{ marginBottom: 5 }}
+          ></TextField>
+          <TextField
+            placeholder="E a resposta para essa questão?"
+            style={{ marginBottom: 5, paddingLeft: 10 }}
+          ></TextField>
+        </Animated.View>
+      ) : item == "vf" ? (
+        <Animated.View
+          style={{
+            opacity: animatedOpacity,
+            paddingHorizontal: 10,
+            paddingVertical: 10,
+            elevation: 1,
+            borderRadius: 1,
+            borderRadius: 20,
+            backgroundColor: "white",
+            marginBottom: 10,
+          }}
+        >
+          <TextField
+            placeholder="Qual a pergunta para essa questão?"
+            placeholderTextColor="black"
+            style={{ marginBottom: 5 }}
+          ></TextField>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              marginBottom: 5,
+              paddingLeft: 20,
+            }}
+          >
+            <Text style={{ fontSize: 20 }}>V</Text>
+            <CheckBox containerStyle={{ width: "10%" }} />
+
+            <Input
+              inputContainerStyle={{
+                width: "70%",
+                marginBottom: -20,
+              }}
+            ></Input>
+          </View>
+
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              marginBottom: 5,
+              paddingLeft: 20,
+            }}
+          >
+            <Text style={{ fontSize: 20 }}>F</Text>
+            <CheckBox containerStyle={{ width: "10%" }} />
+
+            <Input
+              inputContainerStyle={{
+                width: "70%",
+                marginBottom: -20,
+              }}
+            ></Input>
+          </View>
+
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              marginBottom: 5,
+              paddingLeft: 20,
+            }}
+          >
+            <Text style={{ fontSize: 20 }}>V</Text>
+            <CheckBox containerStyle={{ width: "10%" }} />
+
+            <Input
+              inputContainerStyle={{
+                width: "70%",
+                marginBottom: -20,
+              }}
+            ></Input>
+          </View>
+
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              paddingLeft: 20,
+            }}
+          >
+            <Text style={{ fontSize: 20 }}>F</Text>
+            <CheckBox containerStyle={{ width: "10%" }} />
+
+            <Input
+              inputContainerStyle={{
+                width: "70%",
+                marginBottom: -20,
+              }}
+            ></Input>
+          </View>
+
+          {/* <Input label="Resposta" style={{ martinTop: 5 }} /> */}
+        </Animated.View>
+      ) : (
+        <View>
+          <Text>Selecione</Text>
+        </View>
+      )
+    );
+  };
 
   function show(tipoAtividade) {
     Animated.timing(animatedOpacity, {
@@ -87,9 +290,6 @@ const criarAtividade = () => {
       duration: 800,
       useNativeDriver: true,
     }).start();
-    // if (tipoAtividade == "vf") {
-    //   setAtividadesVf([...atividadesVf, { id: 1, teste: "teste" }]);
-    // }
   }
 
   function handleNavigateback() {
@@ -141,11 +341,11 @@ const criarAtividade = () => {
             height: 35,
             alignItems: "center",
             justifyContent: "center",
-            scaleX: animatedHeight,
-            scaleY: animatedHeight,
+            // scaleX: animatedHeight,
+            // scaleY: animatedHeight,
           }}
         >
-          <Animated.View style={animatedStyle}>
+          <Animated.View>
             <Feather name="send" size={18} color="white" />
           </Animated.View>
         </TouchableOpacity>
@@ -177,118 +377,8 @@ const criarAtividade = () => {
           { label: "Verdadeiro e Falso", value: "vf", key: 3 },
         ]}
       />
-      {tipoAtividade == "MultiEscolha" && (
-        <ScrollView showsVerticalScrollIndicator={false}>
-          {atividadesMultE.map((item) => (
-            <Animated.View
-              style={{
-                opacity: animatedOpacity,
-                paddingHorizontal: 10,
-              }}
-            >
-              <TextField
-                placeholder="Pergunta"
-                placeholderTextColor="black"
-                style={{ marginBottom: 5 }}
-              ></TextField>
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  marginBottom: 5,
-                }}
-              >
-                <Text style={{ fontSize: 20 }}>A.</Text>
-                <CheckBox containerStyle={{ width: "10%" }} />
-                <Input
-                  inputContainerStyle={{
-                    width: "70%",
-                    marginBottom: -20,
-                  }}
-                ></Input>
-              </View>
-
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  marginBottom: 5,
-                }}
-              >
-                <Text style={{ fontSize: 20 }}>A.</Text>
-                <CheckBox containerStyle={{ width: "10%" }} />
-                <Input
-                  inputContainerStyle={{
-                    width: "70%",
-                    marginBottom: -20,
-                  }}
-                ></Input>
-              </View>
-
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  marginBottom: 5,
-                }}
-              >
-                <Text style={{ fontSize: 20 }}>A.</Text>
-                <CheckBox containerStyle={{ width: "10%" }} />
-                <Input
-                  inputContainerStyle={{
-                    width: "70%",
-                    marginBottom: -20,
-                  }}
-                ></Input>
-              </View>
-
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
-              >
-                <Text style={{ fontSize: 20 }}>A.</Text>
-                <CheckBox containerStyle={{ width: "10%" }} />
-                <Input
-                  inputContainerStyle={{
-                    width: "70%",
-                    marginBottom: -20,
-                  }}
-                ></Input>
-              </View>
-
-              {/* <Input label="Resposta" style={{ martinTop: 5 }} /> */}
-            </Animated.View>
-          ))}
-        </ScrollView>
-      )}
-
-      {tipoAtividade == "vf" &&
-        atividadesVf.map((item) => (
-          <Animated.View key={item.id + 1} style={{ opacity: animatedOpacity }}>
-            <Text>VF</Text>
-          </Animated.View>
-        ))}
-
-      {tipoAtividade == "Dissertativa" && (
-        <ScrollView showsVerticalScrollIndicator={false}>
-          {atividadesDiss.map((item) => (
-            <Animated.View
-              style={{ opacity: animatedOpacity, paddingHorizontal: 10 }}
-            >
-              <TextField
-                placeholder="Pergunta"
-                placeholderTextColor="black"
-                style={{ fontSize: 18, fontWeight: "bold" }}
-              ></TextField>
-              <TextField
-                placeholder="Resposta"
-                style={{ marginBottom: 5, paddingLeft: 10 }}
-              ></TextField>
-            </Animated.View>
-          ))}
-        </ScrollView>
+      {atividades.length >= 1 && (
+        <ScrollView showsVerticalScrollIndicator={false}>{teste()}</ScrollView>
       )}
 
       <TouchableOpacity
@@ -300,6 +390,8 @@ const criarAtividade = () => {
           backgroundColor: "#378CE4",
           borderRadius: 50,
           marginTop: "auto",
+          scaleX: animatedHeight,
+          scaleY: animatedHeight,
         }}
       >
         <Feather name="plus" color="white" size={40}></Feather>

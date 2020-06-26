@@ -6,6 +6,7 @@ import {
   ScrollView,
   Animated,
   Easing,
+  StatusBar,
 } from "react-native";
 import MenuCard from "../../components/HomeComponents/menuCard";
 import BoxRetangular from "../../components/HomeComponents/boxRetangular";
@@ -48,9 +49,11 @@ const Home = () => {
 
   return (
     <Animated.View style={{ ...styles.container }}>
+      <StatusBar backgroundColor="#e5e5e5"></StatusBar>
       <Animated.Text
         style={{ ...styles.helloText, ...transfomrStyleX, opacity: fadeAnim }}
       >
+        Olá, Carlos Henrique
         {/* Olá, {user.nome} */}
       </Animated.Text>
       <Animated.Text
@@ -116,7 +119,9 @@ const Home = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#378CE4",
+    // backgroundColor: "#378CE4",
+    backgroundColor: "#e5e5e5",
+    // backgroundColor: "white",
     justifyContent: "center",
     paddingLeft: 16,
     paddingTop: 32,
@@ -125,13 +130,16 @@ const styles = StyleSheet.create({
 
   helloText: {
     fontFamily: "Roboto_400Regular",
-    color: "#C4C4C4",
+    // color: "#C4C4C4",
+    color: "#378CE4",
     fontSize: 18,
   },
 
   welcomText: {
     fontFamily: "Ubuntu_700Bold",
-    color: "white",
+    // color: "white",
+    color: "#378CE4",
+
     fontSize: 25,
   },
 
@@ -142,7 +150,9 @@ const styles = StyleSheet.create({
   },
 
   dayliCards: {
-    backgroundColor: "#75B7FB",
+    // backgroundColor: "#75B7FB",
+
+    backgroundColor: "#378CE4",
     flex: 1,
     minWidth: 346,
     maxWidth: 346,

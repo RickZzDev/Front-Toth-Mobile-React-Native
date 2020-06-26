@@ -92,7 +92,7 @@ const Chamada = () => {
             <FontAwesome5
               name="chevron-left"
               style={{ alignSelf: "center" }}
-              color="white"
+              color="#378CE4"
               size={18}
             />
           </TouchableOpacity>
@@ -174,7 +174,7 @@ const Chamada = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#378ce4",
+    backgroundColor: "#e5e5e5",
     justifyContent: "center",
     padding: 20,
   },
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   cardChamada: {
-    backgroundColor: "#75B7FB",
+    backgroundColor: "#378CE4",
     flex: 1,
     borderRadius: 20,
     flexDirection: "row",
@@ -235,6 +235,9 @@ const styles = StyleSheet.create({
   },
   nomeTurma: {
     color: "white",
+    color: "#378CE4",
+    // backgroundColor: "#378CE4",
+
     fontSize: 18,
     fontWeight: "bold",
     marginLeft: "15%",
