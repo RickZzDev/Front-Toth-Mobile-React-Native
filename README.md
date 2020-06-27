@@ -8,3 +8,4 @@ Este projeto ainda está em desenvolvimento, e provavelmente sofrerá atualizaç
 ![alt text](https://github.com/RickZzDev//Front-Toth-Mobile-React-Native/blob/master/assets/imagesToGit/atividadeDia.jpeg?raw=true)
 ![alt text](https://github.com/RickZzDev//Front-Toth-Mobile-React-Native/blob/master/assets/imagesToGit/comunicados.jpeg?raw=true)
 ![alt text](https://github.com/RickZzDev//Front-Toth-Mobile-React-Native/blob/master/assets/imagesToGit/criarComunicados.jpeg?raw=true)
+![alt text](https://github.com/RickZzDev//Front-Toth-Mobile-React-Native/blob/master/assets/imagesToGit/login.jpeg?raw=true)
