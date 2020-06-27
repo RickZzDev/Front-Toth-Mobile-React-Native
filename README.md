@@ -1,9 +1,9 @@
 # Front-Toth-Mobile-React-Native
-![alt text](https://github.com/RickZzDev//Front-Toth-Mobile-React-Native/blob/master/assets/splash.png?raw=true)
-![alt text](https://github.com/RickZzDev//Front-Toth-Mobile-React-Native/blob/master/assets/home1.jpeg?raw=true)
-![alt text](https://github.com/RickZzDev//Front-Toth-Mobile-React-Native/blob/master/assets/home2.jpeg?raw=true)
-![alt text](https://github.com/RickZzDev//Front-Toth-Mobile-React-Native/blob/master/assets/home3.jpeg?raw=true)
-![alt text](https://github.com/RickZzDev//Front-Toth-Mobile-React-Native/blob/master/assets/criarAtividade.jpeg?raw=true)
-![alt text](https://github.com/RickZzDev//Front-Toth-Mobile-React-Native/blob/master/assets/atividadeDia.jpeg?raw=true)
-![alt text](https://github.com/RickZzDev//Front-Toth-Mobile-React-Native/blob/master/assets/comunicados.jpeg?raw=true)
-![alt text](https://github.com/RickZzDev//Front-Toth-Mobile-React-Native/blob/master/assets/criarComunicados.jpeg?raw=true)
+
+![alt text](https://github.com/RickZzDev//Front-Toth-Mobile-React-Native/blob/master/assets/imagesToGit/home1.jpeg?raw=true)
+![alt text](https://github.com/RickZzDev//Front-Toth-Mobile-React-Native/blob/master/assets/imagesToGit/home2.jpeg?raw=true)
+![alt text](https://github.com/RickZzDev//Front-Toth-Mobile-React-Native/blob/master/assets/imagesToGit/home3.jpeg?raw=true)
+![alt text](https://github.com/RickZzDev//Front-Toth-Mobile-React-Native/blob/master/assets/imagesToGit/criarAtividade.jpeg?raw=true)
+![alt text](https://github.com/RickZzDev//Front-Toth-Mobile-React-Native/blob/master/assets/imagesToGit/atividadeDia.jpeg?raw=true)
+![alt text](https://github.com/RickZzDev//Front-Toth-Mobile-React-Native/blob/master/assets/imagesToGit/comunicados.jpeg?raw=true)
+![alt text](https://github.com/RickZzDev//Front-Toth-Mobile-React-Native/blob/master/assets/imagesToGit/criarComunicados.jpeg?raw=true)
