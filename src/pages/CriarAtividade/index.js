@@ -312,7 +312,7 @@ const criarAtividade = () => {
           <FontAwesome5
             name="chevron-left"
             style={{ alignSelf: "center" }}
-            color="gray"
+            color="#378ce4"
             size={20}
           />
         </TouchableOpacity>
@@ -406,6 +406,7 @@ const styles = StyleSheet.create({
     // alignItems: "center",
     paddingHorizontal: 20,
     paddingVertical: 40,
+    backgroundColor: "white",
   },
 
   divBackOptions: {

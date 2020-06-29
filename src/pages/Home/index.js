@@ -49,7 +49,7 @@ const Home = () => {
 
   return (
     <Animated.View style={{ ...styles.container }}>
-      <StatusBar backgroundColor="#e5e5e5"></StatusBar>
+      <StatusBar backgroundColor="white"></StatusBar>
       <Animated.Text
         style={{ ...styles.helloText, ...transfomrStyleX, opacity: fadeAnim }}
       >
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     // backgroundColor: "#378CE4",
-    backgroundColor: "#e5e5e5",
+    backgroundColor: "white",
     // backgroundColor: "white",
     justifyContent: "center",
     paddingLeft: 16,

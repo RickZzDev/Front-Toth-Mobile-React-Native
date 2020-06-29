@@ -37,7 +37,7 @@ const Atividades = () => {
           <FontAwesome5
             name="chevron-left"
             style={{ alignSelf: "center" }}
-            color="gray"
+            color="#378CE4"
             size={20}
           />
         </TouchableOpacity>
