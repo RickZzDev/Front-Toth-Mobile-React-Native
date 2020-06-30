@@ -174,7 +174,7 @@ const Chamada = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#e5e5e5",
+    backgroundColor: "white",
     justifyContent: "center",
     padding: 20,
   },

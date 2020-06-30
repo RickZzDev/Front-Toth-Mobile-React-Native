@@ -65,8 +65,9 @@ const criarAtividade = () => {
   // }
 
   function acrescentarQuestao(tipoAtividade) {
-    setAtividade([...atividades, tipoAtividade]);
-    setCont([...cont, cont[cont.length - 1] + 1]);
+    tipoAtividade == undefined
+      ? alert("Favor escolher um tipo de atividade")
+      : setAtividade([...atividades, tipoAtividade]);
   }
 
   var teste = () => {
@@ -276,11 +277,7 @@ const criarAtividade = () => {
 
           {/* <Input label="Resposta" style={{ martinTop: 5 }} /> */}
         </Animated.View>
-      ) : (
-        <View>
-          <Text>Selecione</Text>
-        </View>
-      )
+      ) : null
     );
   };
 
@@ -341,8 +338,6 @@ const criarAtividade = () => {
             height: 35,
             alignItems: "center",
             justifyContent: "center",
-            // scaleX: animatedHeight,
-            // scaleY: animatedHeight,
           }}
         >
           <Animated.View>
@@ -377,6 +372,21 @@ const criarAtividade = () => {
           { label: "Verdadeiro e Falso", value: "vf", key: 3 },
         ]}
       />
+      {atividades.length == 0 && (
+        <View
+          style={{
+            paddingHorizontal: 40,
+            paddingVertical: 10,
+          }}
+        >
+          <Text style={{ fontSize: 18, fontWeight: "bold" }}>
+            Escolha um tipo de atividade
+          </Text>
+          <Text style={{ fontSize: 16 }}>
+            E clique no botão abaixo para adicionar uma questão :)
+          </Text>
+        </View>
+      )}
       {atividades.length >= 1 && (
         <ScrollView showsVerticalScrollIndicator={false}>{teste()}</ScrollView>
       )}

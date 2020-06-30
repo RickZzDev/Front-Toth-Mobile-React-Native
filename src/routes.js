@@ -12,6 +12,8 @@ import Comunicados from "./pages/Comunicados";
 import CriarComunicado from "./pages/CriarComunicado";
 import Atividades from "./pages/Atividades/index";
 import CriarAtividade from "./pages/CriarAtividade";
+import Turmas from "./pages/Turmas";
+import Provas from "./pages/Provas";
 
 const appStack = createStackNavigator();
 
@@ -44,6 +46,8 @@ const Routes = () => {
         <appStack.Screen name="CriarComunicado" component={CriarComunicado} />
         <appStack.Screen name="CriarAtividade" component={CriarAtividade} />
         <appStack.Screen name="Atividades" component={Atividades} />
+        <appStack.Screen name="Turmas" component={Turmas} />
+        <appStack.Screen name="Provas" component={Provas} />
       </appStack.Navigator>
     </NavigationContainer>
   );
