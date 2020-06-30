@@ -12,6 +12,7 @@ import MenuCard from "../../components/HomeComponents/menuCard";
 import BoxRetangular from "../../components/HomeComponents/boxRetangular";
 import { useRoute, useNavigation } from "@react-navigation/native";
 
+//Teste2
 //Teste
 const Home = () => {
   const routes = useRoute();
