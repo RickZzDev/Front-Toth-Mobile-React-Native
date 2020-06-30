@@ -14,6 +14,8 @@ import { useRoute, useNavigation } from "@react-navigation/native";
 
 //Teste2
 //Teste
+//Teste2
+//Teste
 const Home = () => {
   const routes = useRoute();
   const routeParams = routes.params;
