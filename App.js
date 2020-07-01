@@ -5,7 +5,7 @@ import { StyleSheet, Text, View, StatusBar } from "react-native";
 export default function App() {
   return (
     <>
-      <StatusBar barStyle="dark-content" backgroundColor="#e5e5e5" />
+      <StatusBar barStyle="dark-content" backgroundColor="white" />
       <Routes />
     </>
   );

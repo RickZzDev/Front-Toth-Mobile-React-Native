@@ -1,10 +1,10 @@
 import React from "react";
 import { TextField, OutlinedTextField } from "react-native-material-textfield";
 
-const inputMaterialDesign = ({ label, height = 55 }) => {
+const inputMaterialDesign = ({ label, height = 55, keyboardType = "text" }) => {
   return (
     <OutlinedTextField
-      keyboardType="phone-pad"
+      keyboardType={keyboardType}
       label={label}
       multiline
       labelFontSize={16}

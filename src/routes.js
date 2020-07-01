@@ -35,7 +35,7 @@ const Routes = () => {
         headerTintColor="#000000"
         screenOptions={{
           cardStyle: {
-            backgroundColor: "#f0f0f5",
+            backgroundColor: "white",
           },
         }}
       >
