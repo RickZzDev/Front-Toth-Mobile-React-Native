@@ -46,8 +46,7 @@ const Provas = () => {
           <View
             style={{
               flexDirection: "row",
-              width: "75%",
-              alignSelf: "flex-start",
+              width: "100%",
               justifyContent: "space-between",
               marginBottom: 12,
             }}
@@ -62,6 +61,17 @@ const Provas = () => {
             </TouchableOpacity>
 
             <Text style={styles.title}>Marcar datas avaliativas</Text>
+            <TouchableOpacity
+              title="Show modal"
+              style={{
+                width: 26,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              onPress={toggleModal}
+            >
+              <Feather name="help-circle" color="#378ce4" size={20} />
+            </TouchableOpacity>
           </View>
           <View>
             <Calendar
@@ -108,7 +118,6 @@ const Provas = () => {
             <Input label="Peso da prova" keyboardType="phone-pad" height={60} />
             <Input label="Atividades para estudar" height={60} />
           </View>
-          <Button title="Show modal" onPress={toggleModal} />
 
           <Modal isVisible={isModalVisible}>
             <View style={{ flex: 1 }}>
@@ -119,6 +128,7 @@ const Provas = () => {
                   justifyContent: "space-between",
                   alignItems: "flex-start",
                   borderRadius: 10,
+                  borderBottomRightRadius: 0,
                   paddingLeft: 30,
                   paddingVertical: 40,
                 }}
@@ -149,7 +159,22 @@ const Provas = () => {
                   <Feather name="smile" color="#378ce4" size={22} />
                 </Text>
               </View>
-              <Button title="Hide modal" onPress={toggleModal} />
+              <TouchableOpacity
+                title="Hide modal"
+                style={{
+                  backgroundColor: "white",
+                  width: "10%",
+                  height: 30,
+                  alignSelf: "flex-end",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  borderBottomRightRadius: 10,
+                  borderBottomLeftRadius: 10,
+                }}
+                onPress={toggleModal}
+              >
+                <Feather name="x-circle" color="#378ce4" size={20} />
+              </TouchableOpacity>
             </View>
           </Modal>
           <TouchableOpacity style={styles.enviarProva}>
