@@ -13,6 +13,7 @@ import {
 import logo from "../../assets/TOTH.png";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Feather } from "@expo/vector-icons";
+import { AsyncStorage } from "react-native";
 import FlashMessage from "react-native-flash-message";
 import api from "../../services/api";
 import errorMessage from "../../components/globalComponents/errorPopUp";
@@ -28,11 +29,12 @@ export default function Main() {
       login: email,
       senha: senha,
     };
+
     api
       .post("professores/autenticacao", dados)
       .then((response) => {
         response.status == 200
-          ? handleNavigateToHome(response.data)
+          ? sucessLogin(response.data)
           : errorMessage(
               "Erro ao logar",
               "Favor conferir email e senha",
@@ -41,7 +43,8 @@ export default function Main() {
             );
       })
       .catch((erro) => {
-        handleNavigateToHome();
+        // handleNavigateToHome();
+        console.log(erro);
         errorMessage(
           "Erro ao logar",
           "Favor conferir email e senha",
@@ -49,6 +52,12 @@ export default function Main() {
           "danger"
         );
       });
+  }
+
+  async function sucessLogin(data) {
+    await AsyncStorage.setItem("jwt_key", data.jwt);
+    delete data["jwt"];
+    handleNavigateToHome(data);
   }
 
   function handleNavigateToHome(data) {

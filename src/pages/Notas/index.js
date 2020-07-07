@@ -37,7 +37,7 @@ const Notas = () => {
               flexDirection: "row",
               justifyContent: "space-between",
               flexWrap: "wrap",
-              height: 170,
+              height: 200,
             }}
           >
             <LinearGradient

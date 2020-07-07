@@ -38,9 +38,10 @@ const Home = () => {
     }).start();
   }, []);
 
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState({});
+
   useEffect(() => {
-    // setUser(routeParams.data);
+    setUser(routeParams.data.professor);
   }, []);
 
   const transfomrStyleX = {
@@ -57,8 +58,7 @@ const Home = () => {
       <Animated.Text
         style={{ ...styles.helloText, ...transfomrStyleX, opacity: fadeAnim }}
       >
-        Olá, Carlos Henrique
-        {/* Olá, {user.nome} */}
+        Olá, {user.nome}
       </Animated.Text>
       <Animated.Text
         style={{ ...styles.welcomText, ...transfomrStyleX, opacity: fadeAnim }}
@@ -109,7 +109,11 @@ const Home = () => {
       <View style={styles.menuCardsContainer}>
         <ScrollView horizontal showsHorizontalScrollIndicator={false}>
           <MenuCard text="Atividades" materialIconName="assignment" />
-          <MenuCard text="Turmas" materialIconName="school" />
+          <MenuCard
+            dataTurmas={user.turmas}
+            text="Turmas"
+            materialIconName="school"
+          />
           <MenuCard text="Comunicados" materialIconName="sms" />
           <MenuCard text="Chamada" materialIconName="recent-actors" />
           <MenuCard text="Notas" materialIconName="graphic-eq" />

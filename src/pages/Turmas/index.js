@@ -7,15 +7,24 @@ import {
   ScrollView,
 } from "react-native";
 import { FontAwesome5, Feather } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
 import CardTurma from "../../components/turmasComponentes";
+import { useRoute, useNavigation } from "@react-navigation/native";
 
 const Turma = () => {
   const navigate = useNavigation();
+  const routes = useRoute();
+
+  const routeParams = routes.params;
+
+  const [turmas, setTurmas] = useState([]);
 
   function handleNavigateback() {
     navigate.goBack();
   }
+
+  useEffect(() => {
+    setTurmas(routeParams.turmas);
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -37,14 +46,17 @@ const Turma = () => {
             flexWrap: "wrap",
           }}
         >
-          <CardTurma
-            turno="Manhã"
-            icon="atom"
-            nome_sala="3 C"
-            numero_sala="13"
-            bg_color="#7519ff"
-          />
-          <CardTurma
+          {turmas.map((turma) => (
+            <CardTurma
+              turno={turma.turno}
+              icon="atom"
+              nome_sala={turma.ano.ano + " " + turma.identificador}
+              numero_sala="13"
+              bg_color="#7519ff"
+            />
+          ))}
+
+          {/* <CardTurma
             turno="Manhã"
             icon="flask"
             nome_sala="3 B"
@@ -89,7 +101,7 @@ const Turma = () => {
             nome_sala="3 F"
             numero_sala="14"
             bg_color="#98c414"
-          />
+          /> */}
         </View>
       </ScrollView>
     </View>

@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import CardTurma from "../../components/turmasComponentes";
 
 const BoxRetangular = ({ text, width }) => {
   return (

@@ -9,7 +9,7 @@ import {
 import { MaterialIcons } from "@expo/vector-icons";
 import { useNavigation, useRoute } from "@react-navigation/native";
 
-const MenuCard = ({ text, materialIconName }) => {
+const MenuCard = ({ text, materialIconName, dataTurmas = null }) => {
   const navigation = useNavigation();
 
   const [translateAnimY] = useState(new Animated.Value(150));
@@ -31,13 +31,13 @@ const MenuCard = ({ text, materialIconName }) => {
     }).start();
   });
 
-  function handleNavigateTo(pagina) {
-    navigation.navigate(pagina);
+  function handleNavigateTo(pagina, dataTurma) {
+    navigation.navigate(pagina, { turmas: dataTurma });
   }
 
   return (
     <TouchableOpacity
-      onPress={() => handleNavigateTo(text)}
+      onPress={() => handleNavigateTo(text, dataTurmas)}
       activeOpacity={0.6}
       style={{ ...styles.menuCards, ...transformStyleY }}
     >
