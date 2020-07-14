@@ -8,6 +8,9 @@ import { useNavigation } from "@react-navigation/native";
 const CardTurma = ({ turno, nome_sala, numero_sala, icon, bg_color }) => {
   const navigate = useNavigation();
 
+  switch (materia) {
+  }
+
   function handleNavigateback() {
     navigate.goBack();
   }

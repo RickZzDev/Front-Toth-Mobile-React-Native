@@ -1,17 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Text,
   StyleSheet,
   TouchableOpacity,
   View,
-  Image,
-  KeyboardAvoidingView,
   TextInput,
   ScrollView,
+  AsyncStorage,
 } from "react-native";
 import { Feather, FontAwesome5 } from "@expo/vector-icons";
 import CardComunicado from "../../components/ComunicadosComponents/cardComunicado";
 import { useNavigation } from "@react-navigation/native";
+import api from "../../services/api";
 
 const Comunicados = () => {
   const navigate = useNavigation();
@@ -23,6 +23,29 @@ const Comunicados = () => {
   function handleNavigateToCreate() {
     navigate.navigate("CriarComunicado");
   }
+
+  const [comunicados, setComunicados] = useState([]);
+
+  useEffect(() => {
+    async function getComunicados() {
+      console.log("asdasd");
+      const token = await AsyncStorage.getItem("jwt_key");
+
+      const headers = { Authorization: "Bearer " + token };
+      await api
+        .get("comunicados", {
+          headers: headers,
+        })
+        .then((response) => {
+          setComunicados(response.data);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
+
+    getComunicados();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -67,14 +90,21 @@ const Comunicados = () => {
           // flexDirection: "row",
         }}
       >
-        <CardComunicado icon="flask" important={true} color="#00e6d2" />
-        <CardComunicado icon="atom" color="#7519ff" />
+        {comunicados.map((item, index) => (
+          <CardComunicado
+            key={index}
+            icon="flask"
+            important={true}
+            color="#00e6d2"
+          />
+        ))}
+        {/* <CardComunicado icon="atom" color="#7519ff" />
         <CardComunicado icon="globe-africa" color="#76de00" />
         <CardComunicado icon="language" color="#f2b600" />
         <CardComunicado icon="hourglass" color="#007bff" />
         <CardComunicado icon="calculator" color="#c71400" />
         <CardComunicado icon="biohazard" color="#98c414" />
-        <CardComunicado icon="brain" color="#cf00cf" />
+        <CardComunicado icon="brain" color="#cf00cf" /> */}
       </ScrollView>
       <TouchableOpacity
         onPress={handleNavigateToCreate}

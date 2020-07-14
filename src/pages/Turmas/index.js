@@ -46,13 +46,15 @@ const Turma = () => {
             flexWrap: "wrap",
           }}
         >
-          {turmas.map((turma) => (
+          {turmas.map((turma, index) => (
             <CardTurma
               turno={turma.turno}
               icon="atom"
               nome_sala={turma.ano.ano + " " + turma.identificador}
-              numero_sala="13"
+              numero_sala={turma.numeroSala}
               bg_color="#7519ff"
+              materia={turma}
+              key={index}
             />
           ))}
 
