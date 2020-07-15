@@ -10,8 +10,15 @@ import {
 import { Feather, FontAwesome5 } from "@expo/vector-icons";
 import foto from "../../assets/TOTH.png";
 import { useNavigation } from "@react-navigation/native";
+import { interpolate } from "react-native-reanimated";
 
-const cardComunicado = ({ color, icon, important = false }) => {
+const cardComunicado = ({
+  title,
+  description,
+  color,
+  icon,
+  important = false,
+}) => {
   const [animatedHeight, setAnimated] = useState(new Animated.Value(1));
 
   function desc() {
@@ -65,14 +72,14 @@ const cardComunicado = ({ color, icon, important = false }) => {
         </View>
         <View style={styles.txtComunciados}>
           <View style={{ flexDirection: "row" }}>
-            <Text style={{ fontSize: 16, fontWeight: "bold" }}>Assunto </Text>
+            <Text style={{ fontSize: 16, fontWeight: "bold" }}>{title} </Text>
             {important == true ? (
               <Animated.View style={animatedStyle}>
                 <Feather name="info" size={18} color="#d10300" />
               </Animated.View>
             ) : null}
           </View>
-          <Text>Comunidado</Text>
+          <Text>{description}</Text>
         </View>
         <View style={styles.infoComunicados}>
           <Text style={{ fontSize: 15, color: "black" }}>12:00</Text>

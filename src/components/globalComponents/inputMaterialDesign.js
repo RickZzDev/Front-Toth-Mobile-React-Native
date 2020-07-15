@@ -1,5 +1,6 @@
 import React from "react";
 import { TextField, OutlinedTextField } from "react-native-material-textfield";
+import { Value } from "react-native-reanimated";
 
 const inputMaterialDesign = ({
   label,
@@ -9,6 +10,7 @@ const inputMaterialDesign = ({
   tintColor = "#378CE4",
   textColor = "#378CE4",
   maxLength = 150,
+  onChangeFunciton = () => {},
 }) => {
   return (
     <OutlinedTextField
@@ -20,6 +22,9 @@ const inputMaterialDesign = ({
       baseColor={baseColor}
       maxLength={maxLength}
       multiline
+      onChange={(e) => {
+        onChangeFunciton(e.nativeEvent.text);
+      }}
       // labelFontSize={16}
       inputContainerStyle={{
         height: height,

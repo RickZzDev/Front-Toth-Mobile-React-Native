@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   View,
   Animated,
+  CheckBox,
 } from "react-native";
 import { TextField, OutlinedTextField } from "react-native-material-textfield";
 import { FontAwesome5, Feather } from "@expo/vector-icons";
@@ -14,6 +15,13 @@ import Input from "../../components/globalComponents/inputMaterialDesign";
 const CriarComunicado = () => {
   const [animatedHeight, setAnimated] = useState(new Animated.Value(1));
   const [animatedWidth, setAnimatedWidth] = useState(new Animated.Value(25));
+  const [geral, setGeral] = useState(false);
+  const [onlyAlunos, setOnlyAlunos] = useState(false);
+  const [onlyProfessores, setOnlyProfessores] = useState(false);
+  const [description, setDescription] = useState("");
+  const [title, setTitle] = useState("");
+
+  var comunicado = "";
 
   function desc() {
     Animated.timing(animatedHeight, {
@@ -39,6 +47,15 @@ const CriarComunicado = () => {
 
   function handleNavigateback() {
     navigate.goBack();
+  }
+
+  function teste(e) {
+    console.log(e);
+    console.log(comunicado);
+  }
+
+  function enviarComunicado() {
+    console.log(title);
   }
 
   const animatedStyle = {
@@ -78,6 +95,7 @@ const CriarComunicado = () => {
           <Feather name="paperclip" size={20} color="white" />
         </TouchableOpacity>
         <TouchableOpacity
+          onPress={enviarComunicado}
           style={{
             backgroundColor: "#378ce4",
             width: 35,
@@ -94,10 +112,21 @@ const CriarComunicado = () => {
           </Animated.View>
         </TouchableOpacity>
       </View>
-      <Input label="De" />
-      <Input label="Para" />
-      <Input label="Assunto" />
+      {/* <Input label="Para" /> */}
+      <Input label="Assunto" onChangeFunciton={teste} />
       <Input label="Comunicado" height={105} />
+      <View style={styles.divCheck}>
+        <Text style={styles.divCheckTxt}>Esse comunicado é para todos?</Text>
+        <CheckBox value={geral} onValueChange={setGeral} />
+      </View>
+      <View style={styles.divCheck}>
+        <Text style={styles.divCheckTxt}>Somente para professores?</Text>
+        <CheckBox value={onlyProfessores} onValueChange={setOnlyProfessores} />
+      </View>
+      <View style={styles.divCheck}>
+        <Text style={styles.divCheckTxt}>Somente para alunos?</Text>
+        <CheckBox value={onlyAlunos} onValueChange={setOnlyAlunos} />
+      </View>
     </View>
   );
 };
@@ -108,6 +137,20 @@ const styles = StyleSheet.create({
     // alignItems: "center",
     padding: 20,
     backgroundColor: "white",
+  },
+
+  divCheck: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingLeft: 8,
+    fontSize: 55,
+    color: "#378CE4",
+    justifyContent: "space-between",
+  },
+
+  divCheckTxt: {
+    fontSize: 18,
+    color: "#378CE4",
   },
 
   divBackOptions: {
