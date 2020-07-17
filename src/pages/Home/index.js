@@ -114,10 +114,18 @@ const Home = () => {
             text="Turmas"
             materialIconName="school"
           />
-          <MenuCard text="Comunicados" materialIconName="sms" />
-          <MenuCard text="Chamada" materialIconName="recent-actors" />
-          <MenuCard text="Notas" materialIconName="graphic-eq" />
-          <MenuCard text="Provas" materialIconName="event" />
+          <MenuCard
+            text="Comunicados"
+            materialIconName="sms"
+            data={routeParams.data.professor}
+          />
+          <MenuCard
+            text="Chamada"
+            materialIconName="recent-actors"
+            data={user}
+          />
+          <MenuCard text="Notas" materialIconName="graphic-eq" data={user} />
+          <MenuCard text="Provas" materialIconName="event" data={user} />
         </ScrollView>
       </View>
     </Animated.View>

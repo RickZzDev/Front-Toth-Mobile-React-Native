@@ -11,10 +11,12 @@ import {
 } from "react-native";
 import { Feather, FontAwesome5 } from "@expo/vector-icons";
 import CardComunicado from "../../components/ComunicadosComponents/cardComunicado";
-import { useNavigation } from "@react-navigation/native";
+import { useRoute, useNavigation } from "@react-navigation/native";
 import api from "../../services/api";
 
-const Comunicados = () => {
+const Comunicados = ({ turmas, data }) => {
+  const routes = useRoute();
+  const routeParams = routes.params;
   const navigate = useNavigation();
 
   function handleNavigateback() {
@@ -22,7 +24,7 @@ const Comunicados = () => {
   }
 
   function handleNavigateToCreate() {
-    navigate.navigate("CriarComunicado");
+    navigate.navigate("CriarComunicado", { data: routeParams.data });
   }
 
   const [comunicados, setComunicados] = useState([]);

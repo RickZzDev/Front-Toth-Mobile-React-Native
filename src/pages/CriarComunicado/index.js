@@ -5,23 +5,34 @@ import {
   TouchableOpacity,
   View,
   Animated,
-  CheckBox,
+  AsyncStorage,
+  ActivityIndicator,
 } from "react-native";
-import { TextField, OutlinedTextField } from "react-native-material-textfield";
 import { FontAwesome5, Feather } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import { useRoute, useNavigation } from "@react-navigation/native";
+import RNPickerSelect from "react-native-picker-select";
+import api from "../../services/api";
+import Modal from "react-native-modal";
+import Lottie from "lottie-react-native";
+import check from "../../animations/checkAnim.json";
 import Input from "../../components/globalComponents/inputMaterialDesign";
 
 const CriarComunicado = () => {
   const [animatedHeight, setAnimated] = useState(new Animated.Value(1));
   const [animatedWidth, setAnimatedWidth] = useState(new Animated.Value(25));
   const [geral, setGeral] = useState(false);
-  const [onlyAlunos, setOnlyAlunos] = useState(false);
-  const [onlyProfessores, setOnlyProfessores] = useState(false);
+  const [publicoAlvo, setPublicoAlvo] = useState("");
   const [description, setDescription] = useState("");
   const [title, setTitle] = useState("");
+  const routes = useRoute();
+  const routeParams = routes.params;
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [isModalVisibleSend, setModalVisibleSend] = useState(false);
+  const [enviado, setEnviado] = useState(false);
 
-  var comunicado = "";
+  const toggleModal = () => {
+    setModalVisible(!isModalVisible);
+  };
 
   function desc() {
     Animated.timing(animatedHeight, {
@@ -49,13 +60,41 @@ const CriarComunicado = () => {
     navigate.goBack();
   }
 
-  function teste(e) {
-    console.log(e);
-    console.log(comunicado);
+  function cleanUpFunction() {
+    setTitle("");
+    setDescription("");
+    setPublicoAlvo("");
   }
 
-  function enviarComunicado() {
-    console.log(title);
+  async function enviarComunicado() {
+    setModalVisible(true);
+    var obj = {
+      title: title,
+      description: description,
+      publicoAlvo: publicoAlvo,
+      professor: routeParams.data,
+    };
+
+    const token = await AsyncStorage.getItem("jwt_key");
+    const headers = { Authorization: "Bearer " + token };
+    await api
+      .post("comunicados/cadastro", obj, {
+        headers: headers,
+      })
+      .then((response) => {
+        setEnviado(true);
+        setTimeout(() => {
+          setModalVisible(false);
+        }, 3000);
+        setTimeout(() => {
+          setEnviado(false);
+        }, 3000);
+
+        cleanUpFunction();
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   }
 
   const animatedStyle = {
@@ -113,20 +152,48 @@ const CriarComunicado = () => {
         </TouchableOpacity>
       </View>
       {/* <Input label="Para" /> */}
-      <Input label="Assunto" onChangeFunciton={teste} />
-      <Input label="Comunicado" height={105} />
-      <View style={styles.divCheck}>
-        <Text style={styles.divCheckTxt}>Esse comunicado é para todos?</Text>
-        <CheckBox value={geral} onValueChange={setGeral} />
-      </View>
-      <View style={styles.divCheck}>
-        <Text style={styles.divCheckTxt}>Somente para professores?</Text>
-        <CheckBox value={onlyProfessores} onValueChange={setOnlyProfessores} />
-      </View>
-      <View style={styles.divCheck}>
-        <Text style={styles.divCheckTxt}>Somente para alunos?</Text>
-        <CheckBox value={onlyAlunos} onValueChange={setOnlyAlunos} />
-      </View>
+      <Input label="Assunto" value={title} onChangeFunciton={setTitle} />
+      <Input
+        label="Comunicado"
+        onChangeFunciton={setDescription}
+        height={105}
+        value={description}
+      />
+      <RNPickerSelect
+        placeholder={{ label: "Escolha o publico alvo" }}
+        onValueChange={(value) => {
+          setPublicoAlvo(value);
+        }}
+        items={[
+          { label: "Para todos", value: "Todos", key: 1 },
+          { label: "Somente alunos", value: "Alunos", key: 2 },
+          { label: "Somente professores", value: "Professores", key: 3 },
+        ]}
+      />
+
+      <Modal isVisible={isModalVisible}>
+        <View
+          style={{
+            height: 180,
+            width: "70%",
+            alignSelf: "center",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          {enviado == false ? (
+            <ActivityIndicator size="large" />
+          ) : (
+            <Lottie
+              resizeMode="contain"
+              autoSize
+              source={check}
+              autoPlay
+              loop
+            />
+          )}
+        </View>
+      </Modal>
     </View>
   );
 };
