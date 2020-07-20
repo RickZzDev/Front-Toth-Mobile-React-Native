@@ -1,0 +1,22 @@
+{
+  "expo": {
+    "name": "AppToth",
+    "slug": "AppToth",
+    "platforms": ["ios", "android", "web"],
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./src/assets/TOTH.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#378ce4"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": true
+    }
+  }
+}
