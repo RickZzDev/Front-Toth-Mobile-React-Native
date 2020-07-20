@@ -12,10 +12,6 @@ import MenuCard from "../../components/HomeComponents/menuCard";
 import BoxRetangular from "../../components/HomeComponents/boxRetangular";
 import { useRoute, useNavigation } from "@react-navigation/native";
 
-//Teste2
-//Teste
-//Teste2
-//Teste
 const Home = () => {
   const routes = useRoute();
   const routeParams = routes.params;
@@ -41,7 +37,7 @@ const Home = () => {
   const [user, setUser] = useState({});
 
   useEffect(() => {
-    setUser(routeParams.data.professor);
+    setUser(routeParams.data.aluno);
   }, []);
 
   const transfomrStyleX = {

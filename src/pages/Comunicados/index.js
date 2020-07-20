@@ -116,7 +116,7 @@ const Comunicados = ({ turmas, data }) => {
         <CardComunicado icon="biohazard" color="#98c414" />
         <CardComunicado icon="brain" color="#cf00cf" /> */}
           </ScrollView>
-          <TouchableOpacity
+          {/* <TouchableOpacity
             onPress={handleNavigateToCreate}
             style={{
               backgroundColor: "red",
@@ -128,7 +128,7 @@ const Comunicados = ({ turmas, data }) => {
             }}
           >
             <Feather name="plus" color="white" size={40}></Feather>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       )}
     </View>
