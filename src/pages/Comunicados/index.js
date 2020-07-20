@@ -27,7 +27,7 @@ const Comunicados = ({ turmas, data }) => {
     navigate.navigate("CriarComunicado", { data: routeParams.data });
   }
 
-  const [comunicados, setComunicados] = useState([]);
+  const [comunicados, setComunicados] = useState(null);
 
   useEffect(() => {
     async function getComunicados() {
@@ -35,7 +35,7 @@ const Comunicados = ({ turmas, data }) => {
 
       const headers = { Authorization: "Bearer " + token };
       await api
-        .get("comunicados/escola", {
+        .get("comunicados", {
           headers: headers,
         })
         .then((response) => {
@@ -51,7 +51,7 @@ const Comunicados = ({ turmas, data }) => {
 
   return (
     <View style={styles.container}>
-      {comunicados.length == 0 ? (
+      {comunicados == null ? (
         <View style={{ marginTop: "50%" }}>
           <ActivityIndicator size="large" color="#378ce4" />
         </View>

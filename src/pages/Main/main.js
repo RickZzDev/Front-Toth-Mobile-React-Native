@@ -31,7 +31,7 @@ export default function Main() {
     };
 
     api
-      .post("professores/autenticacao", dados)
+      .post("alunos/autenticacao", dados)
       .then((response) => {
         response.status == 200
           ? sucessLogin(response.data)

@@ -119,11 +119,11 @@ const Home = () => {
             materialIconName="sms"
             data={routeParams.data.professor}
           />
-          <MenuCard
+          {/* <MenuCard
             text="Chamada"
             materialIconName="recent-actors"
             data={user}
-          />
+          /> */}
           <MenuCard text="Notas" materialIconName="graphic-eq" data={user} />
           <MenuCard text="Provas" materialIconName="event" data={user} />
         </ScrollView>
