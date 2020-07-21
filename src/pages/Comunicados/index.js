@@ -13,6 +13,7 @@ import { Feather, FontAwesome5 } from "@expo/vector-icons";
 import CardComunicado from "../../components/ComunicadosComponents/cardComunicado";
 import { useRoute, useNavigation } from "@react-navigation/native";
 import api from "../../services/api";
+import LottieView from "lottie-react-native";
 
 const Comunicados = ({ turmas, data }) => {
   const routes = useRoute();
@@ -27,7 +28,7 @@ const Comunicados = ({ turmas, data }) => {
     navigate.navigate("CriarComunicado", { data: routeParams.data });
   }
 
-  const [comunicados, setComunicados] = useState([]);
+  const [comunicados, setComunicados] = useState([0]);
 
   useEffect(() => {
     async function getComunicados() {
@@ -51,9 +52,16 @@ const Comunicados = ({ turmas, data }) => {
 
   return (
     <View style={styles.container}>
-      {comunicados.length == 0 ? (
-        <View style={{ marginTop: "50%" }}>
+      {comunicados[0] == 0 ? (
+        <View
+          style={{
+            marginTop: 300,
+            marginLeft: "auto",
+            marginRight: "auto",
+          }}
+        >
           <ActivityIndicator size="large" color="#378ce4" />
+          {/* <LottieView autoPlay loop source={require("./loading.json")} /> */}
         </View>
       ) : (
         <View style={{ alignItems: "center" }}>

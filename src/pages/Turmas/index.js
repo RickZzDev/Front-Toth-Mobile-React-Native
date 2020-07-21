@@ -23,7 +23,7 @@ const Turma = () => {
   }
 
   useEffect(() => {
-    setTurmas(routeParams.turmas);
+    setTurmas(routeParams.data);
   }, []);
 
   return (
@@ -46,7 +46,7 @@ const Turma = () => {
             flexWrap: "wrap",
           }}
         >
-          {routeParams.turmas.map((turma, index) => (
+          {routeParams.data.map((turma, index) => (
             // <Text>{aula.aulas[0].materia.nome}</Text>
             <CardTurma
               turno={turma.turno}

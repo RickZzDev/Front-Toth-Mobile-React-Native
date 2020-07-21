@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Text,
   StyleSheet,
@@ -7,13 +7,21 @@ import {
   Image,
   TextInput,
   ScrollView,
+  AsyncStorage,
+  ActivityIndicator,
 } from "react-native";
 import { Feather, FontAwesome5 } from "@expo/vector-icons";
 import CardAtividades from "../../components/atividadesComponentes/index";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
+import api from "../../services/api";
+import LottieView from "lottie-react-native";
 
 const Atividades = () => {
   const navigate = useNavigation();
+
+  const routes = useRoute();
+  const routeParams = routes.params;
+  const [atividades, setAtividades] = useState([0]);
 
   function handleNavigateback() {
     navigate.goBack();
@@ -22,6 +30,26 @@ const Atividades = () => {
   function handleNavigateToCreate() {
     navigate.navigate("CriarAtividade");
   }
+
+  useEffect(() => {
+    async function getAtividades() {
+      const token = await AsyncStorage.getItem("jwt_key");
+
+      const headers = { Authorization: "Bearer " + token };
+      await api
+        .get(`atividades/professor/${routeParams.data}`, {
+          headers: headers,
+        })
+        .then((response) => {
+          setAtividades(response.data);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
+
+    getAtividades();
+  });
 
   return (
     <View style={styles.container}>
@@ -53,39 +81,22 @@ const Atividades = () => {
           // flexDirection: "row",
         }}
       >
-        <CardAtividades
-          icon="flask"
-          nomeMateria="Física"
-          important={true}
-          color="#00e6d2"
-        />
-        <CardAtividades icon="atom" nomeMateria="Quimica" color="#7519ff" />
-        <CardAtividades
-          icon="globe-africa"
-          nomeMateria="Geografia"
-          color="#76de00"
-        />
-        <CardAtividades
-          icon="language"
-          nomeMateria="Português"
-          color="#f2b600"
-        />
-        <CardAtividades
-          icon="hourglass"
-          nomeMateria="História"
-          color="#007bff"
-        />
-        <CardAtividades
-          icon="calculator"
-          nomeMateria="Matematica"
-          color="#c71400"
-        />
-        <CardAtividades
-          icon="biohazard"
-          nomeMateria="Biologia"
-          color="#98c414"
-        />
-        <CardAtividades icon="brain" nomeMateria="Filosofia" color="#cf00cf" />
+        {atividades[0] == 0 ? (
+          <View style={{ backgroundColor: "white", height: 450 }}>
+            <LottieView autoPlay loop source={require("./loading.json")} />
+          </View>
+        ) : (
+          atividades.map((i, index) => (
+            <CardAtividades
+              turma={i.turmas[0].ano.ano + "-" + i.turmas[0].identificador}
+              nome={i.nome}
+              key={index}
+              // icon="language"
+              nomeMateria={i.aulas.materia.nome}
+              dataEntrega={i.dataEntrega}
+            />
+          ))
+        )}
       </ScrollView>
       <TouchableOpacity
         onPress={handleNavigateToCreate}

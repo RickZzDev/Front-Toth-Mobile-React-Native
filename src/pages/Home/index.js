@@ -135,7 +135,11 @@ const Home = () => {
           </Animated.View>
           <View style={styles.menuCardsContainer}>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-              <MenuCard text="Atividades" materialIconName="assignment" />
+              <MenuCard
+                idProfessor={routeParams.data.professor.id}
+                text="Atividades"
+                materialIconName="assignment"
+              />
               <MenuCard
                 dataTurmas={turmas}
                 text="Turmas"
