@@ -111,7 +111,6 @@ const Comunicados = ({ turmas, data }) => {
                 key={index}
                 icon="home"
                 important={true}
-                color="#fcba03"
                 title={item.title}
                 description={item.description}
               />
