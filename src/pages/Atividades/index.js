@@ -28,7 +28,7 @@ const Atividades = () => {
   }
 
   function handleNavigateToCreate() {
-    navigate.navigate("CriarAtividade");
+    navigate.navigate("CriarAtividade", { id: routeParams.data });
   }
 
   useEffect(() => {
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
   textFilter: {
     width: "80%",
     minHeight: "6%",
-    color: "black",
+    color: "#000000",
   },
 });
 

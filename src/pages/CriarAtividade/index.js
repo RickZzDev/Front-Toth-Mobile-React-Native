@@ -10,14 +10,17 @@ import {
 } from "react-native";
 import { TextField } from "react-native-material-textfield";
 import { FontAwesome5, Feather } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { Input as Input2 } from "react-native-elements";
 import RNPickerSelect from "react-native-picker-select";
 import CheckBox from "@react-native-community/checkbox";
 import SectionedMultiSelect from "react-native-sectioned-multi-select";
 import api from "../../services/api";
+import LottieView from "lottie-react-native";
 
 const criarAtividade = () => {
+  const routes = useRoute();
+  const routeParams = routes.params;
   const navigate = useNavigation();
   const [animatedHeight, setAnimated] = useState(new Animated.Value(1));
   const [animatedTranslate, setAnimatedTranslate] = useState(
@@ -32,6 +35,8 @@ const criarAtividade = () => {
   const [idTurmas, setIdTurmas] = useState([]);
   const [dataEntrega, setDataEntrega] = useState("");
   const [turmas, setTurmas] = useState([{ turma: "turma" }]);
+  const [aulas, setAulas] = useState("");
+  const [sending, setSending] = useState(false);
   const [animatedStyle, setAnimatedStyle] = useState({
     transform: [
       {
@@ -52,13 +57,30 @@ const criarAtividade = () => {
             obj.push({ name: i.ano + i.identificador, id: i.id });
             setTurmas(obj);
           });
-          // console.log(turmas);
         })
         .catch((e) => {
           console.log(e);
         });
     }
     getTurmas();
+
+    async function getAulas() {
+      const token = await AsyncStorage.getItem("jwt_key");
+
+      const headers = { Authorization: "Bearer " + token };
+      await api
+        .get(`aulas/professores/${routeParams.id}`, {
+          headers: headers,
+        })
+        .then((response) => {
+          setAulas(response.data[0].id);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
+
+    getAulas();
   }, []);
 
   const itemsArray = [
@@ -93,7 +115,7 @@ const criarAtividade = () => {
   function acrescentarQuestao(tipoQuestao) {
     tipoQuestao == undefined
       ? alert("Favor escolher um tipo de atividade")
-      : tipoQuestao != "Dissertativa"
+      : tipoQuestao != "DISSERTATIVA"
       ? setQuestoes([
           ...questoes,
           {
@@ -123,7 +145,6 @@ const criarAtividade = () => {
     obj[index].enunciado = enunciado;
 
     setQuestoes(obj);
-    console.log(questoes);
   }
 
   function setMultiEscolha(event, index, item) {
@@ -152,12 +173,9 @@ const criarAtividade = () => {
     }
 
     setQuestoes(obj);
-
-    console.log(questoes);
   }
 
   function setCorrectAnswer(index, letraQuestao) {
-    console.log("chamou");
     var obj = questoes;
     switch (letraQuestao) {
       case "A":
@@ -179,12 +197,11 @@ const criarAtividade = () => {
     }
 
     setQuestoes(obj);
-    console.log(questoes);
   }
 
   var teste = () => {
     return questoes.map((item, index) =>
-      item.tipo == "MultiEscolha" ? (
+      item.tipo == "MULTIPLA_ESCOLHA" ? (
         <Animated.View
           key={index}
           style={{
@@ -310,16 +327,16 @@ const criarAtividade = () => {
               }}
             />
             <Text>B</Text>
-            <CheckBox onPress={() => setCorrectAnswer(index, "B")} />
+            <CheckBox onValueChange={() => setCorrectAnswer(index, "B")} />
             <Text>C</Text>
-            <CheckBox onPress={() => setCorrectAnswer(index, "C")} />
+            <CheckBox onValueChange={() => setCorrectAnswer(index, "C")} />
             <Text>D</Text>
-            <CheckBox onPress={() => setCorrectAnswer(index, "D")} />
+            <CheckBox onValueChange={() => setCorrectAnswer(index, "D")} />
           </View>
 
           {/* <Input label="Resposta" style={{ martinTop: 5 }} /> */}
         </Animated.View>
-      ) : item.tipo == "Dissertativa" ? (
+      ) : item.tipo == "DISSERTATIVA" ? (
         <Animated.View
           key={index}
           style={{
@@ -378,8 +395,38 @@ const criarAtividade = () => {
     setItems(item);
   }
 
-  return (
+  async function sendAtividade() {
+    setSending(true);
+    const token = await AsyncStorage.getItem("jwt_key");
+    const headers = { Authorization: "Bearer " + token };
+
+    var obj = {
+      nome: nomeAtividade,
+      aulas: aulas,
+      dataEntrega: dataEntrega,
+      questoes: questoes,
+      id_turma: idTurmas,
+    };
+
+    await api
+      .post("atividades/cadastrar", obj, {
+        headers: headers,
+      })
+      .then((response) => {
+        navigate.navigate("Atividades", { id: routeParams.id });
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
+
+  return sending ? (
+    <View style={{ flex: 1 }}>
+      <LottieView autoPlay loop source={require("./loading.json")} />
+    </View>
+  ) : (
     <View style={styles.container}>
+      {/* <LottieView autoPlay loop source={require("./loading.json")} /> */}
       <View style={styles.divBackOptions}>
         <TouchableOpacity onPress={handleNavigateback}>
           <FontAwesome5
@@ -421,7 +468,7 @@ const criarAtividade = () => {
               name="send"
               size={18}
               color="white"
-              onPress={() => console.log(questoes)}
+              onPress={() => sendAtividade()}
             />
           </Animated.View>
         </TouchableOpacity>
@@ -429,12 +476,12 @@ const criarAtividade = () => {
       <Input2
         placeholder="Nome da atividade"
         value={nomeAtividade}
-        onChange={(event) => setNomeAtividade(event)}
+        onChange={(event) => setNomeAtividade(event.nativeEvent.text)}
       />
       <Input2
         placeholder="yyyy/mm/dd"
         value={dataEntrega}
-        onChange={(event) => setDataEntrega(event)}
+        onChange={(event) => setDataEntrega(event.nativeEvent.text)}
       />
       <View>
         <SectionedMultiSelect
@@ -459,8 +506,8 @@ const criarAtividade = () => {
           show(value);
         }}
         items={[
-          { label: "Multipla escolha", value: "MultiEscolha", key: 1 },
-          { label: "Dissertativa", value: "Dissertativa", key: 2 },
+          { label: "Multipla escolha", value: "MULTIPLA_ESCOLHA", key: 1 },
+          { label: "Dissertativa", value: "DISSERTATIVA", key: 2 },
         ]}
       />
       {questoes.length == 0 && (
@@ -499,6 +546,11 @@ const criarAtividade = () => {
       </TouchableOpacity>
     </View>
   );
+  // : (
+  //   <View style={{ flex: 1, backgroundColor: "green" }}>
+  //     <LottieView autoPlay loop source={require("./teste.json")} />
+  //   </View>
+  // );
 };
 
 const styles = StyleSheet.create({

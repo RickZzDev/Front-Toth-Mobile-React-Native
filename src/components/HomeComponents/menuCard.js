@@ -11,7 +11,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 
 const MenuCard = ({
   text,
-  materialIconName,
+  materialIconName = "calculator",
   dataTurmas = null,
   idProfessor = null,
 }) => {
@@ -42,9 +42,10 @@ const MenuCard = ({
 
   return (
     <TouchableOpacity
-      onPress={() =>
-        handleNavigateTo(text, dataTurmas != null ? dataTurmas : idProfessor)
-      }
+      onPress={() => {
+        console.log(idProfessor);
+        handleNavigateTo(text, dataTurmas != null ? dataTurmas : idProfessor);
+      }}
       activeOpacity={0.6}
       style={{ ...styles.menuCards, ...transformStyleY }}
     >
