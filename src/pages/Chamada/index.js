@@ -28,12 +28,12 @@ const Chamada = () => {
   const [sizeIconX, setSizeX] = useState(new Animated.Value(40));
   const [sizeIconC, setSizeC] = useState(40);
   const [turmas, setTurmas] = useState([]);
-  const [presente, setPresente] = useState([]);
+  const [presente, setPresente] = useState([true]);
   const [items, setItems] = useState([]);
+  const [faltas, setFaltas] = useState([]);
   const [loadingTurmas, setLoadingTurmas] = useState(true);
   const [alunos, setAlunos] = useState([]);
-
-  var array = [{ aluno: "fulando", id: 1 }];
+  const [searching, setSearching] = useState(false);
 
   const itemsArray = [
     {
@@ -44,12 +44,27 @@ const Chamada = () => {
     },
   ];
 
+  async function getAlunos(id) {
+    var obj = [];
+    const token = await AsyncStorage.getItem("jwt_key");
+    const headers = { Authorization: "Bearer " + token };
+
+    await api
+      .get(`alunos/turma/${id}/lazy`, { headers: headers })
+      .then((response) => {
+        setAlunos(response.data);
+        setSearching(false);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
+
   useEffect(() => {
     async function getTurmas() {
       var obj = [];
       const token = await AsyncStorage.getItem("jwt_key");
       const headers = { Authorization: "Bearer " + token };
-
       await api
         .get("turmas/lazy", { headers: headers })
         .then((response) => {
@@ -63,66 +78,122 @@ const Chamada = () => {
           console.log(e);
         });
     }
+
     getTurmas();
-    // var i = 0;
-    // for (i = 0; i <= array.length; i++) {
-    //   setPresente((presente) => [...presente, true]);
-    // }
   }, []);
 
   function onSelectedItemsChange(item) {
     setItems(item);
+    setSearching(true);
+    getAlunos(item[0]);
   }
 
-  function selectIcon(icon, id) {
+  function selectIcon(icon, index, idAluno) {
     let newArray = [...presente];
-    newArray[id] = !newArray[id];
+    // console.log(newArray[index]);
+    newArray[index] = newArray[index] == undefined ? false : !newArray[index];
+    // console.log(newArray);
+
     setPresente(newArray);
+    newArray[index] == false
+      ? putFaltas(idAluno)
+      : removeFaltas(faltas.indexOf(idAluno));
+  }
+
+  function putFaltas(idAuno) {
+    // console.log(idAuno);
+    var array = faltas;
+    // console.log(faltas);
+    array.push(idAuno);
+    setFaltas(array);
+    // console.log(array);
+  }
+
+  function removeFaltas(index) {
+    // console.log(index);
+    index == 0 ? faltas.shift() : faltas.splice(0, index);
+    setFaltas(faltas);
+    // console.log(faltas);
   }
 
   function handleNavigateback() {
     navigate.goBack();
   }
 
+  function getCurrentDate() {
+    var date = new Date();
+    return date.getFullYear() + "-" + date.getMonth() + "-" + date.getDay();
+  }
+
+  function enviarChamada() {
+    var obj = {
+      diaChamada: getCurrentDate(),
+      idTurma: turmas[0].id,
+      idAlunos: faltas,
+    };
+    setSearching("sending");
+    setTimeout(() => {
+      setSearching("sended");
+    }, 5000);
+    console.log(obj);
+  }
+
   return (
     <View style={styles.container}>
       {/* <LottieView autoPlay loop source={require("./rocket.json")} /> */}
       <View style={{ flex: 1 }}>
-        <View style={styles.divBackOptions}>
-          <TouchableOpacity onPress={handleNavigateback}>
-            <FontAwesome5
-              name="chevron-left"
-              style={{ alignSelf: "center" }}
-              color="#378CE4"
-              size={18}
+        {searching == "sending" ? null : (
+          <View>
+            <View style={styles.divBackOptions}>
+              <TouchableOpacity onPress={handleNavigateback}>
+                <FontAwesome5
+                  name="chevron-left"
+                  style={{ alignSelf: "center" }}
+                  color="#378CE4"
+                  size={18}
+                />
+              </TouchableOpacity>
+              <Text style={styles.nomeTurma}>Faça sua Chamada :)</Text>
+            </View>
+            <SectionedMultiSelect
+              items={itemsArray}
+              uniqueKey="id"
+              subKey="children"
+              selectText="Selecione as turmas"
+              showDropDowns={false}
+              readOnlyHeadings={true}
+              hideSearch={true}
+              single
+              confirmText="Confirmar"
+              onConfirm={() => {}}
+              onSelectedItemsChange={onSelectedItemsChange}
+              selectedItems={items}
+              loading={loadingTurmas}
+              loadingComponent={
+                <ActivityIndicator style={{ marginTop: 150 }} size="large" />
+              }
             />
-          </TouchableOpacity>
-          <Text style={styles.nomeTurma}>Faça sua Chamada :)</Text>
-        </View>
+          </View>
+        )}
 
-        <SectionedMultiSelect
-          items={itemsArray}
-          uniqueKey="id"
-          subKey="children"
-          selectText="Selecione as turmas"
-          showDropDowns={false}
-          readOnlyHeadings={true}
-          hideSearch={true}
-          single
-          confirmText="Confirmar"
-          onConfirm={() => {}}
-          onSelectedItemsChange={onSelectedItemsChange}
-          selectedItems={items}
-          loading={loadingTurmas}
-          loadingComponent={
-            <ActivityIndicator style={{ marginTop: 150 }} size="large" />
-          }
-        />
-        {alunos.length == 0 ? (
-          <LottieView autoPlay loop source={require("./rocket.json")} />
+        {searching == true ? (
+          <LottieView autoPlay loop source={require("./rocket.json")} key={1} />
+        ) : searching == "sending" ? (
+          <View style={{ flex: 1 }}>
+            <LottieView autoPlay loop source={require("./send.json")} key={2} />
+          </View>
+        ) : searching == "sended" ? (
+          <View style={{ flex: 1 }}>
+            <LottieView
+              autoPlay
+              loop
+              source={require("./check.json")}
+              key={3}
+            />
+          </View>
         ) : (
           <ScrollView showsVerticalScrollIndicator={false}>
-            {array.map((item, index) => (
+            {alunos.map((item, index) => (
               <View style={styles.caixaChamada} key={item.id}>
                 <View style={styles.cardChamada}>
                   <View style={styles.alunoImg}>
@@ -132,15 +203,13 @@ const Chamada = () => {
                     />
                   </View>
                   <View style={styles.infoAluno}>
-                    <Text style={styles.nomeAluno}>
-                      Matheus Borges da Silva
-                    </Text>
-                    <Text style={styles.anoAluno}>8 ano A</Text>
+                    <Text style={styles.nomeAluno}>{item.nome}</Text>
+                    <Text style={styles.anoAluno}>Turma {turmas[0].name}</Text>
                   </View>
                   <View style={styles.boxAcoes}>
                     <View style={styles.boxIcons}>
                       <TouchableOpacity
-                        onPress={() => selectIcon("x", index)}
+                        onPress={() => selectIcon("x", index, item.id)}
                         style={styles.iconX}
                       >
                         <FontAwesome5
@@ -162,7 +231,7 @@ const Chamada = () => {
                     </View>
                     <View style={styles.boxIcons}>
                       <TouchableOpacity
-                        onPress={() => selectIcon("c", index)}
+                        onPress={() => selectIcon("c", index, item.id)}
                         style={styles.iconCorrect}
                       >
                         <FontAwesome5
@@ -188,8 +257,11 @@ const Chamada = () => {
             ))}
           </ScrollView>
         )}
-        {alunos.length == 0 ? null : (
-          <TouchableOpacity style={styles.enviarChamadaBtn}>
+        {alunos.length == 0 || searching == "sending" ? null : (
+          <TouchableOpacity
+            style={styles.enviarChamadaBtn}
+            onPress={enviarChamada}
+          >
             <Text style={styles.btnTxt}>Enviar chamada</Text>
             <Feather name="send" color="white" size={20} />
           </TouchableOpacity>
