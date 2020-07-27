@@ -28,11 +28,7 @@ const Comunicados = ({ turmas, data }) => {
     navigate.navigate("CriarComunicado", { data: routeParams.data });
   }
 
-<<<<<<< HEAD
-  const [comunicados, setComunicados] = useState(null);
-=======
   const [comunicados, setComunicados] = useState([0]);
->>>>>>> master
 
   useEffect(() => {
     async function getComunicados() {
