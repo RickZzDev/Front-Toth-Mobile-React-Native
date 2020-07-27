@@ -9,7 +9,7 @@ import {
   AsyncStorage,
 } from "react-native";
 import { FontAwesome5, Feather, Ionicons } from "@expo/vector-icons";
-import { Calendar, LocaleConfig } from "react-native-calendars";
+import { Calendar, LocaleConfig, Agenda } from "react-native-calendars";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import lockConfig from "../../services/locales.json";
 import Input from "../../components/globalComponents/inputMaterialDesign";
@@ -26,23 +26,21 @@ const Provas = () => {
   const [idAula, setIdAula] = useState();
 
   useEffect(() => {
-    async function getAulas() {
-      const token = await AsyncStorage.getItem("jwt_key");
-
-      const headers = { Authorization: "Bearer " + token };
-      await api
-        .get(`aulas/professores/${route.params.data.id}`, {
-          headers: headers,
-        })
-        .then((response) => {
-          setIdAula(response.data[0].id);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    }
-
-    getAulas();
+    // async function getAulas() {
+    //   const token = await AsyncStorage.getItem("jwt_key");
+    //   const headers = { Authorization: "Bearer " + token };
+    //   await api
+    //     .get(`aulas/professores/${route.params.data.id}`, {
+    //       headers: headers,
+    //     })
+    //     .then((response) => {
+    //       setIdAula(response.data[0].id);
+    //     })
+    //     .catch((e) => {
+    //       console.log(e);
+    //     });
+    // }
+    // getAulas();
   });
 
   function handleNavigateback() {
@@ -123,39 +121,140 @@ const Provas = () => {
       enabled
     >
       <View style={{ flex: 1, backgroundColor: "white", padding: 20 }}>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <View
-            style={{
-              flexDirection: "row",
-              width: "100%",
-              justifyContent: "space-between",
-              marginBottom: 12,
-            }}
-          >
-            <TouchableOpacity onPress={() => handleNavigateback()}>
-              <FontAwesome5
-                name="chevron-left"
-                style={{ alignSelf: "center" }}
-                color="#378ce4"
-                size={20}
-              />
-            </TouchableOpacity>
+        {/* <ScrollView showsVerticalScrollIndicator={false}> */}
+        <View
+          style={{
+            flexDirection: "row",
+            width: "100%",
+            justifyContent: "space-between",
+            marginBottom: 12,
+          }}
+        >
+          <TouchableOpacity onPress={() => handleNavigateback()}>
+            <FontAwesome5
+              name="chevron-left"
+              style={{ alignSelf: "center" }}
+              color="#378ce4"
+              size={20}
+            />
+          </TouchableOpacity>
 
-            <Text style={styles.title}>Marcar datas avaliativas</Text>
-            <TouchableOpacity
-              title="Show modal"
-              style={{
-                width: 26,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-              onPress={toggleModal}
-            >
-              <Feather name="help-circle" color="#378ce4" size={20} />
-            </TouchableOpacity>
-          </View>
-          <View>
-            <Calendar
+          <Text style={styles.title}>Marcar datas avaliativas</Text>
+          <TouchableOpacity
+            title="Show modal"
+            style={{
+              width: 26,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            onPress={toggleModal}
+          >
+            <Feather name="help-circle" color="#378ce4" size={20} />
+          </TouchableOpacity>
+        </View>
+        <View style={{ flex: 1, backgroundColor: "red" }}>
+          <Agenda
+            items={{
+              "2020-08-20": [{ name: { teste: "1", t2: 4 }, height: 80 }],
+              "2012-05-23": [{ name: "item 2 - any js object", height: 80 }],
+              "2012-05-24": [],
+              "2012-05-25": [
+                { name: "item 3 - any js object" },
+                { name: "any js object" },
+              ],
+            }}
+            // renderItem={(item, firstItemInDay) => {
+            //   return (
+            //     <View>
+            //       <Text>{item.name.teste}</Text>
+            //     </View>
+            //   );
+            // }}
+            renderEmptyDate={() => {
+              return (
+                <View>
+                  <Text>EXPMT</Text>
+                </View>
+              );
+            }}
+            renderEmptyData={(day) => {
+              return (
+                <View
+                  style={{
+                    flex: 1,
+                    alignItems: "center",
+                  }}
+                >
+                  <Text>Nada marcado para esse dia</Text>
+                  <Text>Tire um tempo saudável para descansar</Text>
+                  <Text>E claro</Text>
+                  <Text>Rever algo que você ainda</Text>
+                  <Text>Não tenha entendido por completo</Text>
+                  <LottieView
+                    key={2}
+                    loop
+                    autoPlay
+                    source={require("./s2.json")}
+                  />
+                </View>
+              );
+            }}
+            renderDay={(day, item) => {
+              return (
+                <View
+                  style={{
+                    width: "100%",
+                    minHeight: 250,
+                    padding: 16,
+                  }}
+                >
+                  <View
+                    style={{
+                      // backgroundColor: "yellow",
+                      // padding: 18,
+                      flexDirection: "row",
+                      justifyContent: "flex-start",
+                    }}
+                  >
+                    <View style={{ marginRight: 25 }}>
+                      <Text style={{ fontSize: 26, color: "grey" }}>
+                        {day.day}
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        backgroundColor: "white",
+                        width: "75%",
+                        borderRadius: 10,
+                        paddingHorizontal: 10,
+                        paddingVertical: 10,
+                      }}
+                    >
+                      <Text style={{ fontSize: 18, color: "grey" }}>
+                        Conteudo: Conteudo tal
+                      </Text>
+                      <Text style={{ fontSize: 18, color: "grey" }}>
+                        Atividades: Atividade tal
+                      </Text>
+                      <Text style={{ fontSize: 18, color: "grey" }}>
+                        Materia: materia tal
+                      </Text>
+                      <Text style={{ fontSize: 18, color: "grey" }}>
+                        Peso: peso tal
+                      </Text>
+                      <Text style={{ fontSize: 18, color: "grey" }}>
+                        Materia: materia tal
+                      </Text>
+                    </View>
+                  </View>
+                  {/* <Text>{day.day}</Text> */}
+                </View>
+              );
+            }}
+
+            // Agenda theme
+          ></Agenda>
+          {/* <Calendar
               markedDates={markedDate}
               theme={{
                 backgroundColor: "#ffffff",
@@ -195,9 +294,9 @@ const Provas = () => {
 
                 setDiaProva(day.dateString);
               }}
-            />
-          </View>
-          <View style={{ marginTop: 15, backgroundColor: "white" }}>
+            /> */}
+        </View>
+        {/* <View style={{ marginTop: 15, backgroundColor: "white" }}>
             <Input label="Conteudos" onChangeFunciton={setData} height={60} />
             <Input
               label="Peso da prova"
@@ -210,9 +309,9 @@ const Provas = () => {
               onChangeFunciton={setData}
               height={60}
             />
-          </View>
+          </View> */}
 
-          <Modal isVisible={isModalVisible}>
+        {/* <Modal isVisible={isModalVisible}>
             <View style={{ flex: 1 }}>
               <View
                 style={{
@@ -269,12 +368,12 @@ const Provas = () => {
                 <Feather name="x-circle" color="#378ce4" size={20} />
               </TouchableOpacity>
             </View>
-          </Modal>
-          <TouchableOpacity style={styles.enviarProva} onPress={enviarProva}>
+          </Modal> */}
+        {/* <TouchableOpacity style={styles.enviarProva} onPress={enviarProva}>
             <Text style={styles.btnTxt}>Enviar prova</Text>
             <Feather name="send" color="white" size={20} />
-          </TouchableOpacity>
-        </ScrollView>
+          </TouchableOpacity> */}
+        {/* </ScrollView> */}
       </View>
     </KeyboardAvoidingView>
   );
