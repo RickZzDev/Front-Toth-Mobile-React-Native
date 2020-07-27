@@ -160,7 +160,11 @@ const Home = () => {
                 materialIconName="graphic-eq"
                 data={user}
               />
-              <MenuCard text="Provas" materialIconName="event" data={user} />
+              <MenuCard
+                text="Provas"
+                materialIconName="event"
+                idProfessor={routeParams.data.professor}
+              />
             </ScrollView>
           </View>
         </Animated.View>

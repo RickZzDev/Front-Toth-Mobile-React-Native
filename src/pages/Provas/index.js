@@ -6,17 +6,44 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   Button,
+  AsyncStorage,
 } from "react-native";
 import { FontAwesome5, Feather, Ionicons } from "@expo/vector-icons";
 import { Calendar, LocaleConfig } from "react-native-calendars";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import lockConfig from "../../services/locales.json";
 import Input from "../../components/globalComponents/inputMaterialDesign";
 import { ScrollView } from "react-native-gesture-handler";
 import Modal from "react-native-modal";
+import LottieView from "lottie-react-native";
+
+import api from "../../services/api";
 
 const Provas = () => {
   const navigate = useNavigation();
+
+  const route = useRoute();
+  const [idAula, setIdAula] = useState();
+
+  useEffect(() => {
+    async function getAulas() {
+      const token = await AsyncStorage.getItem("jwt_key");
+
+      const headers = { Authorization: "Bearer " + token };
+      await api
+        .get(`aulas/professores/${route.params.data.id}`, {
+          headers: headers,
+        })
+        .then((response) => {
+          setIdAula(response.data[0].id);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
+
+    getAulas();
+  });
 
   function handleNavigateback() {
     navigate.goBack();
@@ -28,13 +55,67 @@ const Provas = () => {
     setModalVisible(!isModalVisible);
   };
   const [markedDate, setMarkdedDate] = useState({});
+  const [conteudo, setConteudos] = useState("");
+  const [pesoProva, setPesoProva] = useState("");
+  const [diaProva, setDiaProva] = useState("");
+  const [atividadesParaEstudar, setAtividadesParaEstudar] = useState({});
+  const [sending, setSending] = useState("");
+
+  async function enviarProva() {
+    setSending("sending");
+    const token = await AsyncStorage.getItem("jwt_key");
+
+    const headers = { Authorization: "Bearer " + token };
+
+    var obj = {
+      conteudo: conteudo,
+      pesoProva: pesoProva,
+      atividadesParaEstudar: atividadesParaEstudar,
+      id_aula: idAula,
+      diaProva: diaProva,
+    };
+
+    await api
+      .post("provas/cadastro", obj, {
+        headers: headers,
+      })
+      .then((response) => {
+        navigate.navigate("SucessPage");
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+    console.log(obj);
+  }
+
+  function setData(text, label) {
+    switch (label) {
+      case "Conteudos":
+        setConteudos(text);
+        break;
+      case "Peso da prova":
+        setPesoProva(text);
+        break;
+      case "Atividades para estudar":
+        setAtividadesParaEstudar(text);
+        break;
+    }
+    // setProva({
+    //   ...prova,
+    //   label: value
+    // });
+  }
 
   //Configs de calendario
   LocaleConfig.locales["br"] = lockConfig;
 
   LocaleConfig.defaultLocale = "br";
 
-  return (
+  return sending == "sending" ? (
+    <View style={{ flex: 1, backgroundColor: "white", padding: 20 }}>
+      <LottieView autoPlay loop key={1} source={require("./4.json")} />
+    </View>
+  ) : (
     <KeyboardAvoidingView
       keyboardVerticalOffset={Platform.OS === "ios" ? "padding" : "height"}
       style={{ flex: 1 }}
@@ -78,6 +159,7 @@ const Provas = () => {
               markedDates={markedDate}
               theme={{
                 backgroundColor: "#ffffff",
+
                 // calendarBackground: "#d6d4d4",
                 textSectionTitleColor: "black",
                 selectedDayTextColor: "#ffffff",
@@ -110,13 +192,24 @@ const Provas = () => {
                 setMarkdedDate({
                   ...markedDate,
                 });
+
+                setDiaProva(day.dateString);
               }}
             />
           </View>
           <View style={{ marginTop: 15, backgroundColor: "white" }}>
-            <Input label="Conteudos" height={60} />
-            <Input label="Peso da prova" keyboardType="phone-pad" height={60} />
-            <Input label="Atividades para estudar" height={60} />
+            <Input label="Conteudos" onChangeFunciton={setData} height={60} />
+            <Input
+              label="Peso da prova"
+              onChangeFunciton={setData}
+              keyboardType="phone-pad"
+              height={60}
+            />
+            <Input
+              label="Atividades para estudar"
+              onChangeFunciton={setData}
+              height={60}
+            />
           </View>
 
           <Modal isVisible={isModalVisible}>
@@ -177,7 +270,7 @@ const Provas = () => {
               </TouchableOpacity>
             </View>
           </Modal>
-          <TouchableOpacity style={styles.enviarProva}>
+          <TouchableOpacity style={styles.enviarProva} onPress={enviarProva}>
             <Text style={styles.btnTxt}>Enviar prova</Text>
             <Feather name="send" color="white" size={20} />
           </TouchableOpacity>

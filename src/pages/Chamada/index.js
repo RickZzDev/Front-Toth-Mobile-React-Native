@@ -34,6 +34,7 @@ const Chamada = () => {
   const [loadingTurmas, setLoadingTurmas] = useState(true);
   const [alunos, setAlunos] = useState([]);
   const [searching, setSearching] = useState(false);
+  const navigation = useNavigation();
 
   const itemsArray = [
     {
@@ -122,20 +123,31 @@ const Chamada = () => {
 
   function getCurrentDate() {
     var date = new Date();
-    return date.getFullYear() + "-" + date.getMonth() + "-" + date.getDay();
+    var month = date.getMonth();
+    parseInt(month) < 10 ? (month = `0${month}`) : (month = month);
+    return date.getFullYear() + "-" + month + "-" + date.getDate();
   }
 
-  function enviarChamada() {
+  async function enviarChamada() {
+    const token = await AsyncStorage.getItem("jwt_key");
+    const headers = { Authorization: "Bearer " + token };
+
     var obj = {
       diaChamada: getCurrentDate(),
       idTurma: turmas[0].id,
       idAlunos: faltas,
     };
+
     setSearching("sending");
-    setTimeout(() => {
-      setSearching("sended");
-    }, 5000);
-    console.log(obj);
+
+    api
+      .post("chamadas/cadastro", obj, { headers: headers })
+      .then((response) => {
+        navigation.navigate("SucessPage");
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   }
 
   return (
@@ -181,15 +193,6 @@ const Chamada = () => {
         ) : searching == "sending" ? (
           <View style={{ flex: 1 }}>
             <LottieView autoPlay loop source={require("./send.json")} key={2} />
-          </View>
-        ) : searching == "sended" ? (
-          <View style={{ flex: 1 }}>
-            <LottieView
-              autoPlay
-              loop
-              source={require("./check.json")}
-              key={3}
-            />
           </View>
         ) : (
           <ScrollView showsVerticalScrollIndicator={false}>

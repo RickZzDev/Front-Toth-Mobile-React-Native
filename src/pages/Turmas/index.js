@@ -51,7 +51,7 @@ const Turma = () => {
             <CardTurma
               turno={turma.turno}
               // icon="atom"
-              nome_sala={"6" + turma.identificador}
+              nome_sala={turma.ano.ano + turma.identificador}
               numero_sala={turma.numero_sala}
               materia={turma.cronograma.diasLetivos[0].aulas[0].materia.nome}
               key={index}

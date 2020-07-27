@@ -100,7 +100,7 @@ const Notas = () => {
                     baseColor="white"
                     tintColor="white"
                     textColor="white"
-                    keyboardType="phone-pad"
+                    keyboardType="number"
                     maxLength={1}
                     height={40}
                   />

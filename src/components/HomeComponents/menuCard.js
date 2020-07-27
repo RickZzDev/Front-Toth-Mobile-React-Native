@@ -43,7 +43,6 @@ const MenuCard = ({
   return (
     <TouchableOpacity
       onPress={() => {
-        console.log(idProfessor);
         handleNavigateTo(text, dataTurmas != null ? dataTurmas : idProfessor);
       }}
       activeOpacity={0.6}
