@@ -145,11 +145,7 @@ const Home = () => {
                 text="Turmas"
                 materialIconName="school"
               />
-              <MenuCard
-                text="Comunicados"
-                materialIconName="sms"
-                data={routeParams.data.professor}
-              />
+              <MenuCard text="Comunicados" materialIconName="sms" data={user} />
               <MenuCard
                 text="Chamada"
                 materialIconName="recent-actors"

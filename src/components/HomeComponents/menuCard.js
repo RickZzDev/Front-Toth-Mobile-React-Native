@@ -14,6 +14,7 @@ const MenuCard = ({
   materialIconName = "calculator",
   dataTurmas = null,
   idProfessor = null,
+  data = null,
 }) => {
   const navigation = useNavigation();
 
@@ -43,7 +44,10 @@ const MenuCard = ({
   return (
     <TouchableOpacity
       onPress={() => {
-        handleNavigateTo(text, dataTurmas != null ? dataTurmas : idProfessor);
+        handleNavigateTo(
+          text,
+          dataTurmas != null ? dataTurmas : data != null ? data : idProfessor
+        );
       }}
       activeOpacity={0.6}
       style={{ ...styles.menuCards, ...transformStyleY }}

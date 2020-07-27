@@ -29,6 +29,7 @@ const CriarComunicado = () => {
   const [isModalVisible, setModalVisible] = useState(false);
   const [isModalVisibleSend, setModalVisibleSend] = useState(false);
   const [enviado, setEnviado] = useState(false);
+  const [idAula, setIdAula] = useState(0);
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -52,6 +53,24 @@ const CriarComunicado = () => {
 
   useEffect(() => {
     grow();
+
+    async function getAula() {
+      const token = await AsyncStorage.getItem("jwt_key");
+
+      const headers = { Authorization: "Bearer " + token };
+      await api
+        .get(`aulas/professores/${routeParams.data.id}`, {
+          headers: headers,
+        })
+        .then((response) => {
+          setIdAula(response.data[0].id);
+        })
+        .catch((e) => {
+          console.log(e);
+        });
+    }
+
+    getAula();
   }, []);
 
   const navigate = useNavigation();
@@ -71,8 +90,8 @@ const CriarComunicado = () => {
     var obj = {
       title: title,
       description: description,
-      publicoAlvo: publicoAlvo,
-      professor: routeParams.data,
+      publico_alvo: publicoAlvo,
+      idAula: idAula,
     };
 
     const token = await AsyncStorage.getItem("jwt_key");
@@ -87,7 +106,7 @@ const CriarComunicado = () => {
           setModalVisible(false);
         }, 3000);
         setTimeout(() => {
-          setEnviado(false);
+          navigate.navigate("Home");
         }, 3000);
 
         cleanUpFunction();
@@ -152,9 +171,15 @@ const CriarComunicado = () => {
         </TouchableOpacity>
       </View>
       {/* <Input label="Para" /> */}
-      <Input label="Assunto" value={title} onChangeFunciton={setTitle} />
+      <Input
+        keyboardType="text"
+        label="Assunto"
+        value={title}
+        onChangeFunciton={setTitle}
+      />
       <Input
         label="Comunicado"
+        keyboardType="text"
         onChangeFunciton={setDescription}
         height={105}
         value={description}

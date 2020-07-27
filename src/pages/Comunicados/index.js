@@ -36,7 +36,7 @@ const Comunicados = ({ turmas, data }) => {
 
       const headers = { Authorization: "Bearer " + token };
       await api
-        .get("comunicados/escola", {
+        .get("comunicados", {
           headers: headers,
         })
         .then((response) => {
@@ -110,6 +110,7 @@ const Comunicados = ({ turmas, data }) => {
               <CardComunicado
                 key={index}
                 icon="home"
+                materia={item.aula.materia.nome}
                 important={true}
                 title={item.title}
                 description={item.description}
