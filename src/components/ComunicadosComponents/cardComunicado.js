@@ -15,10 +15,36 @@ import { interpolate } from "react-native-reanimated";
 const cardComunicado = ({
   title,
   description,
-  color,
+  color = "",
+  materia,
   icon,
   important = false,
 }) => {
+  switch (materia) {
+    case "Matemática":
+      icon = "calculator";
+      color = "#c71400";
+      break;
+    case "Fisica":
+      icon = "athom";
+      break;
+    case "Química":
+      icon = "flask";
+      color = "#00e6d2";
+      break;
+    case "Geografia":
+      icon = "globe-africa";
+      color = "#f2b600";
+      break;
+    case "Biologia":
+      icon = "biohazard";
+      color = "#98c414";
+      break;
+    case "Historia":
+      icon = "hourglass";
+      color = "#007bff";
+      break;
+  }
   const [animatedHeight, setAnimated] = useState(new Animated.Value(1));
 
   function desc() {

@@ -110,6 +110,7 @@ const Comunicados = ({ turmas, data }) => {
               <CardComunicado
                 key={index}
                 icon="home"
+                materia={item.aula.materia.nome}
                 important={true}
                 title={item.title}
                 description={item.description}

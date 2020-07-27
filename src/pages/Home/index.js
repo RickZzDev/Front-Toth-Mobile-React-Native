@@ -42,23 +42,24 @@ const Home = () => {
   const [turmas, setTurmas] = useState(null);
 
   useEffect(() => {
-    setUser(routeParams.data.professor);
-    async function getTurmas() {
-      const token = await AsyncStorage.getItem("jwt_key");
-      const headers = { Authorization: "Bearer " + token };
-      await api
-        .get(`turmas/professores/${routeParams.data.professor.id}`, {
-          headers: headers,
-        })
-        .then((response) => {
-          setTurmas(response.data);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    }
+    setUser(routeParams.data.aluno);
+    console.log(user);
+    // async function getTurmas() {
+    //   const token = await AsyncStorage.getItem("jwt_key");
+    //   const headers = { Authorization: "Bearer " + token };
+    //   await api
+    //     .get(`turmas/professores/${routeParams.data.professor.id}`, {
+    //       headers: headers,
+    //     })
+    //     .then((response) => {
+    //       setTurmas(response.data);
+    //     })
+    //     .catch((e) => {
+    //       console.log(e);
+    //     });
+    // }
 
-    getTurmas();
+    // getTurmas();
   }, []);
 
   const transfomrStyleX = {
@@ -71,7 +72,7 @@ const Home = () => {
 
   return (
     <View style={{ flex: 1 }}>
-      {turmas != null ? (
+      {turmas == null ? (
         <Animated.View style={{ ...styles.container }}>
           <StatusBar backgroundColor="white"></StatusBar>
           <Animated.Text
@@ -136,34 +137,34 @@ const Home = () => {
           <View style={styles.menuCardsContainer}>
             <ScrollView horizontal showsHorizontalScrollIndicator={false}>
               <MenuCard
-                idProfessor={routeParams.data.professor.id}
+                // idProfessor={routeParams.data.professor.id}
                 text="Atividades"
                 materialIconName="assignment"
               />
               <MenuCard
-                dataTurmas={turmas}
+                // dataTurmas={turmas}
                 text="Turmas"
                 materialIconName="school"
               />
               <MenuCard
                 text="Comunicados"
                 materialIconName="sms"
-                data={routeParams.data.professor}
+                // data={routeParams.data.professor}
               />
               <MenuCard
                 text="Chamada"
                 materialIconName="recent-actors"
-                data={user}
+                // data={user}
               />
               <MenuCard
                 text="Notas"
                 materialIconName="graphic-eq"
-                data={user}
+                // data={user}
               />
               <MenuCard
                 text="Provas"
                 materialIconName="event"
-                idProfessor={routeParams.data.professor}
+                // idProfessor={routeParams.data.professor}
               />
             </ScrollView>
           </View>
