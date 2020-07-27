@@ -23,7 +23,7 @@ const inputMaterialDesign = ({
       maxLength={maxLength}
       multiline
       onChange={(e) => {
-        onChangeFunciton(e.nativeEvent.text);
+        onChangeFunciton(e.nativeEvent.text, label);
       }}
       // labelFontSize={16}
       inputContainerStyle={{

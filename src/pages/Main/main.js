@@ -56,6 +56,7 @@ export default function Main() {
 
   async function sucessLogin(data) {
     await AsyncStorage.setItem("jwt_key", data.jwt);
+
     delete data["jwt"];
 
     handleNavigateToHome(data);

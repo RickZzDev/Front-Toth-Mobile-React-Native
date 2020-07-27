@@ -5,10 +5,35 @@ import aluno from "../../assets/TOTH.png";
 // import {MaterialIcons} from '@expo/vector-icons'
 import { useNavigation } from "@react-navigation/native";
 
-const CardTurma = ({ turno, nome_sala, numero_sala, icon, bg_color }) => {
+const CardTurma = ({ turno, nome_sala, numero_sala, materia }) => {
+  var icon = "";
+  var color = "";
   const navigate = useNavigation();
 
   switch (materia) {
+    case "Matemática":
+      icon = "calculator";
+      color = "#c71400";
+      break;
+    case "Fisica":
+      icon = "athom";
+      break;
+    case "Química":
+      icon = "flask";
+      color = "#00e6d2";
+      break;
+    case "Geografia":
+      icon = "globe-africa";
+      color = "#f2b600";
+      break;
+    case "Biologia":
+      icon = "biohazard";
+      color = "#98c414";
+      break;
+    case "Historia":
+      icon = "hourglass";
+      color = "#007bff";
+      break;
   }
 
   function handleNavigateback() {
@@ -16,7 +41,7 @@ const CardTurma = ({ turno, nome_sala, numero_sala, icon, bg_color }) => {
   }
 
   return (
-    <View style={[styles.boxTurma, { backgroundColor: bg_color }]}>
+    <View style={[styles.boxTurma, { backgroundColor: color }]}>
       <View style={{ flexDirection: "row" }}>
         <View style={styles.turno_icon}>
           <Text style={{ color: "white", marginLeft: 16, fontSize: 18 }}>

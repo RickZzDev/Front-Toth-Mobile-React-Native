@@ -23,7 +23,7 @@ const Turma = () => {
   }
 
   useEffect(() => {
-    setTurmas(routeParams.turmas);
+    setTurmas(routeParams.data);
   }, []);
 
   return (
@@ -46,64 +46,17 @@ const Turma = () => {
             flexWrap: "wrap",
           }}
         >
-          {turmas.map((turma, index) => (
+          {routeParams.data.map((turma, index) => (
+            // <Text>{aula.aulas[0].materia.nome}</Text>
             <CardTurma
               turno={turma.turno}
-              icon="atom"
-              nome_sala={turma.ano.ano + " " + turma.identificador}
-              numero_sala={turma.numeroSala}
-              bg_color="#7519ff"
-              materia={turma}
+              // icon="atom"
+              nome_sala={turma.ano.ano + turma.identificador}
+              numero_sala={turma.numero_sala}
+              materia={turma.cronograma.diasLetivos[0].aulas[0].materia.nome}
               key={index}
             />
           ))}
-
-          {/* <CardTurma
-            turno="Manhã"
-            icon="flask"
-            nome_sala="3 B"
-            numero_sala="19"
-            bg_color="#00e6d2"
-          />
-
-          <CardTurma
-            turno="Manhã"
-            icon="globe-africa"
-            nome_sala="3 A"
-            numero_sala="10"
-            bg_color="#76de00"
-          />
-
-          <CardTurma
-            turno="Manhã"
-            icon="globe-africa"
-            nome_sala="3 D"
-            numero_sala="16"
-            bg_color="#f2b600"
-          />
-
-          <CardTurma
-            turno="Manhã"
-            icon="hourglass"
-            nome_sala="3 F"
-            numero_sala="12"
-            bg_color="#007bff"
-          />
-
-          <CardTurma
-            turno="Manhã"
-            icon="calculator"
-            nome_sala="3 F"
-            numero_sala="12"
-            bg_color="#c71400"
-          />
-          <CardTurma
-            turno="Manhã"
-            icon="biohazard"
-            nome_sala="3 F"
-            numero_sala="14"
-            bg_color="#98c414"
-          /> */}
         </View>
       </ScrollView>
     </View>

@@ -10,9 +10,18 @@ import {
 import { Feather, FontAwesome5 } from "@expo/vector-icons";
 import foto from "../../assets/TOTH.png";
 import { useNavigation } from "@react-navigation/native";
+import { getIconType } from "react-native-elements";
 
-const cardAtividades = ({ color, icon, important = false, nomeMateria }) => {
+const cardAtividades = ({
+  nome,
+  important = false,
+  nomeMateria,
+  turma,
+  dataEntrega,
+}) => {
   const [animatedHeight, setAnimated] = useState(new Animated.Value(1));
+  const [icon, setIcon] = useState("");
+  const [color, setColor] = useState("");
 
   function desc() {
     Animated.timing(animatedHeight, {
@@ -30,8 +39,38 @@ const cardAtividades = ({ color, icon, important = false, nomeMateria }) => {
     }).start(() => desc());
   }
 
+  function getIcon() {
+    switch (nomeMateria) {
+      case "Matemática":
+        setIcon("calculator");
+        setColor("#c71400");
+        break;
+      case "Fisica":
+        setIcon("athom");
+        setColor("#cf00cf");
+        break;
+      case "Química":
+        setIcon("flask");
+        setColor("#00e6d2");
+        break;
+      case "Geografia":
+        setIcon("globe-africa");
+        setColor("#f2b600");
+        break;
+      case "Biologia":
+        setIcon("biohazard");
+        setColor("#98c414");
+        break;
+      case "Historia":
+        setIcon("hourglass");
+        setColor("#007bff");
+        break;
+    }
+  }
+
   useEffect(() => {
     grow();
+    getIcon();
   }, []);
 
   const animatedStyle = {
@@ -58,16 +97,17 @@ const cardAtividades = ({ color, icon, important = false, nomeMateria }) => {
       >
         <View style={styles.txtComunciados}>
           <View style={{ flexDirection: "row" }}>
-            <Text style={{ fontSize: 18, fontWeight: "bold" }}>Atividade </Text>
+            <Text style={{ fontSize: 18, fontWeight: "bold" }}>{nome} </Text>
             {important == true ? (
               <Animated.View style={{ ...animatedStyle, marginTop: 4 }}>
                 <Feather name="info" size={18} color="#d10300" />
               </Animated.View>
             ) : null}
           </View>
-          <Text style={{ fontWeight: "bold" }}>Sala: 8A</Text>
-          <Text>Tipo:</Text>
-          <Text>Alunos: 1,5,8,15</Text>
+          <Text style={{ fontWeight: "bold" }}>Sala: {turma}</Text>
+          <Text style={{ fontWeight: "bold" }}>
+            Data de entrega:{dataEntrega.split("T")[0]}{" "}
+          </Text>
         </View>
         <View style={styles.infoComunicados}>
           <FontAwesome5 name={icon} color={color} size={70}></FontAwesome5>
