@@ -31,8 +31,8 @@ const Atividades = () => {
     navigate.navigate("CriarAtividade", { id: routeParams.data });
   }
 
-  function handleNavigateToAnswer(id) {
-    navigate.navigate("ResponderAtividade", { id: id });
+  function handleNavigateToAnswer(id, aluno) {
+    navigate.navigate("ResponderAtividade", { id: id, aluno: aluno });
   }
 
   useEffect(() => {
@@ -41,7 +41,7 @@ const Atividades = () => {
 
       const headers = { Authorization: "Bearer " + token };
       await api
-        .get(`atividades`, {
+        .get(`atividades/alunos/${routeParams.data.id}`, {
           headers: headers,
         })
         .then((response) => {
@@ -91,7 +91,9 @@ const Atividades = () => {
           </View>
         ) : (
           atividades.map((i, index) => (
-            <TouchableOpacity onPress={() => handleNavigateToAnswer(i.id)}>
+            <TouchableOpacity
+              onPress={() => handleNavigateToAnswer(i.id, routeParams.data)}
+            >
               <CardAtividades
                 turma={
                   (i.turmas = []

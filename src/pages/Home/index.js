@@ -43,7 +43,6 @@ const Home = () => {
 
   useEffect(() => {
     setUser(routeParams.data.aluno);
-    console.log(user);
     // async function getTurmas() {
     //   const token = await AsyncStorage.getItem("jwt_key");
     //   const headers = { Authorization: "Bearer " + token };
@@ -140,6 +139,7 @@ const Home = () => {
                 // idProfessor={routeParams.data.professor.id}
                 text="Atividades"
                 materialIconName="assignment"
+                aluno={user}
               />
               <MenuCard
                 // dataTurmas={turmas}

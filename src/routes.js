@@ -16,6 +16,7 @@ import Turmas from "./pages/Turmas";
 import Provas from "./pages/Provas";
 import Notas from "./pages/Notas";
 import Sucesspage from "./pages/sucessPage/sucessPage";
+import SucessAtividadePage from "./pages/SucessAtividadePage/sucessAtividadePage";
 import ResponderAtividade from "./pages/ResponderAtividade";
 
 const appStack = createStackNavigator();
@@ -56,6 +57,10 @@ const Routes = () => {
         <appStack.Screen
           name="ResponderAtividade"
           component={ResponderAtividade}
+        />
+        <appStack.Screen
+          name="SucessAtividadePage"
+          component={SucessAtividadePage}
         />
       </appStack.Navigator>
     </NavigationContainer>
