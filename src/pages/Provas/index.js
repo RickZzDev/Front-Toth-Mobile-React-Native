@@ -24,24 +24,38 @@ const Provas = () => {
 
   const route = useRoute();
   const [idAula, setIdAula] = useState();
+  const [dates, setDates] = useState({});
 
   useEffect(() => {
-    // async function getAulas() {
-    //   const token = await AsyncStorage.getItem("jwt_key");
-    //   const headers = { Authorization: "Bearer " + token };
-    //   await api
-    //     .get(`aulas/professores/${route.params.data.id}`, {
-    //       headers: headers,
-    //     })
-    //     .then((response) => {
-    //       setIdAula(response.data[0].id);
-    //     })
-    //     .catch((e) => {
-    //       console.log(e);
-    //     });
-    // }
-    // getAulas();
-  });
+    getDates();
+  }, []);
+
+  async function getDates() {
+    const token = await AsyncStorage.getItem("jwt_key");
+    const headers = { Authorization: "Bearer " + token };
+    await api
+      .get(`provas/`, {
+        headers: headers,
+      })
+      .then((response) => {
+        response.data.map((e, index) => {
+          var t = dates;
+          t[e.diaProva.split("T")[0]] = [
+            {
+              conteudo: e.conteudo,
+              atividades: e.atividadesParaEstudar,
+              materia: e.aula.materia.nome,
+              peso: e.pesoProva,
+            },
+          ];
+          setDates(t);
+          console.log(dates);
+        });
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
 
   function handleNavigateback() {
     navigate.goBack();
@@ -139,7 +153,7 @@ const Provas = () => {
             />
           </TouchableOpacity>
 
-          <Text style={styles.title}>Marcar datas avaliativas</Text>
+          <Text style={styles.title}>Datas avaliativas</Text>
           <TouchableOpacity
             title="Show modal"
             style={{
@@ -154,15 +168,7 @@ const Provas = () => {
         </View>
         <View style={{ flex: 1, backgroundColor: "red" }}>
           <Agenda
-            items={{
-              "2020-08-20": [{ name: { teste: "1", t2: 4 }, height: 80 }],
-              "2012-05-23": [{ name: "item 2 - any js object", height: 80 }],
-              "2012-05-24": [],
-              "2012-05-25": [
-                { name: "item 3 - any js object" },
-                { name: "any js object" },
-              ],
-            }}
+            items={dates}
             // renderItem={(item, firstItemInDay) => {
             //   return (
             //     <View>
@@ -183,13 +189,27 @@ const Provas = () => {
                   style={{
                     flex: 1,
                     alignItems: "center",
+                    padding: 18,
                   }}
                 >
-                  <Text>Nada marcado para esse dia</Text>
-                  <Text>Tire um tempo saudável para descansar</Text>
-                  <Text>E claro</Text>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      // width: "70%",
+                    }}
+                  >
+                    <Text style={styles.txtSemAtividade}>
+                      Nada marcado para esse dia
+                    </Text>
+                    {/* <FontAwesome5 name="hand-peace" color="#378CE4" size={22} /> */}
+                  </View>
+
+                  <Text>Tire um tempo saudável para</Text>
+                  <Text>Descansar e rever algo</Text>
+                  {/* <Text>E claro</Text>
                   <Text>Rever algo que você ainda</Text>
-                  <Text>Não tenha entendido por completo</Text>
+                  <Text>Não tenha entendido por completo</Text> */}
                   <LottieView
                     key={2}
                     loop
@@ -231,19 +251,20 @@ const Provas = () => {
                       }}
                     >
                       <Text style={{ fontSize: 18, color: "grey" }}>
-                        Conteudo: Conteudo tal
+                        <Text style={styles.tituloLembrete}> Conteudo:</Text>
+                        {item.conteudo}
                       </Text>
                       <Text style={{ fontSize: 18, color: "grey" }}>
-                        Atividades: Atividade tal
+                        <Text style={styles.tituloLembrete}> Atividades:</Text>
+                        {item.atividades}
                       </Text>
                       <Text style={{ fontSize: 18, color: "grey" }}>
-                        Materia: materia tal
+                        <Text style={styles.tituloLembrete}> Materia:</Text>
+                        {item.materia}
                       </Text>
                       <Text style={{ fontSize: 18, color: "grey" }}>
-                        Peso: peso tal
-                      </Text>
-                      <Text style={{ fontSize: 18, color: "grey" }}>
-                        Materia: materia tal
+                        <Text style={styles.tituloLembrete}> Peso:</Text>{" "}
+                        {item.peso}
                       </Text>
                     </View>
                   </View>
@@ -389,6 +410,15 @@ const styles = StyleSheet.create({
     color: "white",
     fontSize: 17,
     marginRight: 15,
+  },
+
+  txtSemAtividade: {
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+
+  tituloLembrete: {
+    fontWeight: "bold",
   },
 
   enviarProva: {

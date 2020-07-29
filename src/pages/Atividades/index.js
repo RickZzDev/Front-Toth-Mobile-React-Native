@@ -31,13 +31,17 @@ const Atividades = () => {
     navigate.navigate("CriarAtividade", { id: routeParams.data });
   }
 
+  function handleNavigateToAnswer(id) {
+    navigate.navigate("ResponderAtividade", { id: id });
+  }
+
   useEffect(() => {
     async function getAtividades() {
       const token = await AsyncStorage.getItem("jwt_key");
 
       const headers = { Authorization: "Bearer " + token };
       await api
-        .get(`atividades/professor/${routeParams.data}`, {
+        .get(`atividades`, {
           headers: headers,
         })
         .then((response) => {
@@ -87,18 +91,23 @@ const Atividades = () => {
           </View>
         ) : (
           atividades.map((i, index) => (
-            <CardAtividades
-              turma={i.turmas[0].ano.ano + "-" + i.turmas[0].identificador}
-              nome={i.nome}
-              key={index}
-              // icon="language"
-              nomeMateria={i.aulas.materia.nome}
-              dataEntrega={i.dataEntrega}
-            />
+            <TouchableOpacity onPress={() => handleNavigateToAnswer(i.id)}>
+              <CardAtividades
+                turma={
+                  (i.turmas = []
+                    ? "Todas"
+                    : i.turmas[0].ano.ano + "-" + i.turmas[0].identificador)
+                }
+                nome={i.nome}
+                key={index}
+                nomeMateria={i.aulas.materia.nome}
+                dataEntrega={i.dataEntrega}
+              />
+            </TouchableOpacity>
           ))
         )}
       </ScrollView>
-      <TouchableOpacity
+      {/* <TouchableOpacity
         onPress={handleNavigateToCreate}
         style={{
           marginTop: -20,
@@ -109,7 +118,7 @@ const Atividades = () => {
         }}
       >
         <Feather name="plus" color="white" size={40}></Feather>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
     </View>
   );
 };
