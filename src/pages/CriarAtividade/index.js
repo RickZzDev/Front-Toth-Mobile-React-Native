@@ -396,6 +396,7 @@ const criarAtividade = () => {
   }
 
   async function sendAtividade() {
+    console.log("AAAAAAAAAAAAAAAAAAAAAa");
     setSending(true);
     const token = await AsyncStorage.getItem("jwt_key");
     const headers = { Authorization: "Bearer " + token };

@@ -88,7 +88,11 @@ const Atividades = () => {
         ) : (
           atividades.map((i, index) => (
             <CardAtividades
-              turma={i.turmas[0].ano.ano + "-" + i.turmas[0].identificador}
+              turma={
+                i.turmas[0] == null
+                  ? "Todas"
+                  : i.turmas[0].ano.ano + "-" + i.turmas[0].identificador
+              }
               nome={i.nome}
               key={index}
               // icon="language"
