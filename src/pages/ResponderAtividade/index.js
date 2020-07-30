@@ -415,8 +415,8 @@ const responderAtividade = () => {
       })
       .then((response) => {
         toggleModal();
-        setAcertos(response.data.acertos);
-        console.log(response.data);
+        setAcertos(response.data.Acertos);
+
         // setTimeout(() => {
         //   navigation.navigate("Atividades");
         // }, 3000);
@@ -546,11 +546,11 @@ const responderAtividade = () => {
             }}
           >
             <Text style={{ fontSize: 18, fontWeight: "bold" }}>
-              Escolha um tipo de atividade
+              Estamos trazendo as questoões da sua atividade :)
             </Text>
-            <Text style={{ fontSize: 16 }}>
+            {/* <Text style={{ fontSize: 16 }}>
               E clique no botão abaixo para adicionar uma questão :)
-            </Text>
+            </Text> */}
           </View>
         ) : (
           questoes.questoes.map((item, index) =>
