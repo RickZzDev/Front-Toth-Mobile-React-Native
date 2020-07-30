@@ -416,9 +416,10 @@ const responderAtividade = () => {
       .then((response) => {
         toggleModal();
         setAcertos(response.data.acertos);
-        setTimeout(() => {
-          navigation.navigate("Atividades");
-        }, 3000);
+        console.log(response.data);
+        // setTimeout(() => {
+        //   navigation.navigate("Atividades");
+        // }, 3000);
       })
       .catch((e) => {
         console.log(e);
@@ -536,190 +537,204 @@ const responderAtividade = () => {
           { label: "Dissertativa", value: "DISSERTATIVA", key: 2 },
         ]}
       /> */}
-
-      {questoes.length == 0 ? (
-        <View
-          style={{
-            paddingHorizontal: 40,
-            paddingVertical: 10,
-          }}
-        >
-          <Text style={{ fontSize: 18, fontWeight: "bold" }}>
-            Escolha um tipo de atividade
-          </Text>
-          <Text style={{ fontSize: 16 }}>
-            E clique no botão abaixo para adicionar uma questão :)
-          </Text>
-        </View>
-      ) : (
-        questoes.questoes.map((item, index) =>
-          item.tipo != "Dissertativa" ? (
-            <View key={index}>
-              <TextField
-                placeholder={item.enunciado}
-                placeholderTextColor="black"
-                disabled={true}
-                onChangeText={() => {}}
-                style={{ marginBottom: 5 }}
-              ></TextField>
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  marginBottom: 5,
-                  paddingLeft: 20,
-                }}
-              >
-                <Text style={{ fontSize: 20 }}>A.</Text>
-                <Input2
-                  inputContainerStyle={{
-                    width: "70%",
-                    marginBottom: -20,
-                  }}
+      <ScrollView>
+        {questoes.length == 0 ? (
+          <View
+            style={{
+              paddingHorizontal: 40,
+              paddingVertical: 10,
+            }}
+          >
+            <Text style={{ fontSize: 18, fontWeight: "bold" }}>
+              Escolha um tipo de atividade
+            </Text>
+            <Text style={{ fontSize: 16 }}>
+              E clique no botão abaixo para adicionar uma questão :)
+            </Text>
+          </View>
+        ) : (
+          questoes.questoes.map((item, index) =>
+            item.tipo != "Dissertativa" ? (
+              <View key={index}>
+                <TextField
+                  placeholder={item.enunciado}
+                  placeholderTextColor="black"
                   disabled={true}
-                  placeholderTextColor="#000000"
-                  placeholder={item.alternativasQuestao[0].enunciadoAlternativa}
-                  // onChangeText={(event) => {
-                  //   setMultiEscolha(event, index, "A");
-                  // }}
-                ></Input2>
-              </View>
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  marginBottom: 5,
-                  paddingLeft: 20,
-                }}
-              >
-                <Text style={{ fontSize: 20 }}>B.</Text>
-                <Input2
-                  placeholder={item.alternativasQuestao[1].enunciadoAlternativa}
-                  inputContainerStyle={{
-                    width: "70%",
-                    marginBottom: -20,
+                  onChangeText={() => {}}
+                  style={{ marginBottom: 5 }}
+                ></TextField>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    marginBottom: 5,
+                    paddingLeft: 20,
                   }}
-                  disabled={true}
-                  placeholderTextColor="#000000"
-                  // onChangeText={(event) => {
-                  //   setMultiEscolha(event, index, "B");
-                  // }}
-                ></Input2>
-              </View>
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  marginBottom: 5,
-                  paddingLeft: 20,
-                }}
-              >
-                <Text style={{ fontSize: 20 }}>C.</Text>
-                <Input2
-                  inputContainerStyle={{
-                    width: "70%",
-                    marginBottom: -20,
+                >
+                  <Text style={{ fontSize: 20 }}>A.</Text>
+                  <Input2
+                    inputContainerStyle={{
+                      width: "70%",
+                      marginBottom: -20,
+                    }}
+                    disabled={true}
+                    placeholderTextColor="#000000"
+                    placeholder={
+                      item.alternativasQuestao[0].enunciadoAlternativa
+                    }
+                    // onChangeText={(event) => {
+                    //   setMultiEscolha(event, index, "A");
+                    // }}
+                  ></Input2>
+                </View>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    marginBottom: 5,
+                    paddingLeft: 20,
                   }}
-                  disabled={true}
-                  placeholderTextColor="#000000"
-                  placeholder={item.alternativasQuestao[2].enunciadoAlternativa}
-                  // onChangeText={(event) => {
-                  //   setMultiEscolha(event, index, "C");
-                  // }}
-                ></Input2>
-              </View>
-              <View
-                style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  paddingLeft: 20,
-                  // justifyContent: "space-between",
-                }}
-              >
-                <Text style={{ fontSize: 20 }}>D.</Text>
-                <Input2
-                  inputContainerStyle={{
-                    width: "70%",
-                    marginBottom: -20,
+                >
+                  <Text style={{ fontSize: 20 }}>B.</Text>
+                  <Input2
+                    placeholder={
+                      item.alternativasQuestao[1].enunciadoAlternativa
+                    }
+                    inputContainerStyle={{
+                      width: "70%",
+                      marginBottom: -20,
+                    }}
+                    disabled={true}
+                    placeholderTextColor="#000000"
+                    // onChangeText={(event) => {
+                    //   setMultiEscolha(event, index, "B");
+                    // }}
+                  ></Input2>
+                </View>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    marginBottom: 5,
+                    paddingLeft: 20,
                   }}
-                  disabled={true}
-                  placeholder={item.alternativasQuestao[3].enunciadoAlternativa}
-                  placeholderTextColor="#000000"
-                  // onChangeText={(event) => {
-                  //   setMultiEscolha(event, index, "D");
-                  // }}
-                ></Input2>
+                >
+                  <Text style={{ fontSize: 20 }}>C.</Text>
+                  <Input2
+                    inputContainerStyle={{
+                      width: "70%",
+                      marginBottom: -20,
+                    }}
+                    disabled={true}
+                    placeholderTextColor="#000000"
+                    placeholder={
+                      item.alternativasQuestao[2].enunciadoAlternativa
+                    }
+                    // onChangeText={(event) => {
+                    //   setMultiEscolha(event, index, "C");
+                    // }}
+                  ></Input2>
+                </View>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    paddingLeft: 20,
+                    // justifyContent: "space-between",
+                  }}
+                >
+                  <Text style={{ fontSize: 20 }}>D.</Text>
+                  <Input2
+                    inputContainerStyle={{
+                      width: "70%",
+                      marginBottom: -20,
+                    }}
+                    disabled={true}
+                    placeholder={
+                      item.alternativasQuestao[3].enunciadoAlternativa
+                    }
+                    placeholderTextColor="#000000"
+                    // onChangeText={(event) => {
+                    //   setMultiEscolha(event, index, "D");
+                    // }}
+                  ></Input2>
+                </View>
+                <Text
+                  style={{
+                    fontSize: 15,
+                    fontWeight: "bold",
+                    marginTop: 5,
+                    marginBottom: 5,
+                  }}
+                >
+                  Qual a resposta certa?
+                </Text>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    paddingHorizontal: 10,
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <Text>A</Text>
+                  <CheckBox
+                    // value={item.alternativasQuestao[0].correto}
+                    // checked={item.alternativasQuestao[0].correto}
+                    onValueChange={() => {
+                      setCorrectAnswer(index, "A", item.tipo);
+                    }}
+                  />
+                  <Text>B</Text>
+                  <CheckBox
+                    onValueChange={() =>
+                      setCorrectAnswer(index, "B", item.tipo)
+                    }
+                  />
+                  <Text>C</Text>
+                  <CheckBox
+                    onValueChange={() =>
+                      setCorrectAnswer(index, "C", item.tipo)
+                    }
+                  />
+                  <Text>D</Text>
+                  <CheckBox
+                    onValueChange={() =>
+                      setCorrectAnswer(index, "D", item.tipo)
+                    }
+                  />
+                </View>
               </View>
-              <Text
-                style={{
-                  fontSize: 15,
-                  fontWeight: "bold",
-                  marginTop: 5,
-                  marginBottom: 5,
-                }}
-              >
-                Qual a resposta certa?
-              </Text>
+            ) : (
               <View
+                key={index}
                 style={{
-                  flexDirection: "row",
-                  alignItems: "center",
                   paddingHorizontal: 10,
-                  justifyContent: "space-between",
+                  marginBottom: 10,
+                  elevation: 1,
+                  borderRadius: 1,
+                  borderRadius: 20,
+                  backgroundColor: "white",
                 }}
               >
-                <Text>A</Text>
-                <CheckBox
-                  value={item.alternativasQuestao[0].correto}
-                  checked={item.alternativasQuestao[0].correto}
-                  onValueChange={() => {
-                    setCorrectAnswer(index, "A", item.tipo);
-                  }}
-                />
-                <Text>B</Text>
-                <CheckBox
-                  onValueChange={() => setCorrectAnswer(index, "B", item.tipo)}
-                />
-                <Text>C</Text>
-                <CheckBox
-                  onValueChange={() => setCorrectAnswer(index, "C", item.tipo)}
-                />
-                <Text>D</Text>
-                <CheckBox
-                  onValueChange={() => setCorrectAnswer(index, "D", item.tipo)}
-                />
+                <TextField
+                  placeholder={item.enunciado}
+                  placeholderTextColor="black"
+                  style={{ marginBottom: 5 }}
+                  disabled={true}
+                  onChangeText={() => {}}
+                  // value={item.alternativasQuestão[0].enunciadoAlternativa}
+                ></TextField>
+                <TextField
+                  // disabled={true}
+                  placeholder="E a resposta para essa questão?"
+                  style={{ marginBottom: 5, paddingLeft: 10 }}
+                ></TextField>
               </View>
-            </View>
-          ) : (
-            <View
-              key={index}
-              style={{
-                paddingHorizontal: 10,
-                marginBottom: 10,
-                elevation: 1,
-                borderRadius: 1,
-                borderRadius: 20,
-                backgroundColor: "white",
-              }}
-            >
-              <TextField
-                placeholder={item.enunciado}
-                placeholderTextColor="black"
-                style={{ marginBottom: 5 }}
-                disabled={true}
-                onChangeText={() => {}}
-                // value={item.alternativasQuestão[0].enunciadoAlternativa}
-              ></TextField>
-              <TextField
-                // disabled={true}
-                placeholder="E a resposta para essa questão?"
-                style={{ marginBottom: 5, paddingLeft: 10 }}
-              ></TextField>
-            </View>
+            )
           )
-        )
-      )}
-
+        )}
+      </ScrollView>
       {/* <TouchableOpacity
         onPress={() => acrescentarQuestao(tipoQuestao)}
         style={{

@@ -92,6 +92,7 @@ const Atividades = () => {
         ) : (
           atividades.map((i, index) => (
             <TouchableOpacity
+              key={index}
               onPress={() => handleNavigateToAnswer(i.id, routeParams.data)}
             >
               <CardAtividades
@@ -101,7 +102,6 @@ const Atividades = () => {
                     : i.turmas[0].ano.ano + "-" + i.turmas[0].identificador)
                 }
                 nome={i.nome}
-                key={index}
                 nomeMateria={i.aulas.materia.nome}
                 dataEntrega={i.dataEntrega}
               />
