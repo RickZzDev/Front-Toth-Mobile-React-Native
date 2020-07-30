@@ -41,6 +41,7 @@ const responderAtividade = () => {
   const [aulas, setAulas] = useState("");
   const [sending, setSending] = useState(false);
   const [arrayAnswers, setAnswers] = useState([]);
+  const [acertos, setAcertos] = useState(0);
   const [animatedStyle, setAnimatedStyle] = useState({
     transform: [
       {
@@ -397,33 +398,30 @@ const responderAtividade = () => {
   }
 
   async function sendAtividade() {
-    // console.log(arrayAnswers);
     setSending(true);
-    console.log("AAAAAAAAA");
 
-    setTimeout(() => {
-      toggleModal();
-      // navigation.navigate("SucessAtividadePage");
-    }, 2000);
+    const token = await AsyncStorage.getItem("jwt_key");
+    const headers = { Authorization: "Bearer " + token };
 
-    // const token = await AsyncStorage.getItem("jwt_key");
-    // const headers = { Authorization: "Bearer " + token };
-
-    // var obj = {
-    //   alternativas: arrayAnswers,
-    //   idAtividade: routeParams.id,
-    // };
-    // console.log(obj);
-    // await api
-    //   .post("atividades/pontos", obj, {
-    //     headers: headers,
-    //   })
-    //   .then((response) => {
-    //     console.log(response.data);
-    //   })
-    //   .catch((e) => {
-    //     console.log(e);
-    //   });
+    var obj = {
+      alternativas: arrayAnswers,
+      idAtividade: routeParams.id,
+    };
+    console.log(obj);
+    await api
+      .post("atividades/pontos", obj, {
+        headers: headers,
+      })
+      .then((response) => {
+        toggleModal();
+        setAcertos(response.data.acertos);
+        setTimeout(() => {
+          navigation.navigate("Atividade");
+        }, 5000);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   }
 
   return sending ? (
@@ -436,9 +434,16 @@ const responderAtividade = () => {
             alignSelf: "center",
             justifyContent: "center",
             alignItems: "center",
-            backgroundColor: "red",
+            backgroundColor: "white",
+            borderRadius: 50,
           }}
-        ></View>
+        >
+          <FontAwesome5 name="check-circle" color="green" size={70} />
+          <Text style={{ fontWeight: "bold", marginTop: 10 }}>
+            Você acertou:{" "}
+            <Text style={{ fontWeight: "normal" }}>5 questoes</Text>
+          </Text>
+        </View>
       </Modal>
       <LottieView autoPlay loop source={require("../Chamada/send.json")} />
     </View>
@@ -546,7 +551,7 @@ const responderAtividade = () => {
       ) : (
         questoes.questoes.map((item, index) =>
           item.tipo != "Dissertativa" ? (
-            <View>
+            <View key={index}>
               <TextField
                 placeholder={item.enunciado}
                 placeholderTextColor="black"
