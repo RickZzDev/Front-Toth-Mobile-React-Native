@@ -98,11 +98,11 @@ const cardAtividades = ({
         <View style={styles.txtComunciados}>
           <View style={{ flexDirection: "row" }}>
             <Text style={{ fontSize: 18, fontWeight: "bold" }}>{nome} </Text>
-            {important == true ? (
+            {/* {important == true ? (
               <Animated.View style={{ ...animatedStyle, marginTop: 4 }}>
                 <Feather name="info" size={18} color="#d10300" />
               </Animated.View>
-            ) : null}
+            ) : null} */}
           </View>
           <Text style={{ fontWeight: "bold" }}>Sala: {turma}</Text>
           <Text style={{ fontWeight: "bold" }}>
@@ -115,7 +115,7 @@ const cardAtividades = ({
       </View>
 
       <View style={{ ...styles.barraImportancia, backgroundColor: color }}>
-        <Text style={{ color: "white", fontSize: 18, fontWeight: "bold" }}>
+        <Text style={{ color: "#ffffff", fontSize: 18, fontWeight: "bold" }}>
           {nomeMateria}
           {/* <FontAwesome5 name={icon} size={20} /> */}
         </Text>
