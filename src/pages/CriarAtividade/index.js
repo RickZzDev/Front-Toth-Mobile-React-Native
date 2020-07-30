@@ -474,61 +474,65 @@ const criarAtividade = () => {
           </Animated.View>
         </TouchableOpacity>
       </View>
-      <Input2
-        placeholder="Nome da atividade"
-        value={nomeAtividade}
-        onChange={(event) => setNomeAtividade(event.nativeEvent.text)}
-      />
-      <Input2
-        placeholder="yyyy/mm/dd"
-        value={dataEntrega}
-        onChange={(event) => setDataEntrega(event.nativeEvent.text)}
-      />
-      <View>
-        <SectionedMultiSelect
-          items={itemsArray}
-          uniqueKey="id"
-          subKey="children"
-          selectText="Selecione as turmas"
-          showDropDowns={false}
-          readOnlyHeadings={true}
-          hideSearch={true}
-          confirmText="Confirmar"
-          onConfirm={onConfirmedTurmas}
-          onSelectedItemsChange={onSelectedItemsChange}
-          selectedItems={items}
+      <ScrollView>
+        <Input2
+          placeholder="Nome da atividade"
+          value={nomeAtividade}
+          onChange={(event) => setNomeAtividade(event.nativeEvent.text)}
         />
-      </View>
-
-      <RNPickerSelect
-        placeholder={{ label: "Tipo de atividade" }}
-        onValueChange={(value) => {
-          setTipoQuestao(value);
-          show(value);
-        }}
-        items={[
-          { label: "Multipla escolha", value: "MULTIPLA_ESCOLHA", key: 1 },
-          { label: "Dissertativa", value: "DISSERTATIVA", key: 2 },
-        ]}
-      />
-      {questoes.length == 0 && (
-        <View
-          style={{
-            paddingHorizontal: 40,
-            paddingVertical: 10,
-          }}
-        >
-          <Text style={{ fontSize: 18, fontWeight: "bold" }}>
-            Escolha um tipo de atividade
-          </Text>
-          <Text style={{ fontSize: 16 }}>
-            E clique no botão abaixo para adicionar uma questão :)
-          </Text>
+        <Input2
+          placeholder="yyyy/mm/dd"
+          value={dataEntrega}
+          onChange={(event) => setDataEntrega(event.nativeEvent.text)}
+        />
+        <View>
+          <SectionedMultiSelect
+            items={itemsArray}
+            uniqueKey="id"
+            subKey="children"
+            selectText="Selecione as turmas"
+            showDropDowns={false}
+            readOnlyHeadings={true}
+            hideSearch={true}
+            confirmText="Confirmar"
+            onConfirm={onConfirmedTurmas}
+            onSelectedItemsChange={onSelectedItemsChange}
+            selectedItems={items}
+          />
         </View>
-      )}
-      {questoes.length >= 1 && (
-        <ScrollView showsVerticalScrollIndicator={false}>{teste()}</ScrollView>
-      )}
+
+        <RNPickerSelect
+          placeholder={{ label: "Tipo de atividade" }}
+          onValueChange={(value) => {
+            setTipoQuestao(value);
+            show(value);
+          }}
+          items={[
+            { label: "Multipla escolha", value: "MULTIPLA_ESCOLHA", key: 1 },
+            { label: "Dissertativa", value: "DISSERTATIVA", key: 2 },
+          ]}
+        />
+        {questoes.length == 0 && (
+          <View
+            style={{
+              paddingHorizontal: 40,
+              paddingVertical: 10,
+            }}
+          >
+            <Text style={{ fontSize: 18, fontWeight: "bold" }}>
+              Escolha um tipo de atividade
+            </Text>
+            <Text style={{ fontSize: 16 }}>
+              E clique no botão abaixo para adicionar uma questão :)
+            </Text>
+          </View>
+        )}
+        {questoes.length >= 1 && (
+          <ScrollView showsVerticalScrollIndicator={false}>
+            {teste()}
+          </ScrollView>
+        )}
+      </ScrollView>
 
       <TouchableOpacity
         onPress={() => acrescentarQuestao(tipoQuestao)}
