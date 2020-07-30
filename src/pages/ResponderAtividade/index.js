@@ -406,8 +406,9 @@ const responderAtividade = () => {
     var obj = {
       alternativas: arrayAnswers,
       idAtividade: routeParams.id,
+      idAluno: routeParams.aluno.id,
     };
-    console.log(obj);
+    // console.log(obj);
     await api
       .post("atividades/pontos", obj, {
         headers: headers,
@@ -416,8 +417,8 @@ const responderAtividade = () => {
         toggleModal();
         setAcertos(response.data.acertos);
         setTimeout(() => {
-          navigation.navigate("Atividade");
-        }, 5000);
+          navigation.navigate("Atividades");
+        }, 3000);
       })
       .catch((e) => {
         console.log(e);
@@ -441,7 +442,9 @@ const responderAtividade = () => {
           <FontAwesome5 name="check-circle" color="green" size={70} />
           <Text style={{ fontWeight: "bold", marginTop: 10 }}>
             Você acertou:{" "}
-            <Text style={{ fontWeight: "normal" }}>5 questoes</Text>
+            <Text style={{ fontWeight: "normal" }}>
+              {acertos == 0 ? 0 : acertos} questoes
+            </Text>
           </Text>
         </View>
       </Modal>
