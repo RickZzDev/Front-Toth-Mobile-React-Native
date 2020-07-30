@@ -49,7 +49,7 @@ const Atividades = () => {
     }
 
     getAtividades();
-  });
+  }, []);
 
   return (
     <View style={styles.container}>
