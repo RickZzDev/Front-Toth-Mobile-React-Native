@@ -53,7 +53,7 @@ const Atividades = () => {
     }
 
     getAtividades();
-  });
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -86,8 +86,24 @@ const Atividades = () => {
         }}
       >
         {atividades[0] == 0 ? (
-          <View style={{ backgroundColor: "white", height: 450 }}>
+          <View style={{ backgroundColor: "white", height: 450, flex: 1 }}>
             <LottieView autoPlay loop source={require("./loading.json")} />
+          </View>
+        ) : atividades.length == 0 ? (
+          <View
+            style={{
+              backgroundColor: "white",
+              flex: 1,
+              height: 400,
+              marginTop: 50,
+            }}
+          >
+            <Text
+              style={{ alignSelf: "center", fontWeight: "bold", fontSize: 15 }}
+            >
+              Sem atividades para você hoje :)
+            </Text>
+            <LottieView autoPlay loop source={require("../Provas/s1.json")} />
           </View>
         ) : (
           atividades.map((i, index) => (
