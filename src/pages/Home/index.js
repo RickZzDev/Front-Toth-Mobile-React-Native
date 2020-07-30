@@ -231,7 +231,7 @@ const styles = StyleSheet.create({
   },
 
   dayliCardTitle: {
-    color: "white",
+    color: "#ffffff",
     fontFamily: "Ubuntu_700Bold",
     fontSize: 18,
     marginBottom: 15,

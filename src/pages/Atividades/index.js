@@ -95,7 +95,6 @@ const Atividades = () => {
               }
               nome={i.nome}
               key={index}
-              // icon="language"
               nomeMateria={i.aulas.materia.nome}
               dataEntrega={i.dataEntrega}
             />
