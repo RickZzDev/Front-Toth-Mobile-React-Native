@@ -417,9 +417,9 @@ const responderAtividade = () => {
         toggleModal();
         setAcertos(response.data.Acertos);
 
-        // setTimeout(() => {
-        //   navigation.navigate("Atividades");
-        // }, 3000);
+        setTimeout(() => {
+          navigation.navigate("Atividades");
+        }, 3000);
       })
       .catch((e) => {
         console.log(e);
