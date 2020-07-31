@@ -17,18 +17,22 @@ import { LinearGradient } from "expo-linear-gradient";
 import Input from "../../components/globalComponents/inputMaterialDesign";
 import RNPickerSelect from "react-native-picker-select";
 import api from "../../services/api";
+import { TextField, OutlinedTextField } from "react-native-material-textfield";
+
 import SectionedMultiSelect from "react-native-sectioned-multi-select";
 
 const Notas = () => {
   const navigate = useNavigation();
 
-  const [notas, setNotas] = useState([]);
+  const [notas, setNotas] = useState([{}]);
   const [turmas, setTurmas] = useState([]);
   const [provas, setProvas] = useState([]);
   const [itemsTurmas, setItemsTurmas] = useState([]);
   const [itemsProvas, setItemsProvas] = useState([]);
   const [alunos, setAlunos] = useState([]);
   const [searching, setSearching] = useState(false);
+  const [cores, setCores] = useState([]);
+  const [teste, setTeste] = useState([]);
 
   const [loadingTurmas, setLoadingTurmas] = useState(false);
 
@@ -68,7 +72,7 @@ const Notas = () => {
     await api
       .get(`alunos/turma/${id}/lazy`, { headers: headers })
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setAlunos(response.data);
         setSearching(false);
       })
@@ -82,8 +86,17 @@ const Notas = () => {
     // setSearching(true);
   }
 
-  function setArrayNotas() {
-    console.log("A");
+  function setArrayNotas(aluno, index, nota) {
+    console.log(cores[index]);
+    var newArray = [...cores];
+    newArray[index] = nota >= 6 ? "blue" : "red";
+
+    var obj = notas;
+    var coresArray = cores;
+    obj[index] = { aluno: aluno, valor: nota };
+
+    setNotas(obj);
+    setCores(newArray);
   }
 
   const itemsProva = [
@@ -198,93 +211,117 @@ const Notas = () => {
               <Text>AA</Text>
             </View>
           ) : (
-            <View
-              style={{
-                flex: 1,
-                flexDirection: "row",
-                justifyContent: "space-between",
-                flexWrap: "wrap",
-                height: 200,
-                backgroundColor: "red",
-              }}
-            >
-              <LinearGradient
-                colors={["#378CE4", "black"]}
-                style={{ width: "49%", borderRadius: 10 }}
+            alunos.map((i, index) => (
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  flexWrap: "wrap",
+                  height: 200,
+                  // newArray,
+                }}
               >
-                <View style={styles.cardAluno}>
-                  <View style={{ flexDirection: "row" }}>
-                    <ImageBackground
-                      source={aluno}
-                      imageStyle={{ borderRadius: 50 }}
-                      style={{
-                        width: 80,
-                        height: 80,
-                        resizeMode: "cover",
-                      }}
-                    />
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        width: 85,
-                        justifyContent: "flex-end",
-                        paddingRight: 12,
-                      }}
-                    >
-                      <Text
+                <LinearGradient
+                  colors={[
+                    cores[index] == undefined ? "grey" : cores[index],
+                    "black",
+                  ]}
+                  style={{
+                    // backgroundColor:
+                    // cores[index] == undefined ? "grey" : cores[index],
+                    width: "49%",
+                    borderRadius: 20,
+                  }}
+                  key={index}
+                >
+                  <View style={styles.cardAluno}>
+                    <View style={{ flexDirection: "row" }}>
+                      <ImageBackground
+                        source={aluno}
+                        imageStyle={{ borderRadius: 50 }}
                         style={{
-                          fontWeight: "bold",
-                          color: "white",
-                          fontSize: 24,
-                          marginRight: 8,
+                          width: 80,
+                          height: 80,
+                          resizeMode: "cover",
+                        }}
+                      />
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          width: 85,
+                          justifyContent: "flex-end",
+                          paddingRight: 12,
                         }}
                       >
-                        8
-                      </Text>
-                      <Feather
-                        name="smile"
-                        style={{ marginTop: 2 }}
-                        color="white"
-                        size={28}
-                      ></Feather>
+                        <Text
+                          style={{
+                            fontWeight: "bold",
+                            color: "white",
+                            fontSize: 24,
+                            marginRight: 8,
+                          }}
+                        >
+                          {notas[index].valor}
+                        </Text>
+                        <Feather
+                          name={notas[index].valor >= 6 ? "smile" : "frown"}
+                          style={{ marginTop: 2 }}
+                          color="white"
+                          size={28}
+                        ></Feather>
+                      </View>
                     </View>
+
+                    <Text
+                      style={{
+                        fontSize: 14,
+                        marginTop: 2,
+                        fontWeight: "bold",
+                        color: "white",
+                        alignSelf: "center",
+                        marginBottom: 15,
+                      }}
+                    >
+                      {i.nome}
+                    </Text>
+                    <View style={{ width: 140 }}>
+                      <OutlinedTextField
+                        label="Nota obtida"
+                        tintColor="white"
+                        textColor="white"
+                        keyboardType="number-pad"
+                        label="Nota obtida"
+                        selectionColor="red"
+                        baseColor="white"
+                        keyboardType="number-pad"
+                        maxLength={2}
+                        height={20}
+                        onChange={(e) => {
+                          setArrayNotas(i, index, e.nativeEvent.text);
+                        }}
+                        multiline
+                        inputContainerStyle={{
+                          height: 55,
+                        }}
+                      />
+                      {/* <Input
+                        keyboardType="number-pad"
+                        maxLength={1}
+                        height={40}
+                      /> */}
+                    </View>
+
+                    <View
+                      style={{
+                        width: "70%",
+                        alignSelf: "center",
+                      }}
+                    ></View>
                   </View>
+                </LinearGradient>
 
-                  <Text
-                    style={{
-                      fontSize: 14,
-                      marginTop: 2,
-                      fontWeight: "bold",
-                      color: "white",
-                      alignSelf: "center",
-                      marginBottom: 15,
-                    }}
-                  >
-                    Schwazenegger da silva
-                  </Text>
-                  <View style={{ width: 140 }}>
-                    <Input
-                      label="Nota obtida"
-                      baseColor="white"
-                      tintColor="white"
-                      textColor="white"
-                      keyboardType="number-pad"
-                      maxLength={1}
-                      height={40}
-                      onChangeFunciton={() => setArrayNotas()}
-                    />
-                  </View>
-
-                  <View
-                    style={{
-                      width: "70%",
-                      alignSelf: "center",
-                    }}
-                  ></View>
-                </View>
-              </LinearGradient>
-
-              {/* <LinearGradient
+                {/* <LinearGradient
               colors={["red", "black"]}
               style={{ width: "49%", borderRadius: 10 }}
             >
@@ -358,7 +395,8 @@ const Notas = () => {
                 ></View>
               </View>
             </LinearGradient> */}
-            </View>
+              </View>
+            ))
           )}
         </ScrollView>
       </View>
