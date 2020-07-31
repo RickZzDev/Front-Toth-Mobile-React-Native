@@ -7,19 +7,65 @@ import {
   ScrollView,
   Image,
   ImageBackground,
+  AsyncStorage,
+  Dimensions,
 } from "react-native";
 import { FontAwesome5, Feather } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import { ProgressChart } from "react-native-chart-kit";
 import aluno from "../../assets/aluno.jpeg";
-import { LinearGradient } from "expo-linear-gradient";
-import Input from "../../components/globalComponents/inputMaterialDesign";
+import api from "../../services/api";
 
 const Notas = () => {
   const navigate = useNavigation();
+  const screenWidth = Dimensions.get("window").width - 100;
+
+  // const [provas, setProvas] = useNavigation([]);
+  const data = {
+    labels: ["Swim", "Bike"], // optional
+    data: [0.4, 0.6],
+  };
+
+  const chartConfig = {
+    backgroundGradientFrom: "#000000",
+    backgroundGradientFromOpacity: 0,
+    backgroundGradientTo: "#ffffff",
+    backgroundGradientToOpacity: 0,
+    color: (opacity = 1) => `rgba(55, 140, 228, ${opacity})`,
+    barPercentage: 0.5,
+    useShadowColorFromDataset: false,
+    // optional
+  };
 
   function handleNavigateback() {
     navigate.goBack();
   }
+
+  // async function getProvas() {
+  //   setLoadingProvas(true);
+  //   var obj = [];
+  //   const token = await AsyncStorage.getItem("jwt_key");
+
+  //   const headers = { Authorization: "Bearer " + token };
+  //   await api
+  //     .get(`provas`, {
+  //       headers: headers,
+  //     })
+  //     .then((response) => {
+  //       // response.data.map((i, index) => {
+  //       //   obj.push({ name: i.nome != null ? i.nome : "semNome", id: i.id });
+  //       //   setProvas(obj);
+  //       // });
+  //       // setLoadingProvas(false);
+  //     })
+  //     .catch((e) => {
+  //       console.log(e);
+  //     });
+  // }
+
+  useEffect(() => {
+    // getProvas();
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -28,7 +74,7 @@ const Notas = () => {
           <TouchableOpacity onPress={handleNavigateback}>
             <FontAwesome5 name="chevron-left" color="#378CE4" size={18} />
           </TouchableOpacity>
-          <Text style={[styles.nomeTurma]}>Lançar notas</Text>
+          <Text style={[styles.nomeTurma]}>Minhas notas</Text>
         </View>
         <ScrollView showsVerticalScrollIndicator={false}>
           <View
@@ -37,158 +83,30 @@ const Notas = () => {
               flexDirection: "row",
               justifyContent: "space-between",
               flexWrap: "wrap",
-              height: 200,
+              // justifyContent: "center",
+              // alignContent: "center",
             }}
           >
-            <LinearGradient
-              colors={["#378CE4", "black"]}
-              style={{ width: "49%", borderRadius: 10 }}
+            <View
+              style={{
+                borderColor: "#dbdbdb",
+                borderBottomWidth: 5,
+                borderRightWidth: 5,
+                width: "100%",
+              }}
             >
-              <View style={styles.cardAluno}>
-                <View style={{ flexDirection: "row" }}>
-                  <ImageBackground
-                    source={aluno}
-                    imageStyle={{ borderRadius: 50 }}
-                    style={{
-                      width: 80,
-                      height: 80,
-                      resizeMode: "cover",
-                    }}
-                  />
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      width: 85,
-                      justifyContent: "flex-end",
-                      paddingRight: 12,
-                    }}
-                  >
-                    <Text
-                      style={{
-                        fontWeight: "bold",
-                        color: "white",
-                        fontSize: 24,
-                        marginRight: 8,
-                      }}
-                    >
-                      8
-                    </Text>
-                    <Feather
-                      name="smile"
-                      style={{ marginTop: 2 }}
-                      color="white"
-                      size={28}
-                    ></Feather>
-                  </View>
-                </View>
-
-                <Text
-                  style={{
-                    fontSize: 14,
-                    marginTop: 2,
-                    fontWeight: "bold",
-                    color: "white",
-                    alignSelf: "center",
-                    marginBottom: 15,
-                  }}
-                >
-                  Schwazenegger da silva
-                </Text>
-                <View style={{ width: 140 }}>
-                  <Input
-                    label="Nota obtida"
-                    baseColor="white"
-                    tintColor="white"
-                    textColor="white"
-                    keyboardType="number"
-                    maxLength={1}
-                    height={40}
-                  />
-                </View>
-
-                <View
-                  style={{
-                    width: "70%",
-                    alignSelf: "center",
-                  }}
-                ></View>
-              </View>
-            </LinearGradient>
-
-            <LinearGradient
-              colors={["red", "black"]}
-              style={{ width: "49%", borderRadius: 10 }}
-            >
-              <View style={styles.cardAluno}>
-                <View style={{ flexDirection: "row" }}>
-                  <ImageBackground
-                    source={aluno}
-                    imageStyle={{ borderRadius: 50 }}
-                    style={{
-                      width: 80,
-                      height: 80,
-                      resizeMode: "cover",
-                    }}
-                  />
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      width: 85,
-                      justifyContent: "flex-end",
-                      paddingRight: 12,
-                    }}
-                  >
-                    <Text
-                      style={{
-                        fontWeight: "bold",
-                        color: "white",
-                        fontSize: 24,
-                        marginRight: 8,
-                      }}
-                    >
-                      5
-                    </Text>
-                    <Feather
-                      name="frown"
-                      style={{ marginTop: 2 }}
-                      color="white"
-                      size={28}
-                    ></Feather>
-                  </View>
-                </View>
-
-                <Text
-                  style={{
-                    fontSize: 14,
-                    marginTop: 2,
-                    fontWeight: "bold",
-                    color: "white",
-                    alignSelf: "center",
-                    marginBottom: 15,
-                  }}
-                >
-                  Schwazenegger da silva
-                </Text>
-                <View style={{ width: 140 }}>
-                  <Input
-                    label="Nota obtido"
-                    baseColor="white"
-                    tintColor="white"
-                    textColor="white"
-                    keyboardType="phone-pad"
-                    maxLength={1}
-                    height={40}
-                  />
-                </View>
-
-                <View
-                  style={{
-                    width: "70%",
-                    alignSelf: "center",
-                  }}
-                ></View>
-              </View>
-            </LinearGradient>
+              <Text style={{ marginLeft: 25, fontSize: 14 }}>PROVA TAL</Text>
+              <ProgressChart
+                data={data}
+                width={screenWidth}
+                height={220}
+                strokeWidth={16}
+                radius={32}
+                chartConfig={chartConfig}
+                hideLegend={false}
+                style={{ borderRadius: 50 }}
+              />
+            </View>
           </View>
         </ScrollView>
       </View>

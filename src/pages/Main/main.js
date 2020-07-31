@@ -33,6 +33,7 @@ export default function Main() {
     api
       .post("alunos/autenticacao", dados)
       .then((response) => {
+        console.log("AAAAAA");
         response.status == 200
           ? sucessLogin(response.data)
           : errorMessage(
@@ -43,6 +44,7 @@ export default function Main() {
             );
       })
       .catch((erro) => {
+        console.log("AAAAAA");
         // handleNavigateToHome();
         console.log(erro);
         errorMessage(
