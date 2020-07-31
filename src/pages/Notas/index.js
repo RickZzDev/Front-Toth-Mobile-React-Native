@@ -18,13 +18,15 @@ import Input from "../../components/globalComponents/inputMaterialDesign";
 import RNPickerSelect from "react-native-picker-select";
 import api from "../../services/api";
 import { TextField, OutlinedTextField } from "react-native-material-textfield";
+import LottieView from "lottie-react-native";
 
 import SectionedMultiSelect from "react-native-sectioned-multi-select";
+import { not } from "react-native-reanimated";
 
 const Notas = () => {
   const navigate = useNavigation();
 
-  const [notas, setNotas] = useState([{}]);
+  const [notas, setNotas] = useState([]);
   const [turmas, setTurmas] = useState([]);
   const [provas, setProvas] = useState([]);
   const [itemsTurmas, setItemsTurmas] = useState([]);
@@ -35,6 +37,8 @@ const Notas = () => {
   const [teste, setTeste] = useState([]);
 
   const [loadingTurmas, setLoadingTurmas] = useState(false);
+  const [loadingProvas, setLoadingProvas] = useState(false);
+  const [sendingNota, setSendingNota] = useState(false);
 
   const itemsArrayTurmas = [
     {
@@ -86,14 +90,17 @@ const Notas = () => {
     // setSearching(true);
   }
 
-  function setArrayNotas(aluno, index, nota) {
-    console.log(cores[index]);
+  function setArrayNotas(alunoDTO, index, nota) {
     var newArray = [...cores];
     newArray[index] = nota >= 6 ? "blue" : "red";
 
     var obj = notas;
     var coresArray = cores;
-    obj[index] = { aluno: aluno, valor: nota };
+    obj[index] = {
+      alunoDTO: alunoDTO,
+      valor: parseInt(nota),
+      idProva: provas[0].id,
+    };
 
     setNotas(obj);
     setCores(newArray);
@@ -109,296 +116,282 @@ const Notas = () => {
     },
   ];
 
+  async function getTurmas() {
+    setLoadingTurmas(true);
+    var obj = [];
+    const token = await AsyncStorage.getItem("jwt_key");
+
+    const headers = { Authorization: "Bearer " + token };
+    await api
+      .get("turmas/lazy", { headers: headers })
+      .then((response) => {
+        response.data.map((i, index) => {
+          obj.push({ name: i.ano + i.identificador, id: i.id });
+          setTurmas(obj);
+          setLoadingTurmas(false);
+        });
+        // console.log(obj);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
+
+  async function getProvas() {
+    setLoadingProvas(true);
+    var obj = [];
+    const token = await AsyncStorage.getItem("jwt_key");
+
+    const headers = { Authorization: "Bearer " + token };
+    await api
+      .get(`provas`, {
+        headers: headers,
+      })
+      .then((response) => {
+        response.data.map((i, index) => {
+          obj.push({ name: i.nome != null ? i.nome : "semNome", id: i.id });
+
+          setProvas(obj);
+        });
+        setLoadingProvas(false);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
+
+  async function postNotas(obj) {}
+
+  async function lancarNotas() {
+    setSendingNota(true);
+    const token = await AsyncStorage.getItem("jwt_key");
+
+    const headers = { Authorization: "Bearer " + token };
+    await api
+      .post(`notas/cadastro`, notas, {
+        headers: headers,
+      })
+      .then(() => {
+        navigate.navigate("Home");
+      });
+  }
+
   useEffect(() => {
-    async function getProvas() {
-      var obj = [];
-      const token = await AsyncStorage.getItem("jwt_key");
-
-      const headers = { Authorization: "Bearer " + token };
-      await api
-        .get(`provas`, {
-          headers: headers,
-        })
-        .then((response) => {
-          response.data.map((i, index) => {
-            obj.push({ name: i.nome != null ? i.nome : "semNome", id: i.id });
-
-            setProvas(obj);
-          });
-          // console.log(obj);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    }
-
     getProvas();
-
-    async function getTurmas() {
-      var obj = [];
-      const token = await AsyncStorage.getItem("jwt_key");
-
-      const headers = { Authorization: "Bearer " + token };
-      await api
-        .get("turmas/lazy", { headers: headers })
-        .then((response) => {
-          response.data.map((i, index) => {
-            obj.push({ name: i.ano + i.identificador, id: i.id });
-            setTurmas(obj);
-            setLoadingTurmas(false);
-          });
-          // console.log(obj);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    }
 
     getTurmas();
   }, []);
 
   return (
     <View style={styles.container}>
-      <View>
-        <View style={[styles.divBackOptions]}>
-          <TouchableOpacity onPress={handleNavigateback}>
-            <FontAwesome5 name="chevron-left" color="#378CE4" size={18} />
-          </TouchableOpacity>
-          <Text style={[styles.nomeTurma]}>Lançar notas</Text>
-        </View>
-
-        <SectionedMultiSelect
-          items={itemsArrayTurmas}
-          uniqueKey="id"
-          subKey="children"
-          selectText="Selecione as turmas"
-          showDropDowns={false}
-          readOnlyHeadings={true}
-          hideSearch={true}
-          single
-          confirmText="Confirmar"
-          onConfirm={() => {}}
-          onSelectedItemsChange={onSelectedItemsChange}
-          selectedItems={itemsTurmas}
-          loading={loadingTurmas}
-          loadingComponent={
-            <ActivityIndicator style={{ marginTop: 150 }} size="large" />
-          }
-        />
-
-        <SectionedMultiSelect
-          items={itemsProva}
-          uniqueKey="id"
-          subKey="children"
-          selectText="Selecione a prova "
-          showDropDowns={false}
-          readOnlyHeadings={true}
-          hideSearch={true}
-          single
-          confirmText="Confirmar"
-          onConfirm={() => {}}
-          onSelectedItemsChange={onSelectedItemsChangeProva}
-          selectedItems={itemsProvas}
-          // loading={loadingTurmas}
-          loadingComponent={
-            <ActivityIndicator style={{ marginTop: 150 }} size="large" />
-          }
-        />
-
-        <ScrollView showsVerticalScrollIndicator={false}>
-          {alunos.length == 0 ? (
-            <View>
-              <Text>AA</Text>
-            </View>
-          ) : (
-            alunos.map((i, index) => (
-              <View
+      <View style={{ flex: 1 }}>
+        {sendingNota == true ? (
+          <View style={{ flex: 1 }}>
+            <LottieView
+              duration={4000}
+              loop={false}
+              autoPlay
+              source={require("./3.json")}
+              key={2}
+            />
+          </View>
+        ) : (
+          <View>
+            <View style={[styles.divBackOptions]}>
+              <TouchableOpacity onPress={handleNavigateback}>
+                <FontAwesome5 name="chevron-left" color="#378CE4" size={18} />
+              </TouchableOpacity>
+              <Text style={[styles.nomeTurma]}>Lançar notas</Text>
+              <TouchableOpacity
                 style={{
-                  flex: 1,
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  flexWrap: "wrap",
-                  height: 200,
-                  // newArray,
+                  backgroundColor: "#378ce4",
+                  width: 35,
+                  borderRadius: 50,
+                  height: 35,
+                  alignItems: "center",
+                  justifyContent: "center",
                 }}
               >
-                <LinearGradient
-                  colors={[
-                    cores[index] == undefined ? "grey" : cores[index],
-                    "black",
-                  ]}
+                <Feather
+                  name="send"
+                  size={18}
+                  color="white"
+                  onPress={() => lancarNotas()}
+                />
+              </TouchableOpacity>
+            </View>
+
+            <SectionedMultiSelect
+              items={itemsArrayTurmas}
+              uniqueKey="id"
+              subKey="children"
+              selectText="Selecione as turmas"
+              showDropDowns={false}
+              readOnlyHeadings={true}
+              hideSearch={true}
+              single
+              confirmText="Confirmar"
+              onConfirm={() => {}}
+              onSelectedItemsChange={onSelectedItemsChange}
+              selectedItems={itemsTurmas}
+              loading={loadingTurmas}
+              loadingComponent={
+                <ActivityIndicator style={{ marginTop: 150 }} size="large" />
+              }
+            />
+
+            <SectionedMultiSelect
+              items={itemsProva}
+              uniqueKey="id"
+              subKey="children"
+              selectText="Selecione a prova "
+              showDropDowns={false}
+              readOnlyHeadings={true}
+              hideSearch={true}
+              single
+              confirmText="Confirmar"
+              onConfirm={() => {}}
+              onSelectedItemsChange={onSelectedItemsChangeProva}
+              selectedItems={itemsProvas}
+              loading={loadingProvas}
+              loadingComponent={
+                <ActivityIndicator style={{ marginTop: 150 }} size="large" />
+              }
+            />
+
+            <ScrollView showsVerticalScrollIndicator={false}>
+              {alunos.length == 0 ? (
+                <View style={{ height: 200 }}>
+                  <LottieView
+                    autoPlay
+                    source={require("../Chamada/rocket.json")}
+                  />
+                </View>
+              ) : (
+                <View
                   style={{
-                    // backgroundColor:
-                    // cores[index] == undefined ? "grey" : cores[index],
-                    width: "49%",
-                    borderRadius: 20,
+                    flex: 1,
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    flexWrap: "wrap",
+                    height: 200,
+                    // backgroundColor: "red",
+                    // newArray,
                   }}
-                  key={index}
                 >
-                  <View style={styles.cardAluno}>
-                    <View style={{ flexDirection: "row" }}>
-                      <ImageBackground
-                        source={aluno}
-                        imageStyle={{ borderRadius: 50 }}
-                        style={{
-                          width: 80,
-                          height: 80,
-                          resizeMode: "cover",
-                        }}
-                      />
-                      <View
-                        style={{
-                          flexDirection: "row",
-                          width: 85,
-                          justifyContent: "flex-end",
-                          paddingRight: 12,
-                        }}
-                      >
+                  {alunos.map((i, index) => (
+                    <LinearGradient
+                      colors={[
+                        cores[index] == undefined ? "grey" : cores[index],
+                        "black",
+                      ]}
+                      style={{
+                        // backgroundColor:
+                        // cores[index] == undefined ? "grey" : cores[index],
+                        width: "49%",
+                        borderRadius: 20,
+                      }}
+                      key={index}
+                    >
+                      <View style={styles.cardAluno}>
+                        <View style={{ flexDirection: "row" }}>
+                          <ImageBackground
+                            source={aluno}
+                            imageStyle={{ borderRadius: 50 }}
+                            style={{
+                              width: 80,
+                              height: 80,
+                              resizeMode: "cover",
+                            }}
+                          />
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              width: 85,
+                              justifyContent: "flex-end",
+                              paddingRight: 12,
+                            }}
+                          >
+                            <Text
+                              style={{
+                                fontWeight: "bold",
+                                color: "white",
+                                fontSize: 24,
+                                marginRight: 8,
+                              }}
+                            >
+                              {/* {notas[index].valor == undefined
+                            ? ""
+                            : notas[index].valor} */}
+                            </Text>
+                            <Feather
+                              name={
+                                notas[index] == undefined
+                                  ? "alert-circle"
+                                  : notas[index].valor >= 6
+                                  ? "smile"
+                                  : "frown"
+                              }
+                              style={{ marginTop: 2 }}
+                              color="white"
+                              size={28}
+                            ></Feather>
+                          </View>
+                        </View>
+
                         <Text
                           style={{
+                            fontSize: 14,
+                            marginTop: 2,
                             fontWeight: "bold",
                             color: "white",
-                            fontSize: 24,
-                            marginRight: 8,
+                            alignSelf: "center",
+                            marginBottom: 15,
                           }}
                         >
-                          {notas[index].valor}
+                          {i.nome}
                         </Text>
-                        <Feather
-                          name={notas[index].valor >= 6 ? "smile" : "frown"}
-                          style={{ marginTop: 2 }}
-                          color="white"
-                          size={28}
-                        ></Feather>
-                      </View>
-                    </View>
-
-                    <Text
-                      style={{
-                        fontSize: 14,
-                        marginTop: 2,
-                        fontWeight: "bold",
-                        color: "white",
-                        alignSelf: "center",
-                        marginBottom: 15,
-                      }}
-                    >
-                      {i.nome}
-                    </Text>
-                    <View style={{ width: 140 }}>
-                      <OutlinedTextField
-                        label="Nota obtida"
-                        tintColor="white"
-                        textColor="white"
-                        keyboardType="number-pad"
-                        label="Nota obtida"
-                        selectionColor="red"
-                        baseColor="white"
-                        keyboardType="number-pad"
-                        maxLength={2}
-                        height={20}
-                        onChange={(e) => {
-                          setArrayNotas(i, index, e.nativeEvent.text);
-                        }}
-                        multiline
-                        inputContainerStyle={{
-                          height: 55,
-                        }}
-                      />
-                      {/* <Input
+                        <View style={{ width: 140 }}>
+                          <OutlinedTextField
+                            label="Nota obtida"
+                            tintColor="white"
+                            textColor="white"
+                            keyboardType="number-pad"
+                            label="Nota obtida"
+                            selectionColor="red"
+                            baseColor="white"
+                            keyboardType="number-pad"
+                            maxLength={2}
+                            height={20}
+                            onChange={(e) => {
+                              setArrayNotas(i, index, e.nativeEvent.text);
+                            }}
+                            multiline
+                            inputContainerStyle={{
+                              height: 55,
+                            }}
+                          />
+                          {/* <Input
                         keyboardType="number-pad"
                         maxLength={1}
                         height={40}
                       /> */}
-                    </View>
+                        </View>
 
-                    <View
-                      style={{
-                        width: "70%",
-                        alignSelf: "center",
-                      }}
-                    ></View>
-                  </View>
-                </LinearGradient>
-
-                {/* <LinearGradient
-              colors={["red", "black"]}
-              style={{ width: "49%", borderRadius: 10 }}
-            >
-              <View style={styles.cardAluno}>
-                <View style={{ flexDirection: "row" }}>
-                  <ImageBackground
-                    source={aluno}
-                    imageStyle={{ borderRadius: 50 }}
-                    style={{
-                      width: 80,
-                      height: 80,
-                      resizeMode: "cover",
-                    }}
-                  />
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      width: 85,
-                      justifyContent: "flex-end",
-                      paddingRight: 12,
-                    }}
-                  >
-                    <Text
-                      style={{
-                        fontWeight: "bold",
-                        color: "white",
-                        fontSize: 24,
-                        marginRight: 8,
-                      }}
-                    >
-                      5
-                    </Text>
-                    <Feather
-                      name="frown"
-                      style={{ marginTop: 2 }}
-                      color="white"
-                      size={28}
-                    ></Feather>
-                  </View>
+                        <View
+                          style={{
+                            width: "70%",
+                            alignSelf: "center",
+                          }}
+                        ></View>
+                      </View>
+                    </LinearGradient>
+                  ))}
                 </View>
-
-                <Text
-                  style={{
-                    fontSize: 14,
-                    marginTop: 2,
-                    fontWeight: "bold",
-                    color: "white",
-                    alignSelf: "center",
-                    marginBottom: 15,
-                  }}
-                >
-                  Schwazenegger da silva
-                </Text>
-                <View style={{ width: 140 }}>
-                  <Input
-                    label="Nota obtido"
-                    baseColor="white"
-                    tintColor="white"
-                    textColor="white"
-                    keyboardType="number-pad"
-                    maxLength={1}
-                    height={40}
-                  />
-                </View>
-
-                <View
-                  style={{
-                    width: "70%",
-                    alignSelf: "center",
-                  }}
-                ></View>
-              </View>
-            </LinearGradient> */}
-              </View>
-            ))
-          )}
-        </ScrollView>
+              )}
+            </ScrollView>
+          </View>
+        )}
       </View>
     </View>
   );
@@ -411,6 +404,12 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
 
+  btnTxt: {
+    color: "white",
+    fontSize: 17,
+    marginRight: 15,
+  },
+
   image: {
     resizeMode: "cover",
     justifyContent: "center",
@@ -420,17 +419,29 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
 
+  enviarChamadaBtn: {
+    alignItems: "center",
+    padding: 12,
+    flexDirection: "row",
+    backgroundColor: "#378ce4",
+    justifyContent: "center",
+    elevation: 10,
+    borderRadius: 5,
+    marginTop: "auto",
+  },
+
   divBackOptions: {
     paddingHorizontal: 10,
     flexDirection: "row",
     marginBottom: 15,
+    justifyContent: "space-between",
   },
 
   nomeTurma: {
     color: "#378CE4",
     fontSize: 18,
     fontWeight: "bold",
-    marginLeft: "30%",
+    // marginLeft: "30%",
   },
   cardAluno: {
     borderRadius: 10,

@@ -60,26 +60,25 @@ const Chamada = () => {
         console.log(e);
       });
   }
+  async function getTurmas() {
+    var obj = [];
+    const token = await AsyncStorage.getItem("jwt_key");
+    const headers = { Authorization: "Bearer " + token };
+    await api
+      .get("turmas/lazy", { headers: headers })
+      .then((response) => {
+        response.data.map((i, index) => {
+          obj.push({ name: i.ano + i.identificador, id: i.id });
+          setTurmas(obj);
+          setLoadingTurmas(false);
+        });
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
 
   useEffect(() => {
-    async function getTurmas() {
-      var obj = [];
-      const token = await AsyncStorage.getItem("jwt_key");
-      const headers = { Authorization: "Bearer " + token };
-      await api
-        .get("turmas/lazy", { headers: headers })
-        .then((response) => {
-          response.data.map((i, index) => {
-            obj.push({ name: i.ano + i.identificador, id: i.id });
-            setTurmas(obj);
-            setLoadingTurmas(false);
-          });
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    }
-
     getTurmas();
   }, []);
 
