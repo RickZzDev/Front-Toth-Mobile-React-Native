@@ -55,11 +55,13 @@ const cardComunicado = ({
         style={{
           flex: 1,
           // alignSelf: "center",
-          borderTopEndRadius: 12,
-          borderTopLeftRadius: 12,
+          // borderTopEndRadius: 12,
+          // borderTopLeftRadius: 12,
+
+          borderRadius: 12,
+          borderWidth: 1,
           minHeight: 85,
           padding: 8,
-          elevation: 0.8,
           flexDirection: "row",
           justifyContent: "space-between",
         }}

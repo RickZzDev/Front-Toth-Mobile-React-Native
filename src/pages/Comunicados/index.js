@@ -84,7 +84,7 @@ const Comunicados = ({ turmas, data }) => {
 
             <Text style={styles.title}>Comunicaos Gerais</Text>
           </View>
-
+          {/* 
           <View style={styles.searchBox}>
             <Feather
               name="filter"
@@ -97,7 +97,7 @@ const Comunicados = ({ turmas, data }) => {
               style={styles.textFilter}
               placeholder="Pesquisar nos comunicados"
             ></TextInput>
-          </View>
+          </View> */}
           <ScrollView
             showsVerticalScrollIndicator={false}
             style={{

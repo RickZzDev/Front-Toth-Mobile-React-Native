@@ -85,6 +85,24 @@ const Atividades = () => {
           <View style={{ backgroundColor: "white", height: 450 }}>
             <LottieView autoPlay loop source={require("./loading.json")} />
           </View>
+        ) : atividades.length == 0 ? (
+          <View
+            style={{
+              flex: 1,
+              height: 450,
+              paddingHorizontal: 10,
+              paddingVertical: 10,
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+              Você não cadastrou nenhuma atividade
+            </Text>
+            <Text style={{ fontSize: 16, fontWeight: "bold" }}>
+              Clique no botão abaixo e cadastre alguma
+            </Text>
+          </View>
         ) : (
           atividades.map((i, index) => (
             <CardAtividades

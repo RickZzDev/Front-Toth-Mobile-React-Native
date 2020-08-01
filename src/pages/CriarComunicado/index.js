@@ -85,6 +85,11 @@ const CriarComunicado = () => {
     setPublicoAlvo("");
   }
 
+  function teste(text, label) {
+    label == "Assunto" ? setTitle(text) : setDescription(text);
+    // console.log(text);
+  }
+
   async function enviarComunicado() {
     setModalVisible(true);
     var obj = {
@@ -172,14 +177,14 @@ const CriarComunicado = () => {
       </View>
       {/* <Input label="Para" /> */}
       <Input
-        keyboardType="text"
+        keyboardType="default"
         label="Assunto"
         value={title}
-        onChangeFunciton={setTitle}
+        onChangeFunciton={teste}
       />
       <Input
         label="Comunicado"
-        keyboardType="text"
+        keyboardType="default"
         onChangeFunciton={setDescription}
         height={105}
         value={description}
