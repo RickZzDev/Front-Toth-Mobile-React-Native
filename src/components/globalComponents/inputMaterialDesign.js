@@ -5,7 +5,7 @@ import { Value } from "react-native-reanimated";
 const inputMaterialDesign = ({
   label,
   height = 55,
-  keyboardType = "text",
+  keyboardType = "default",
   baseColor = "#378CE4",
   tintColor = "#378CE4",
   textColor = "#378CE4",

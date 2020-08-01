@@ -35,7 +35,7 @@ const Provas = () => {
           headers: headers,
         })
         .then((response) => {
-          setIdAula(response.data[0].id);
+          setIdAula(response.data.id);
         })
         .catch((e) => {
           console.log(e);
