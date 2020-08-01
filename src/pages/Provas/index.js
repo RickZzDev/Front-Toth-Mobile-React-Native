@@ -49,7 +49,6 @@ const Provas = () => {
             },
           ];
           setDates(t);
-          console.log(dates);
         });
       })
       .catch((e) => {
@@ -248,6 +247,8 @@ const Provas = () => {
                         borderRadius: 10,
                         paddingHorizontal: 10,
                         paddingVertical: 10,
+                        height: 180,
+                        justifyContent: "space-between",
                       }}
                     >
                       <Text style={{ fontSize: 18, color: "grey" }}>
