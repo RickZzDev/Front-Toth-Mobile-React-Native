@@ -11,60 +11,49 @@ import {
   Dimensions,
 } from "react-native";
 import { FontAwesome5, Feather } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
-import { ProgressChart } from "react-native-chart-kit";
-import aluno from "../../assets/aluno.jpeg";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import api from "../../services/api";
+import { ProgressCircle } from "react-native-svg-charts";
+import LottieView from "lottie-react-native";
 
 const Notas = () => {
   const navigate = useNavigation();
+  const routes = useRoute();
+  const routeParams = routes.params;
   const screenWidth = Dimensions.get("window").width - 100;
+  const [notas, setNotas] = useState([]);
+  const [data, setData] = useState([]);
 
-  // const [provas, setProvas] = useNavigation([]);
-  const data = {
-    labels: ["Swim", "Bike"], // optional
-    data: [0.4, 0.6],
-  };
+  async function getProvas() {
+    var obj = [];
+    const token = await AsyncStorage.getItem("jwt_key");
 
-  const chartConfig = {
-    backgroundGradientFrom: "#000000",
-    backgroundGradientFromOpacity: 0,
-    backgroundGradientTo: "#ffffff",
-    backgroundGradientToOpacity: 0,
-    color: (opacity = 1) => `rgba(55, 140, 228, ${opacity})`,
-    barPercentage: 0.5,
-    useShadowColorFromDataset: false,
-    // optional
-  };
+    const headers = { Authorization: "Bearer " + token };
+    await api
+      .get(`notas/aluno/${routeParams.data.id}`, {
+        headers: headers,
+      })
+      .then((response) => {
+        setNotas(response.data);
+        // var arrayData = data;
+        // var newObj = data;
+        // setData(newObj);
+        // console.log(data[0].data[0]);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
+
+  // // const [provas, setProvas] = useNavigation([]);
 
   function handleNavigateback() {
     navigate.goBack();
   }
 
-  // async function getProvas() {
-  //   setLoadingProvas(true);
-  //   var obj = [];
-  //   const token = await AsyncStorage.getItem("jwt_key");
-
-  //   const headers = { Authorization: "Bearer " + token };
-  //   await api
-  //     .get(`provas`, {
-  //       headers: headers,
-  //     })
-  //     .then((response) => {
-  //       // response.data.map((i, index) => {
-  //       //   obj.push({ name: i.nome != null ? i.nome : "semNome", id: i.id });
-  //       //   setProvas(obj);
-  //       // });
-  //       // setLoadingProvas(false);
-  //     })
-  //     .catch((e) => {
-  //       console.log(e);
-  //     });
-  // }
-
   useEffect(() => {
-    // getProvas();
+    // console.log(routeParams.data.id);
+    getProvas();
   }, []);
 
   return (
@@ -87,26 +76,105 @@ const Notas = () => {
               // alignContent: "center",
             }}
           >
-            <View
-              style={{
-                borderColor: "#dbdbdb",
-                borderBottomWidth: 5,
-                borderRightWidth: 5,
-                width: "100%",
-              }}
-            >
-              <Text style={{ marginLeft: 25, fontSize: 14 }}>PROVA TAL</Text>
-              <ProgressChart
-                data={data}
-                width={screenWidth}
-                height={220}
-                strokeWidth={16}
-                radius={32}
-                chartConfig={chartConfig}
-                hideLegend={false}
-                style={{ borderRadius: 50 }}
-              />
-            </View>
+            {notas.length == 0 ? (
+              <View style={{ flex: 1, height: 450 }}>
+                <LottieView
+                  autoPlay
+                  loop
+                  source={require("../Chamada/rocket.json")}
+                />
+              </View>
+            ) : (
+              notas.map((nota, index) => (
+                <View
+                  key={index}
+                  style={{
+                    borderColor: "rgba(55, 140, 228,1)",
+                    borderBottomWidth: 3,
+                    borderRightWidth: 5,
+                    width: "100%",
+                    flexWrap: "wrap",
+                    marginTop: 15,
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontSize: 14,
+                    }}
+                  >
+                    {nota.nomeProva}
+                  </Text>
+                  <View
+                    style={{
+                      width: "100%",
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <View style={{ width: "35%" }}>
+                      <ProgressCircle
+                        style={{ height: 200 }}
+                        progress={nota.nota / 10}
+                        progressColor={"rgba(55, 140, 228,1)"}
+                      />
+                    </View>
+                    <View style={{ width: "30%" }}>
+                      <ProgressCircle
+                        style={{ height: 200 }}
+                        progress={nota.notaGeral / 10}
+                        progressColor={"rgba(55, 140, 228,0.5)"}
+                      />
+                    </View>
+                    <View
+                      style={{
+                        width: "30%",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          // justifyContent: "space-evenly",
+                          // alignContent: "center",
+                          alignItems: "center",
+                          marginBottom: 15,
+                        }}
+                      >
+                        <View
+                          style={{
+                            height: 10,
+                            width: 10,
+                            backgroundColor: "rgba(55, 140, 228,1)",
+                            marginRight: 5,
+                          }}
+                        ></View>
+                        <Text>Sua nota: </Text>
+                        <Text>{nota.nota}</Text>
+                      </View>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          // justifyContent: "space-evenly",
+                          // alignContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        <View
+                          style={{
+                            height: 10,
+                            width: 10,
+                            backgroundColor: "rgba(55, 140, 228,0.6)",
+                            marginRight: 5,
+                          }}
+                        ></View>
+                        <Text>Média geral: </Text>
+                        <Text>{nota.notaGeral}</Text>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+              ))
+            )}
           </View>
         </ScrollView>
       </View>

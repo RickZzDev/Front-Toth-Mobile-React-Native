@@ -55,13 +55,13 @@ const Comunicados = ({ turmas, data }) => {
       {comunicados[0] == 0 ? (
         <View
           style={{
-            marginTop: 300,
             marginLeft: "auto",
             marginRight: "auto",
+            height: 450,
+            width: 350,
           }}
         >
-          <ActivityIndicator size="large" color="#378ce4" />
-          {/* <LottieView autoPlay loop source={require("./loading.json")} /> */}
+          <LottieView autoPlay loop source={require("../Provas/s1.json")} />
         </View>
       ) : (
         <View style={{ alignItems: "center" }}>
@@ -85,24 +85,12 @@ const Comunicados = ({ turmas, data }) => {
             <Text style={styles.title}>Comunicaos Gerais</Text>
           </View>
 
-          <View style={styles.searchBox}>
-            <Feather
-              name="filter"
-              color="black"
-              size={25}
-              style={{ width: "10%" }}
-            />
-            <TextInput
-              placeholderTextColor="black"
-              style={styles.textFilter}
-              placeholder="Pesquisar nos comunicados"
-            ></TextInput>
-          </View>
           <ScrollView
             showsVerticalScrollIndicator={false}
             style={{
               // backgroundColor: "blue",
               width: "100%",
+              marginTop: 30,
               // flexDirection: "row",
             }}
           >

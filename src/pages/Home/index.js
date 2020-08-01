@@ -112,13 +112,13 @@ const Home = () => {
                 </View>
               </View>
 
-              <View style={styles.dayliCards}>
+              {/* <View style={styles.dayliCards}>
                 <Text style={{ ...styles.dayliCardTitle }}>Comunicados</Text>
                 <BoxRetangular text="Comunicados Gerais" width={185} />
                 <BoxRetangular text="Relatório de dúvidas" width={185} />
                 <BoxRetangular text="Infromações extras" width={185} />
                 <BoxRetangular text="Turmas" width={185} />
-              </View>
+              </View> */}
 
               <View style={styles.dayliCards}>
                 <Text style={styles.dayliCardTitle}>Atividades do dia</Text>
@@ -141,24 +141,25 @@ const Home = () => {
                 materialIconName="assignment"
                 aluno={user}
               />
-              <MenuCard
+              {/* <MenuCard
                 // dataTurmas={turmas}
                 text="Turmas"
                 materialIconName="school"
-              />
+              /> */}
               <MenuCard
                 text="Comunicados"
                 materialIconName="sms"
                 // data={routeParams.data.professor}
               />
-              <MenuCard
+              {/* <MenuCard
                 text="Chamada"
                 materialIconName="recent-actors"
                 // data={user}
-              />
+              /> */}
               <MenuCard
                 text="Notas"
                 materialIconName="graphic-eq"
+                aluno={user}
                 // data={user}
               />
               <MenuCard
