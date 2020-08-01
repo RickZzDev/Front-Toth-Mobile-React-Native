@@ -29,6 +29,7 @@ const Notas = () => {
     const token = await AsyncStorage.getItem("jwt_key");
 
     const headers = { Authorization: "Bearer " + token };
+    console.log(routeParams.data.id);
     await api
       .get(`notas/aluno/${routeParams.data.id}`, {
         headers: headers,
