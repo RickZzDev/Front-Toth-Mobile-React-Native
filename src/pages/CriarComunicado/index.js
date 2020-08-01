@@ -63,7 +63,7 @@ const CriarComunicado = () => {
           headers: headers,
         })
         .then((response) => {
-          setIdAula(response.data[0].id);
+          setIdAula(response.data.id);
         })
         .catch((e) => {
           console.log(e);
@@ -185,7 +185,7 @@ const CriarComunicado = () => {
       <Input
         label="Comunicado"
         keyboardType="default"
-        onChangeFunciton={setDescription}
+        onChangeFunciton={teste}
         height={105}
         value={description}
       />

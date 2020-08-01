@@ -110,7 +110,11 @@ const cardAtividades = ({
           </Text>
         </View>
         <View style={styles.infoComunicados}>
-          <FontAwesome5 name={icon} color={color} size={70}></FontAwesome5>
+          <FontAwesome5
+            name={icon == "" ? "alert-circle" : icon}
+            color={color}
+            size={70}
+          ></FontAwesome5>
         </View>
       </View>
 

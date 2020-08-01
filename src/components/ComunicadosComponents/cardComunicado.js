@@ -55,11 +55,10 @@ const cardComunicado = ({
         style={{
           flex: 1,
           // alignSelf: "center",
-          // borderTopEndRadius: 12,
-          // borderTopLeftRadius: 12,
+          borderTopEndRadius: 12,
+          borderTopLeftRadius: 12,
 
-          borderRadius: 12,
-          borderWidth: 1,
+          borderWidth: 0.3,
           minHeight: 85,
           padding: 8,
           flexDirection: "row",
@@ -89,7 +88,7 @@ const cardComunicado = ({
         </View>
       </View>
 
-      <View style={{ ...styles.barraImportancia, backgroundColor: color }}>
+      <View style={{ ...styles.barraImportancia, backgroundColor: "#d4cd04" }}>
         <Text style={{ color: "white" }}>
           <FontAwesome5 name={icon} size={20} />
         </Text>

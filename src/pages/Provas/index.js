@@ -58,6 +58,7 @@ const Provas = () => {
   const [conteudo, setConteudos] = useState("");
   const [pesoProva, setPesoProva] = useState("");
   const [diaProva, setDiaProva] = useState("");
+  const [nomeProva, setNomeProva] = useState("");
   const [atividadesParaEstudar, setAtividadesParaEstudar] = useState({});
   const [sending, setSending] = useState("");
 
@@ -68,6 +69,7 @@ const Provas = () => {
     const headers = { Authorization: "Bearer " + token };
 
     var obj = {
+      nome: nomeProva,
       conteudo: conteudo,
       pesoProva: pesoProva,
       atividadesParaEstudar: atividadesParaEstudar,
@@ -98,6 +100,9 @@ const Provas = () => {
         break;
       case "Atividades para estudar":
         setAtividadesParaEstudar(text);
+        break;
+      case "Nome da prova":
+        setNomeProva(text);
         break;
     }
     // setProva({
@@ -198,6 +203,12 @@ const Provas = () => {
             />
           </View>
           <View style={{ marginTop: 15, backgroundColor: "white" }}>
+            <Input
+              label="Nome da prova"
+              onChangeFunciton={setData}
+              keyboardType="default"
+              height={60}
+            />
             <Input label="Conteudos" onChangeFunciton={setData} height={60} />
             <Input
               label="Peso da prova"

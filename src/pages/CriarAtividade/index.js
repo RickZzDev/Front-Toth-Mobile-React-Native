@@ -73,7 +73,7 @@ const criarAtividade = () => {
           headers: headers,
         })
         .then((response) => {
-          setAulas(response.data[0].id);
+          setAulas(response.data.id);
         })
         .catch((e) => {
           console.log(e);
@@ -396,7 +396,6 @@ const criarAtividade = () => {
   }
 
   async function sendAtividade() {
-    console.log("AAAAAAAAAAAAAAAAAAAAAa");
     setSending(true);
     const token = await AsyncStorage.getItem("jwt_key");
     const headers = { Authorization: "Bearer " + token };
@@ -408,6 +407,7 @@ const criarAtividade = () => {
       questoes: questoes,
       id_turma: idTurmas,
     };
+    console.log(obj);
 
     await api
       .post("atividades/cadastrar", obj, {
