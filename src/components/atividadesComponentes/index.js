@@ -43,7 +43,7 @@ const cardAtividades = ({
     switch (nomeMateria) {
       case "Matemática":
         setIcon("calculator");
-        setColor("#c71400");
+        setColor("red");
         break;
       case "Fisica":
         setIcon("athom");
@@ -111,7 +111,7 @@ const cardAtividades = ({
         </View>
         <View style={styles.infoComunicados}>
           <FontAwesome5
-            name={icon == "" ? "alert-circle" : icon}
+            name={icon == "" ? "angle-double-down" : icon}
             color={color}
             size={70}
           ></FontAwesome5>

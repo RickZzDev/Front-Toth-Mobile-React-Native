@@ -123,8 +123,10 @@ const Chamada = () => {
   function getCurrentDate() {
     var date = new Date();
     var month = date.getMonth();
+    var day = date.getDate();
     parseInt(month) < 10 ? (month = `0${month}`) : (month = month);
-    return date.getFullYear() + "-" + month + "-" + date.getDate();
+    parseInt(day) < 10 ? (day = `0${day}`) : (day = day);
+    return date.getFullYear() + "-" + month + "-" + day;
   }
 
   async function enviarChamada() {
@@ -136,6 +138,7 @@ const Chamada = () => {
       idTurma: turmas[0].id,
       idAlunos: faltas,
     };
+    console.log(obj);
 
     setSearching("sending");
 

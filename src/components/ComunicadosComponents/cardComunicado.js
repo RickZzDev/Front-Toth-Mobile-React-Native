@@ -16,7 +16,7 @@ const cardComunicado = ({
   title,
   description,
   color,
-  icon,
+  icon = null,
   important = false,
 }) => {
   const [animatedHeight, setAnimated] = useState(new Animated.Value(1));
@@ -83,14 +83,14 @@ const cardComunicado = ({
           <Text>{description}</Text>
         </View>
         <View style={styles.infoComunicados}>
-          <Text style={{ fontSize: 15, color: "black" }}>12:00</Text>
+          <Text style={{ fontSize: 15, color: "black" }}></Text>
           <Feather name="star" color="black" size={20}></Feather>
         </View>
       </View>
 
       <View style={{ ...styles.barraImportancia, backgroundColor: "#d4cd04" }}>
         <Text style={{ color: "white" }}>
-          <FontAwesome5 name={icon} size={20} />
+          <FontAwesome5 name="home" size={20} />
         </Text>
       </View>
     </View>
@@ -101,7 +101,6 @@ const styles = StyleSheet.create({
   cardComunicado: {
     flex: 1,
     width: "100%",
-    // backgroundColor: "blue",
     // alignSelf: "center",
     height: 130,
     padding: 8,

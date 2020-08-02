@@ -104,31 +104,31 @@ const Home = () => {
                 <Text style={styles.dayliCardTitle}>Aulas do dia</Text>
 
                 <View style={styles.routineContainer}>
-                  <BoxRetangular text="3C 09:30" width={135} />
-                  <BoxRetangular text="3C 09:30" width={135} />
-                  <BoxRetangular text="3C 09:30" width={135} />
-                  <BoxRetangular text="3C 09:30" width={135} />
-                  <BoxRetangular text="3C 09:30" width={135} />
+                  <BoxRetangular text="6A 07:00" width={135} />
+                  <BoxRetangular text="6B 08:00" width={135} />
+                  <BoxRetangular text="6F 09:00" width={135} />
+                  <BoxRetangular text="6C 10:00" width={135} />
+                  <BoxRetangular text="6H 11:00" width={135} />
                 </View>
               </View>
 
-              <View style={styles.dayliCards}>
+              {/* <View style={styles.dayliCards}>
                 <Text style={{ ...styles.dayliCardTitle }}>Comunicados</Text>
                 <BoxRetangular text="Comunicados Gerais" width={185} />
                 <BoxRetangular text="Relatório de dúvidas" width={185} />
                 <BoxRetangular text="Infromações extras" width={185} />
                 <BoxRetangular text="Turmas" width={185} />
-              </View>
+              </View> */}
 
               <View style={styles.dayliCards}>
                 <Text style={styles.dayliCardTitle}>Atividades do dia</Text>
 
                 <View style={styles.routineContainer}>
-                  <BoxRetangular text="3A" width={135} />
-                  <BoxRetangular text="3B" width={135} />
-                  <BoxRetangular text="3C" width={135} />
-                  <BoxRetangular text="3D" width={135} />
-                  <BoxRetangular text="3E" width={135} />
+                  <BoxRetangular text="6A" width={135} />
+                  <BoxRetangular text="6B" width={135} />
+                  <BoxRetangular text="6F" width={135} />
+                  {/* <BoxRetangular text="3D" width={135} />
+                  <BoxRetangular text="3E" width={135} /> */}
                 </View>
               </View>
             </ScrollView>

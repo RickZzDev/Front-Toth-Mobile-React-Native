@@ -30,24 +30,24 @@ const Atividades = () => {
   function handleNavigateToCreate() {
     navigate.navigate("CriarAtividade", { id: routeParams.data });
   }
+  async function getAtividades() {
+    console.log("AA");
+    const token = await AsyncStorage.getItem("jwt_key");
+
+    const headers = { Authorization: "Bearer " + token };
+    await api
+      .get(`atividades/professor/${routeParams.data}`, {
+        headers: headers,
+      })
+      .then((response) => {
+        setAtividades(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }
 
   useEffect(() => {
-    async function getAtividades() {
-      const token = await AsyncStorage.getItem("jwt_key");
-
-      const headers = { Authorization: "Bearer " + token };
-      await api
-        .get(`atividades/professor/${routeParams.data}`, {
-          headers: headers,
-        })
-        .then((response) => {
-          setAtividades(response.data);
-        })
-        .catch((e) => {
-          console.log(e);
-        });
-    }
-
     getAtividades();
   }, []);
 
@@ -70,7 +70,7 @@ const Atividades = () => {
           />
         </TouchableOpacity>
 
-        <Text style={styles.title}>Atividades do dia</Text>
+        <Text style={styles.title}>Atividades</Text>
       </View>
 
       <ScrollView
@@ -109,6 +109,8 @@ const Atividades = () => {
               turma={
                 i.turmas[0] == null
                   ? "Todas"
+                  : i.turmas.length > 1
+                  ? "6A, 6B, 6F"
                   : i.turmas[0].ano.ano + "-" + i.turmas[0].identificador
               }
               nome={i.nome}

@@ -440,7 +440,7 @@ const criarAtividade = () => {
         <Text style={{ ...styles.titleEscrever, color: "#378ce4" }}>
           Criar Atividade
         </Text>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={{
             marginLeft: "auto",
             marginRight: 10,
@@ -451,9 +451,9 @@ const criarAtividade = () => {
             alignItems: "center",
             justifyContent: "center",
           }}
-        >
-          <Feather name="paperclip" size={20} color="white" />
-        </TouchableOpacity>
+        > */}
+        {/* <Feather name="paperclip" size={20} color="white" /> */}
+        {/* </TouchableOpacity> */}
         <TouchableOpacity
           style={{
             backgroundColor: "#378ce4",
