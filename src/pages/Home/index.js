@@ -104,11 +104,11 @@ const Home = () => {
                 <Text style={styles.dayliCardTitle}>Aulas do dia</Text>
 
                 <View style={styles.routineContainer}>
-                  <BoxRetangular text="3C 09:30" width={135} />
-                  <BoxRetangular text="3C 09:30" width={135} />
-                  <BoxRetangular text="3C 09:30" width={135} />
-                  <BoxRetangular text="3C 09:30" width={135} />
-                  <BoxRetangular text="3C 09:30" width={135} />
+                  <BoxRetangular text="Fis  07:00" width={135} />
+                  <BoxRetangular text="Quim 08:00" width={135} />
+                  <BoxRetangular text="Mat  09:00" width={135} />
+                  <BoxRetangular text="Bio  10:00" width={135} />
+                  <BoxRetangular text="Hist 11:00" width={135} />
                 </View>
               </View>
 
@@ -124,11 +124,11 @@ const Home = () => {
                 <Text style={styles.dayliCardTitle}>Atividades do dia</Text>
 
                 <View style={styles.routineContainer}>
-                  <BoxRetangular text="3A" width={135} />
-                  <BoxRetangular text="3B" width={135} />
+                  <BoxRetangular text="Atividade 4" width={135} />
+                  {/* <BoxRetangular text="3B" width={135} />
                   <BoxRetangular text="3C" width={135} />
                   <BoxRetangular text="3D" width={135} />
-                  <BoxRetangular text="3E" width={135} />
+                  <BoxRetangular text="3E" width={135} /> */}
                 </View>
               </View>
             </ScrollView>
